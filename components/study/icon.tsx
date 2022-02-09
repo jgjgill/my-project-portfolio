@@ -1,13 +1,17 @@
 import { cls } from '../../libs/utils';
 
 interface IconProps {
-  text: 'Front' | 'Back' | 'Ux/Ui' | 'Design';
+  text: String;
   fullName?: boolean;
+  [key: string]: any;
 }
 
-const Icon = ({ text, fullName }: IconProps) => {
+const Icon = ({ text, fullName, ...rest }: IconProps) => {
   return (
-    <div className="flex items-centerjustify-center px-2 rounded-md shadow-md bg-slate-400">
+    <div
+      className="flex items-center justify-center cursor-pointer px-2 rounded-md shadow-md bg-slate-400"
+      {...rest}
+    >
       <div
         className={cls(
           'text-xl font-semibold',
