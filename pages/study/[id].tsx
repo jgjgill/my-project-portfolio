@@ -6,6 +6,7 @@ import {
 } from 'next';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
+import Comment from '../../components/study/comment';
 import { dummy } from '../../libs/dummy';
 
 interface Iparams extends ParsedUrlQuery {
@@ -82,9 +83,7 @@ const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
           </svg>
         </div>
         <div className="px-4 py-4 min-h-[20rem] bg-slate-300 rounded-md shadow-md">
-          <p className="text-sm font-medium text-gray-700">
-            {post.content}
-          </p>
+          <p className="text-sm font-medium text-gray-700">{post.content}</p>
         </div>
       </div>
 
@@ -98,35 +97,15 @@ const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
             Submit
           </button>
         </form>
-        <div className="space-y-2">
-          <div className="flex space-x-2 items-center">
-            <span className="text-base font-medium text-gray-900">user1</span>
-            <p className="text-sm font-normal text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              voluptatem asperiores veritatis quasi debitis quidem dicta officia
-            </p>
-          </div>
-          <div className="flex space-x-2 items-center">
-            <span className="text-base font-medium text-gray-900">user2</span>
-            <p className="text-sm font-normal text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              voluptatem asperiores veritatis quasi debitis quidem dicta officia
-            </p>
-          </div>
-          <div className="flex space-x-2 items-center">
-            <span className="text-base font-medium text-gray-900">user3</span>
-            <p className="text-sm font-normal text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              voluptatem asperiores veritatis quasi debitis quidem dicta officia
-            </p>
-          </div>
-          <div className="flex space-x-2 items-center">
-            <span className="text-base font-medium text-gray-900">user4</span>
-            <p className="text-sm font-normal text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              voluptatem asperiores veritatis quasi debitis quidem dicta officia
-            </p>
-          </div>
+        <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
+          {[1, 2, 3, 4].map((item) => (
+            <Comment
+              id={item}
+              key={item}
+              name="user"
+              content="Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?"
+            />
+          ))}
         </div>
       </div>
     </>
