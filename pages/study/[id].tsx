@@ -1,7 +1,43 @@
-import { NextPage } from 'next';
+import {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+  NextPage,
+} from 'next';
 import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
+import { dummy } from '../../libs/dummy';
 
-const Post: NextPage = () => {
+interface Iparams extends ParsedUrlQuery {
+  id: string;
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = dummy.map((item) => {
+    return {
+      params: { id: item.id.toString() },
+    };
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { id } = params as Iparams;
+
+  const post = dummy.find((data) => data.id.toString() === id);
+
+  return {
+    props: {
+      post,
+    },
+  };
+};
+
+const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
   const router = useRouter();
 
   const onClickBack = () => {
@@ -28,7 +64,7 @@ const Post: NextPage = () => {
             />
           </svg>
           <p className="px-8 py-2 w-full text-center text-sm font-semibold text-gray-800 ">
-            Lorem ipsum dolor sit
+            {post.title}
           </p>
           <svg
             className="absolute top-0 -right-1 w-8 h-8"
@@ -47,10 +83,7 @@ const Post: NextPage = () => {
         </div>
         <div className="px-4 py-4 min-h-[20rem] bg-slate-300 rounded-md shadow-md">
           <p className="text-sm font-medium text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique,
-            fuga eligendi? Ea distinctio esse quidem ratione aperiam facere
-            atque, porro voluptas consectetur molestias aspernatur autem
-            perferendis sequi, minima, modi vitae.
+            {post.content}
           </p>
         </div>
       </div>

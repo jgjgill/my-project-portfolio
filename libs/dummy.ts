@@ -17,7 +17,7 @@ export const dummy: post[] = [
     text: 'Front',
     title: '토스ㅣSLASH 21 - JavaScript Bundle Diet',
     content:
-      '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum omnis quo quam fuga, repellat libero doloribus aliquid. Veritatis distinctio dignissimos beatae perferendis, fugit exercitationem doloremque tempore doloribus libero deserunt ducimus.',
     toggle: false,
     comment: 2,
     like: 1,
