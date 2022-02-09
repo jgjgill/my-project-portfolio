@@ -67,6 +67,7 @@ const Study: NextPage = () => {
           <div className="space-y-3">
             {filteredList.map((filteredItem) => (
               <ListItem
+                id={filteredItem.id}
                 key={filteredItem.id}
                 text={filteredItem.text}
                 title={filteredItem.title}
