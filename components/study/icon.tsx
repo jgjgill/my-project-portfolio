@@ -15,10 +15,10 @@ const Icon = ({ text, fullName, ...rest }: IconProps) => {
       <div
         className={cls(
           'text-xl font-semibold',
-          text === 'Front' ? 'text-teal-400' : '',
-          text === 'Back' ? 'text-sky-400' : '',
-          text === 'Ux/Ui' ? 'text-orange-400' : '',
-          text === 'Design' ? 'text-indigo-400' : ''
+          text === 'Front' ? 'text-teal-300' : '',
+          text === 'Back' ? 'text-sky-300' : '',
+          text === 'Ux/Ui' ? 'text-orange-300' : '',
+          text === 'Design' ? 'text-indigo-300' : ''
         )}
       >
         {fullName ? text : text[0]}

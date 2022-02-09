@@ -6,7 +6,9 @@ const Navbar = ({}: NavbarProps) => {
   return (
     <nav className="flex justify-between bg-slate-200 px-4 py-2 rounded-md shadow-md">
       <Link href="/">
-        <a className='px-2 text-xl font-semibold text-gray-500'>JG</a>
+        <a className="flex items-center space-x- px-2 text-xl font-semibold text-gray-500">
+          <span className='text-gray-400'>JG</span>
+        </a>
       </Link>
       <ul className="flex items-center space-x-4 justify-between text-xl font-semibold text-gray-500">
         <li>
