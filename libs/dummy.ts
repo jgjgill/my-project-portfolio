@@ -7,6 +7,8 @@ export interface post extends icon {
   title: string;
   content: string;
   toggle: boolean;
+  comment: number;
+  like: number;
 }
 
 export const dummy: post[] = [
@@ -17,6 +19,8 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 2,
+    like: 1,
   },
   {
     id: 2,
@@ -25,6 +29,8 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 3,
+    like: 2,
   },
   {
     id: 3,
@@ -33,6 +39,8 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 5,
+    like: 7,
   },
   {
     id: 4,
@@ -41,14 +49,17 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 3,
+    like: 2,
   },
   {
     id: 5,
     text: 'Design',
     title: '토스ㅣSLASH 21 - 토스팀을 위한 슬랙봇 설계',
-    content:
-      '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
+    content: '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 1,
+    like: 2,
   },
   {
     id: 6,
@@ -57,5 +68,7 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
+    comment: 3,
+    like: 4,
   },
 ];

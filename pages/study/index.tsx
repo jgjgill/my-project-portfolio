@@ -1,9 +1,9 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import Icon from '../components/study/icon';
-import ListItem from '../components/study/listItem';
-import Memo from '../components/study/memo';
-import { dummy, post } from '../libs/dummy';
+import Icon from '../../components/study/icon';
+import ListItem from '../../components/study/listItem';
+import Memo from '../../components/study/memo';
+import { dummy, post } from '../../libs/dummy';
 
 const Study: NextPage = () => {
   const [dummyData, setDummyData] = useState<post[]>([]);
@@ -81,9 +81,12 @@ const Study: NextPage = () => {
           {dummyData.map((memoItem) => (
             <Memo
               key={memoItem.id}
+              id={memoItem.id}
               text={memoItem.text}
               title={memoItem.title}
               content={memoItem.content}
+              comment={memoItem.comment}
+              like={memoItem.like}
             />
           ))}
         </div>

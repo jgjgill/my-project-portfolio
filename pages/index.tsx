@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Introduce from '../components/home/introduce';
 import Project from '../components/home/project';
 
