@@ -27,8 +27,8 @@ const Navbar = ({}: NavbarProps) => {
           </Link>
         </li>
         <li>
-          <Link href="/nav4">
-            <a>nav4</a>
+          <Link href="/join">
+            <a>Join</a>
           </Link>
         </li>
       </ul>
