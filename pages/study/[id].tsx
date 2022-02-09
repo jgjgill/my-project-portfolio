@@ -5,6 +5,7 @@ import {
   NextPage,
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import Input from '../../components/input';
 import Comment from '../../components/study/comment';
 import PostBoard from '../../components/study/postBoard';
 import { dummy } from '../../libs/dummy';
@@ -45,10 +46,12 @@ const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
 
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
         <form className="flex flex-col space-y-2">
-          <label htmlFor="comment" className="w-full text-center">
-            Comment
-          </label>
-          <input type="text" className="px-2 rounded-md shadow-md" />
+          <Input
+            label="Comment"
+            name="comment"
+            type="text"
+            placeholder="댓글을 입력해주세요"
+          />
           <button type="submit" className="border rounded-md shadow-md">
             Submit
           </button>
