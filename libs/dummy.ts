@@ -1,17 +1,22 @@
-export interface icon {
-  text: 'Front' | 'Ux/Ui' | 'Design' | 'Back';
-}
-
-export interface post extends icon {
+export interface post {
   id: number;
+  text: 'Front' | 'Back' | 'Ux/Ui' | 'Design';
   title: string;
   content: string;
   toggle: boolean;
-  comment: number;
-  like: number;
+  commentCount: number;
+  likeCount: number;
+  comment: comment[];
 }
 
-export const dummy: post[] = [
+export interface comment {
+  id: number;
+  postId: number;
+  name: string;
+  content: string;
+}
+
+export const dummyPost: post[] = [
   {
     id: 1,
     text: 'Front',
@@ -19,8 +24,23 @@ export const dummy: post[] = [
     content:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum omnis quo quam fuga, repellat libero doloribus aliquid. Veritatis distinctio dignissimos beatae perferendis, fugit exercitationem doloremque tempore doloribus libero deserunt ducimus.',
     toggle: false,
-    comment: 2,
-    like: 1,
+    commentCount: 2,
+    likeCount: 1,
+    comment: [
+      {
+        id: 1,
+        postId: 1,
+        name: 'user',
+        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+      },
+      {
+        id: 2,
+        postId: 1,
+        name: 'user2',
+        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+      },
+
+    ]
   },
   {
     id: 2,
@@ -29,8 +49,22 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
-    comment: 3,
-    like: 2,
+    commentCount: 3,
+    likeCount: 2,
+    comment: [
+      {
+        id: 3,
+        postId: 2,
+        name: 'user3',
+        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+      },
+      {
+        id: 4,
+        postId: 2,
+        name: 'user4',
+        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+      },
+    ]
   },
   {
     id: 3,
@@ -39,8 +73,9 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
-    comment: 5,
-    like: 7,
+    commentCount: 5,
+    likeCount: 7,
+    comment: []
   },
   {
     id: 4,
@@ -49,8 +84,9 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
-    comment: 3,
-    like: 2,
+    commentCount: 3,
+    likeCount: 2,
+    comment: []
   },
   {
     id: 5,
@@ -58,8 +94,9 @@ export const dummy: post[] = [
     title: '토스ㅣSLASH 21 - 토스팀을 위한 슬랙봇 설계',
     content: '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
-    comment: 1,
-    like: 2,
+    commentCount: 1,
+    likeCount: 2,
+    comment: []
   },
   {
     id: 6,
@@ -68,7 +105,8 @@ export const dummy: post[] = [
     content:
       '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
-    comment: 3,
-    like: 4,
+    commentCount: 3,
+    likeCount: 4,
+    comment: []
   },
 ];

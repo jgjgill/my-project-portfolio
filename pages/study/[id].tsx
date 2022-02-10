@@ -8,14 +8,14 @@ import { ParsedUrlQuery } from 'querystring';
 import Input from '../../components/input';
 import Comment from '../../components/study/comment';
 import PostBoard from '../../components/study/postBoard';
-import { dummy } from '../../libs/dummy';
+import { comment, dummyPost, post } from '../../libs/dummy';
 
 interface Iparams extends ParsedUrlQuery {
   id: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = dummy.map((item) => {
+  const paths = dummyPost.map((item) => {
     return {
       params: { id: item.id.toString() },
     };
@@ -30,7 +30,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as Iparams;
 
-  const post = dummy.find((data) => data.id.toString() === id);
+  const post = dummyPost.find((data: post) => data.id.toString() === id);
 
   return {
     props: {
@@ -57,12 +57,12 @@ const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
           </button>
         </form>
         <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {[1, 2, 3, 4].map((item) => (
+          {post.comment.map((item: comment) => (
             <Comment
-              id={item}
-              key={item}
-              name="user"
-              content="Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?"
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              content={item.content}
             />
           ))}
         </div>

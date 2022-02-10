@@ -3,14 +3,14 @@ import Icon from './icon';
 
 interface MemoProps {
   id: number;
-  text: 'Front' | 'Back' | 'Ux/Ui' | 'Design';
+  text: string;
   title: string;
   content: string;
-  comment: number;
-  like: number;
+  commentCount: number;
+  likeCount: number;
 }
 
-const Memo = ({ id, text, title, content, comment, like }: MemoProps) => {
+const Memo = ({ id, text, title, content, commentCount, likeCount }: MemoProps) => {
   return (
     <Link href={`/study/${id}`}>
       <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-300 max-h-80 cursor-pointer rounded-md shadow-md">
@@ -39,7 +39,7 @@ const Memo = ({ id, text, title, content, comment, like }: MemoProps) => {
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
               />
             </svg>
-            <span>{comment}</span>
+            <span>{commentCount}</span>
           </div>
           <div className="flex items-center space-x-1">
             <svg
@@ -56,7 +56,7 @@ const Memo = ({ id, text, title, content, comment, like }: MemoProps) => {
                 d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
               />
             </svg>
-            <span>{like}</span>
+            <span>{likeCount}</span>
           </div>
         </div>
       </a>

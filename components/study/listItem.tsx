@@ -3,7 +3,7 @@ import Icon from './icon';
 
 interface ListItemProps {
   id: number;
-  text: 'Front' | 'Back' | 'Ux/Ui' | 'Design';
+  text: string;
   title: string;
 }
 

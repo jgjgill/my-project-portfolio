@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import Icon from '../../components/study/icon';
 import ListItem from '../../components/study/listItem';
 import Memo from '../../components/study/memo';
-import { dummy, post } from '../../libs/dummy';
+import { dummyPost, post } from '../../libs/dummy';
+
+const iconList: ReadonlyArray<string> = ['Front', 'Ux/Ui', 'Design', 'Back'];
 
 const Study: NextPage = () => {
   const [dummyData, setDummyData] = useState<post[]>([]);
   const [filteredIcon, setfilteredIcon] = useState<string[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
-  const iconList = ['Front', 'Ux/Ui', 'Design', 'Back'];
-
   useEffect(() => {
-    setDummyData(dummy);
+    setDummyData(dummyPost);
   }, []);
 
   const onToggle = (item: string) => () => {
@@ -86,8 +86,8 @@ const Study: NextPage = () => {
               text={memoItem.text}
               title={memoItem.title}
               content={memoItem.content}
-              comment={memoItem.comment}
-              like={memoItem.like}
+              commentCount={memoItem.commentCount}
+              likeCount={memoItem.likeCount}
             />
           ))}
         </div>
