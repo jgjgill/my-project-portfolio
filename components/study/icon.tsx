@@ -1,7 +1,8 @@
+import { icon } from '../../libs/dummy';
 import { cls } from '../../libs/utils';
 
 interface IconProps {
-  text: String;
+  text: icon;
   fullName?: boolean;
   [key: string]: any;
 }

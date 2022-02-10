@@ -3,20 +3,20 @@ import { useEffect, useState } from 'react';
 import Icon from '../../components/study/icon';
 import ListItem from '../../components/study/listItem';
 import Memo from '../../components/study/memo';
-import { dummyPost, post } from '../../libs/dummy';
+import { dummyPost, icon, post } from '../../libs/dummy';
 
-const iconList: ReadonlyArray<string> = ['Front', 'Ux/Ui', 'Design', 'Back'];
+const iconList: icon[] = ['Front', 'Ux/Ui', 'Design', 'Back'];
 
 const Study: NextPage = () => {
   const [dummyData, setDummyData] = useState<post[]>([]);
-  const [filteredIcon, setfilteredIcon] = useState<string[]>([]);
+  const [filteredIcon, setfilteredIcon] = useState<icon[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
   useEffect(() => {
     setDummyData(dummyPost);
   }, []);
 
-  const onToggle = (item: string) => () => {
+  const onToggle = (item: icon) => () => {
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item));

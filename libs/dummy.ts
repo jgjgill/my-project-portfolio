@@ -1,6 +1,8 @@
+export type icon = 'Front' | 'Back' | 'Ux/Ui' | 'Design'
+
 export interface post {
   id: number;
-  text: 'Front' | 'Back' | 'Ux/Ui' | 'Design';
+  text: icon;
   title: string;
   content: string;
   toggle: boolean;
