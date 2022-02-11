@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="space-y-2 px-4 py-2 w-full flex flex-col">
+    <div className=" flex flex-col space-y-2 px-4 py-2 w-full">
       <Navbar />
       {children}
     </div>

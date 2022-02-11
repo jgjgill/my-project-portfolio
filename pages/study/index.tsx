@@ -52,7 +52,7 @@ const Study: NextPage = () => {
               ))
             )}
           </div>
-          <div className="flex justify-between items-center space-x-4">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {iconList.map((iconText, i) => (
               <Icon
                 key={i}
@@ -78,7 +78,7 @@ const Study: NextPage = () => {
       </div>
 
       <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {dummyData.map((memoItem) => (
             <Memo
               key={memoItem.id}
