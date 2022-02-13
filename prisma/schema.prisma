@@ -18,7 +18,7 @@ model User {
   avatar     String?
   comments   Comment[]
   createdAt  DateTime  @default(now())
-  upadatedAt DateTime  @updatedAt
+  updatedAt DateTime  @updatedAt
 }
 
 model Post {
@@ -28,8 +28,10 @@ model Post {
   content    String
   toggle     Boolean
   comments   Comment[]
+  commentCount Int
+  likeCount Int
   createdAt  DateTime  @default(now())
-  upadatedAt DateTime  @updatedAt
+  updatedAt DateTime  @updatedAt
 }
 
 model Comment {
@@ -39,6 +41,6 @@ model Comment {
   post       Post     @relation(fields: [postId], references: [id])
   postId     Int
   createdAt  DateTime @default(now())
-  upadatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
 }

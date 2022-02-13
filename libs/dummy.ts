@@ -6,9 +6,11 @@ export interface post {
   title: string;
   content: string;
   toggle: boolean;
+  comments: comment[];
   commentCount: number;
   likeCount: number;
-  comment: comment[];
+  createAt?: string;
+  upadatedAt?: string;
 }
 
 export interface comment {
@@ -28,7 +30,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 2,
     likeCount: 1,
-    comment: [
+    comments: [
       {
         id: 1,
         postId: 1,
@@ -53,7 +55,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 3,
     likeCount: 2,
-    comment: [
+    comments: [
       {
         id: 3,
         postId: 2,
@@ -77,7 +79,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 5,
     likeCount: 7,
-    comment: []
+    comments: []
   },
   {
     id: 4,
@@ -88,7 +90,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 3,
     likeCount: 2,
-    comment: []
+    comments: []
   },
   {
     id: 5,
@@ -98,7 +100,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 1,
     likeCount: 2,
-    comment: []
+    comments: []
   },
   {
     id: 6,
@@ -109,6 +111,6 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 3,
     likeCount: 4,
-    comment: []
+    comments: []
   },
 ];
