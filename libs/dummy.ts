@@ -1,4 +1,4 @@
-export type icon = 'Front' | 'Back' | 'Ux/Ui' | 'Design'
+export type icon = 'Front' | 'Back' | 'Ux/Ui' | 'Design';
 
 export interface post {
   id: number;
@@ -9,14 +9,13 @@ export interface post {
   comments: comment[];
   commentCount: number;
   likeCount: number;
-  createAt?: string;
-  upadatedAt?: string;
 }
 
 export interface comment {
   id: number;
+  user: string;
+  userId: number;
   postId: number;
-  name: string;
   content: string;
 }
 
@@ -34,17 +33,20 @@ export const dummyPost: post[] = [
       {
         id: 1,
         postId: 1,
-        name: 'user',
-        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+        user: 'user2',
+        userId: 2,
+        content:
+          'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?',
       },
       {
         id: 2,
         postId: 1,
-        name: 'user2',
-        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+        user: 'user3',
+        userId: 3,
+        content:
+          'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?',
       },
-
-    ]
+    ],
   },
   {
     id: 2,
@@ -59,16 +61,20 @@ export const dummyPost: post[] = [
       {
         id: 3,
         postId: 2,
-        name: 'user3',
-        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+        user: 'user4',
+        userId: 4,
+        content:
+          'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?',
       },
       {
         id: 4,
         postId: 2,
-        name: 'user4',
-        content: 'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?'
+        user: 'user5',
+        userId: 5,
+        content:
+          'Lorem ipsum dolor sit amea assumenda consequuntur veniam incidunt asperiores, sapiente ducimus id?',
       },
-    ]
+    ],
   },
   {
     id: 3,
@@ -79,7 +85,7 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 5,
     likeCount: 7,
-    comments: []
+    comments: [],
   },
   {
     id: 4,
@@ -90,17 +96,18 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 3,
     likeCount: 2,
-    comments: []
+    comments: [],
   },
   {
     id: 5,
     text: 'Design',
     title: '토스ㅣSLASH 21 - 토스팀을 위한 슬랙봇 설계',
-    content: '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
+    content:
+      '흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드흐름 파악이 어렵고, 도메인 맥락 표현이 안되어 동료에게 물어봐야 알 수 있는 코드',
     toggle: false,
     commentCount: 1,
     likeCount: 2,
-    comments: []
+    comments: [],
   },
   {
     id: 6,
@@ -111,6 +118,6 @@ export const dummyPost: post[] = [
     toggle: false,
     commentCount: 3,
     likeCount: 4,
-    comments: []
+    comments: [],
   },
 ];

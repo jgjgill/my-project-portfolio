@@ -1,21 +1,23 @@
-import {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-  NextPage,
-} from 'next';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Input from '../../components/input';
 import Comment from '../../components/study/comment';
 import PostBoard from '../../components/study/postBoard';
-import { comment, dummyPost, post } from '../../libs/dummy';
+import client from '../../libs/client';
+import { comment, post } from '../../libs/dummy';
 
 interface Iparams extends ParsedUrlQuery {
   id: string;
 }
 
+interface props {
+  post: post;
+  comments: comment[];
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = dummyPost.map((item) => {
+  const data = await client.post.findMany();
+  const paths = data.map((item) => {
     return {
       params: { id: item.id.toString() },
     };
@@ -27,19 +29,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<props> = async ({ params }) => {
   const { id } = params as Iparams;
 
-  const post = dummyPost.find((data: post) => data.id.toString() === id);
+  const postData = await client.post.findMany();
+  const posts: post[] = JSON.parse(JSON.stringify(postData));
+
+  const commentsData = await client.comment.findMany();
+  const filteredComments = commentsData.filter(
+    (item) => item.postId.toString() === id
+  );
+  const comments = JSON.parse(JSON.stringify(filteredComments));
+
+  const post = posts.filter((data) => data.id.toString() === id)[0];
 
   return {
     props: {
       post,
+      comments,
     },
   };
 };
 
-const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
+const Post = ({
+  post,
+  comments,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <PostBoard id={post.id} title={post.title} content={post.content} />
@@ -57,11 +72,11 @@ const Post: NextPage = ({ post }: InferGetStaticPropsType<GetStaticProps>) => {
           </button>
         </form>
         <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {post.comment.map((item: comment) => (
+          {comments.map((item) => (
             <Comment
               id={item.id}
               key={item.id}
-              name={item.name}
+              name={item.user}
               content={item.content}
             />
           ))}
