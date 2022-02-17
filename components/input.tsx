@@ -3,7 +3,7 @@ import { UseFormRegisterReturn, FieldError } from 'react-hook-form';
 interface InputProps {
   label: string;
   name: string;
-  type: 'text' | 'password';
+  type: 'email' | 'text';
   placeholder?: string;
   register: UseFormRegisterReturn;
   required: boolean;

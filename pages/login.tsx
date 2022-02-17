@@ -1,9 +1,10 @@
 import { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import Input from '@components/input';
+import axios from 'axios';
 
 interface LoginForm {
-  name?: string;
+  email?: string;
   password?: string;
 }
 
@@ -25,22 +26,13 @@ const Login: NextPage = () => {
         className="flex flex-col space-y-2 items-center"
       >
         <Input
-          label="Name"
-          name="name"
-          type="text"
-          placeholder="이름을 입력해주세요"
-          register={register('name', { required: true })}
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          register={register('email', { required: true })}
           required
         />
-        <Input
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          register={register('password', { required: true })}
-          required
-        />
-
         <button
           type="submit"
           className="bg-slate-300 w-full text-base font-medium text-gray-700  rounded-md shadow-md"
