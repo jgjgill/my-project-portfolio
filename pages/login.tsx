@@ -16,8 +16,8 @@ const Login: NextPage = () => {
   } = useForm<LoginForm>();
 
   const loginValid = (data: LoginForm) => {
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <div className="bg-slate-400 px-2 py-2 rounded-md shadow-md">
