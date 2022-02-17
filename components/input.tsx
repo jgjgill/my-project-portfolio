@@ -1,12 +1,24 @@
+import { UseFormRegisterReturn, FieldError } from 'react-hook-form';
+
 interface InputProps {
   label: string;
   name: string;
-  type: 'text' | 'password'
+  type: 'text' | 'password';
   placeholder?: string;
-  [key: string]: any;
+  register: UseFormRegisterReturn;
+  required: boolean;
+  errors?: FieldError;
 }
 
-const Input = ({ label, name, placeholder, type, ...rest }: InputProps) => {
+const Input = ({
+  label,
+  name,
+  type,
+  placeholder,
+  register,
+  required,
+  errors,
+}: InputProps) => {
   return (
     <div className="w-full flex flex-col">
       <label
@@ -19,9 +31,13 @@ const Input = ({ label, name, placeholder, type, ...rest }: InputProps) => {
         id={name}
         type={type}
         placeholder={placeholder}
+        {...register}
+        required={required}
         className="px-2 py-1 rounded-md shadow-md"
-        {...rest}
       />
+      {errors && (
+        <p className="text-center text-gray-700 text-base font-medium">{errors.message}</p>
+      )}
     </div>
   );
 };

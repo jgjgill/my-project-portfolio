@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { icon } from '../../libs/dummy';
+import { icon } from '@libs/client/dummy';
 import Icon from './icon';
 
 interface MemoProps {

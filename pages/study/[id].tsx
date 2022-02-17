@@ -1,10 +1,11 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import Input from '../../components/input';
-import Comment from '../../components/study/comment';
-import PostBoard from '../../components/study/postBoard';
-import client from '../../libs/client';
-import { comment, post } from '../../libs/dummy';
+import Input from '@components/input';
+import Comment from '@components/study/comment';
+import PostBoard from '@components/study/postBoard';
+import client from '@libs/server/client';
+import { comment, post } from '@libs/client/dummy';
+import { useForm } from 'react-hook-form';
 
 interface Iparams extends ParsedUrlQuery {
   id: string;
@@ -51,10 +52,24 @@ export const getStaticProps: GetStaticProps<props> = async ({ params }) => {
   };
 };
 
+interface CommentForm {
+  comment: string;
+}
+
 const Post = ({
   post,
   comments,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const {
+    register,
+    handleSubmit: commentSubmit,
+    formState: { errors },
+  } = useForm<CommentForm>();
+
+  const commentVaild = (data: CommentForm) => {
+    console.log(data);
+  };
+
   return (
     <>
       <PostBoard id={post.id} title={post.title} content={post.content} />
@@ -66,6 +81,10 @@ const Post = ({
             name="comment"
             type="text"
             placeholder="댓글을 입력해주세요"
+            register={register('comment', {
+              required: true,
+            })}
+            required
           />
           <button type="submit" className="border rounded-md shadow-md">
             Submit

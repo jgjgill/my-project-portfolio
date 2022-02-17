@@ -1,10 +1,10 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useEffect, useState } from 'react';
-import Icon from '../../components/study/icon';
-import ListItem from '../../components/study/listItem';
-import Memo from '../../components/study/memo';
-import { icon, post } from '../../libs/dummy';
-import client from '../../libs/client';
+import Icon from '@components/study/icon';
+import ListItem from '@components/study/listItem';
+import Memo from '@components/study/memo';
+import { icon, post } from '@libs/client/dummy';
+import client from '@libs/server/client';
 
 interface props {
   posts: post[];

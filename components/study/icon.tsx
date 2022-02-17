@@ -1,5 +1,5 @@
-import { icon } from '../../libs/dummy';
-import { cls } from '../../libs/utils';
+import { icon } from '@libs/client/dummy';
+import { cls } from '@libs/client/utils';
 
 interface IconProps {
   text: icon;
