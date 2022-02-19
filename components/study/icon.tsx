@@ -16,9 +16,9 @@ const Icon = ({ text, fullName, ...rest }: IconProps) => {
       <div
         className={cls(
           'text-xl font-semibold',
-          text === 'Front' ? 'text-teal-300' : '',
-          text === 'Back' ? 'text-sky-300' : '',
-          text === 'Ux/Ui' ? 'text-orange-300' : '',
+          text === 'FrontEnd' ? 'text-teal-300' : '',
+          text === 'BackEnd' ? 'text-sky-300' : '',
+          text === 'UX/UI' ? 'text-orange-300' : '',
           text === 'Design' ? 'text-indigo-300' : ''
         )}
       >

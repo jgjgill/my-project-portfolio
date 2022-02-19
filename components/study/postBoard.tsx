@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 interface PostBoardProps {
   id: number;
   title: string;
-  content: string;
+  content: any;
 }
 
 const PostBoard = ({ id, title, content }: PostBoardProps) => {
@@ -11,6 +11,32 @@ const PostBoard = ({ id, title, content }: PostBoardProps) => {
 
   const onClickBack = () => {
     router.back();
+  };
+
+  const contentType = (item: any, index: number) => {
+    switch (item.type) {
+      case 'paragraph':
+        return (
+          <p key={index} className="text-gray-500 font-medium text-base">
+            {item.text}
+            <br />
+          </p>
+        );
+      case 'heading_2':
+        return (
+          <h2 key={index} className="text-gray-700 font-semibold text-lg">
+            {item.text}
+            <br />
+          </h2>
+        );
+      case 'text':
+        return (
+          <p key={index} className="text-teal-300 font-semibold text-base">
+            {item.text}
+            <br />
+          </p>
+        )
+    }
   };
 
   return (
@@ -50,7 +76,7 @@ const PostBoard = ({ id, title, content }: PostBoardProps) => {
         </svg>
       </div>
       <div className="px-4 py-4 min-h-[20rem] bg-slate-300 rounded-md shadow-md">
-        <p className="text-sm font-medium text-gray-700">{content}</p>
+        {content.map((item: any, i: number) => contentType(item, i))}
       </div>
     </div>
   );

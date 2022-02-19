@@ -1,27 +1,53 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Input from '@components/input';
 import Comment from '@components/study/comment';
 import PostBoard from '@components/study/postBoard';
-import client from '@libs/server/client';
-import { comment, post } from '@libs/client/dummy';
 import { useForm } from 'react-hook-form';
-
-interface Iparams extends ParsedUrlQuery {
-  id: string;
-}
-
-interface props {
-  post: post;
-  comments: comment[];
-}
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import {
+  createNotion,
+  fetchNotionPage,
+  getBlockData,
+} from '@libs/client/notion';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await client.post.findMany();
-  const paths = data.map((item) => {
-    return {
-      params: { id: item.id.toString() },
-    };
+  const notion = createNotion();
+  const page = process.env.NOTION_PAGE_ID!;
+  const pageData = await fetchNotionPage(notion, page);
+
+  const theme: any = [];
+  pageData.results.map((themePage: any) => {
+    if (themePage.type === 'child_page') {
+      return theme.push({
+        id: themePage.id,
+        themeName: themePage.child_page.title,
+      });
+    }
+  });
+
+  const studyData: any = [];
+  await Promise.all(
+    theme.map(async (item: any) => {
+      const themeData = await fetchNotionPage(notion, item.id);
+      return studyData.push({
+        theme: item.themeName,
+        data: themeData,
+      });
+    })
+  );
+
+  const paths: any = [];
+
+  studyData.map(({ data }: any) => {
+    data.results.map((post: any) => {
+      if (post.type === 'child_page') {
+        return paths.push({
+          params: {
+            id: post.id,
+          },
+        });
+      }
+    });
   });
 
   return {
@@ -30,24 +56,29 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<props> = async ({ params }) => {
-  const { id } = params as Iparams;
+export const getStaticProps: GetStaticProps = async ({
+  params: { id },
+}: any) => {
+  const notion = createNotion();
 
-  const postData = await client.post.findMany();
-  const posts: post[] = JSON.parse(JSON.stringify(postData));
+  const page: any = await notion.pages.retrieve({
+    page_id: id,
+  });
 
-  const commentsData = await client.comment.findMany();
-  const filteredComments = commentsData.filter(
-    (item) => item.postId.toString() === id
-  );
-  const comments = JSON.parse(JSON.stringify(filteredComments));
+  const blocks: any = await fetchNotionPage(notion, id);
 
-  const post = posts.filter((data) => data.id.toString() === id)[0];
+  const title = page.properties.title.title
+    .map((title: any) => title.plain_text)
+    .join('');
+  const content = getBlockData(blocks);
 
   return {
     props: {
-      post,
-      comments,
+      post: {
+        title,
+        content,
+        // blocks
+      },
     },
   };
 };
@@ -56,10 +87,7 @@ interface CommentForm {
   comment: string;
 }
 
-const Post = ({
-  post,
-  comments,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {
     register,
     handleSubmit: commentSubmit,
@@ -72,7 +100,9 @@ const Post = ({
 
   return (
     <>
-      <PostBoard id={post.id} title={post.title} content={post.content} />
+      {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
+
+      <PostBoard id={post.title} title={post.title} content={post.content} />
 
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
         <form className="flex flex-col space-y-2">
@@ -91,14 +121,14 @@ const Post = ({
           </button>
         </form>
         <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {comments.map((item) => (
+          {/* {comments.map((item) => (
             <Comment
               id={item.id}
               key={item.id}
               name={item.user}
               content={item.content}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </>

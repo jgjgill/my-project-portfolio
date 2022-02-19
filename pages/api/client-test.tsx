@@ -17,6 +17,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     block_id: page,
   })
 
+  console.log(blockData)
+
   return res.json({ ok: 'good' });
 };
 
