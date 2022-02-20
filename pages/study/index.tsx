@@ -17,6 +17,7 @@ type ThemeContent = {
   theme: string;
   title: string;
   toggle: boolean;
+  createdTime: Date;
 };
 
 interface post {
@@ -29,6 +30,7 @@ interface post {
   comments: comment[];
   commentCount: number;
   likeCount: number;
+  createdTime: Date;
 }
 
 interface comment {
@@ -55,10 +57,15 @@ export const getStaticProps: GetStaticProps = async () => {
           theme: themeName,
           title: study.child_page.title,
           toggle: false,
+          createdTime: study.created_time,
         });
       }
     });
   });
+
+  themeContent.sort(
+    (a, b) => +new Date(b.createdTime) - +new Date(a.createdTime)
+  );
 
   return {
     props: { themeContent },
