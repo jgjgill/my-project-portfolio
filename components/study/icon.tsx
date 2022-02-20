@@ -15,7 +15,7 @@ const Icon = ({themeGroup, text, fullName, ...rest }: IconProps) => {
     >
       <div
         className={cls(
-          'text-xl font-semibold',
+          'text-xl text-center font-semibold',
           text === 'FrontEnd' ? 'text-teal-300' : '',
           text === 'BackEnd' ? 'text-sky-300' : '',
           text === 'UX/UI' ? 'text-orange-300' : '',

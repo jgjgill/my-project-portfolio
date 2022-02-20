@@ -1,4 +1,8 @@
 import IntroItem from './introItem';
+import Image from 'next/image'
+import react from '../../public/react.svg'
+import nextjs from '../../public/nextjs.svg'
+import tailwindcss from '../../public/tailwindcss.svg'
 
 interface IntoduceProps {}
 
@@ -33,9 +37,17 @@ const Introduce = ({}: IntoduceProps) => {
           </IntroItem>
         </div>
       </div>
-      <div className="h-40 bg-slate-400 rounded-md shadow-md" />
+      <div className="h-40 border-slate-400 border-2 px-4 py-2 space-y-4 rounded-md shadow-md">
+        <p className='text-2xl font-semibold text-gray-700'>My Tech</p>
+        <div>
+          <Image src={react} width={50} height={50} />
+          <Image src={tailwindcss} width={50} height={50} />
+          <Image src={nextjs} width={50} height={50} />
+        </div>
+      </div>
     </div>
   );
 };
+
 
 export default Introduce;
