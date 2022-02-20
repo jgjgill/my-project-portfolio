@@ -8,47 +8,40 @@ import {
   createNotion,
   fetchNotionPage,
   getBlockData,
+  getThemePage,
+  getThemePageNameGroup,
+  ThemePage,
 } from '@libs/client/notion';
+import {
+  GetPageResponse,
+  ListBlockChildrenResponse,
+  UpdateBlockResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const notion = createNotion();
-  const page = process.env.NOTION_PAGE_ID!;
-  const pageData = await fetchNotionPage(notion, page);
+  const pageId = process.env.NOTION_PAGE_ID!;
+  const mainPage = await fetchNotionPage(notion, pageId);
+  const themeNameGroup = getThemePageNameGroup(mainPage);
+  const themePageGroup = await getThemePage(notion, themeNameGroup);
 
-  const theme: any = [];
-  pageData.results.map((themePage: any) => {
-    if (themePage.type === 'child_page') {
-      return theme.push({
-        id: themePage.id,
-        themeName: themePage.child_page.title,
+  const getStudyPagePaths = (themePageGroup: ThemePage[]) => {
+    const paths: any = []
+    themePageGroup.map(({ themePageBlocks }) => {
+      themePageBlocks.results.map((themePageBlock: UpdateBlockResponse | any) => {
+        if (themePageBlock.type === 'child_page') {
+          return paths.push({
+            params: {
+              id: themePageBlock.id,
+            },
+          });
+        }
       });
-    }
-  });
-
-  const studyData: any = [];
-  await Promise.all(
-    theme.map(async (item: any) => {
-      const themeData = await fetchNotionPage(notion, item.id);
-      return studyData.push({
-        theme: item.themeName,
-        data: themeData,
-      });
-    })
-  );
-
-  const paths: any = [];
-
-  studyData.map(({ data }: any) => {
-    data.results.map((post: any) => {
-      if (post.type === 'child_page') {
-        return paths.push({
-          params: {
-            id: post.id,
-          },
-        });
-      }
     });
-  });
+    
+    return paths; 
+  }
+  const paths = getStudyPagePaths(themePageGroup)
 
   return {
     paths,
@@ -61,22 +54,22 @@ export const getStaticProps: GetStaticProps = async ({
 }: any) => {
   const notion = createNotion();
 
-  const page: any = await notion.pages.retrieve({
+  const studyPage: GetPageResponse | any = await notion.pages.retrieve({
     page_id: id,
   });
 
-  const blocks: any = await fetchNotionPage(notion, id);
+  const blocks: ListBlockChildrenResponse = await fetchNotionPage(notion, id);
 
-  const title = page.properties.title.title
+  const studyPageTitle = studyPage.properties.title.title
     .map((title: any) => title.plain_text)
     .join('');
-  const content = getBlockData(blocks);
+  const studyPageContent = getBlockData(blocks);
 
   return {
     props: {
       post: {
-        title,
-        content,
+        title: studyPageTitle,
+        content: studyPageContent,
         // blocks
       },
     },

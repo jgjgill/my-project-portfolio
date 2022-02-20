@@ -2,45 +2,58 @@ import { useEffect, useState } from 'react';
 import Icon from '@components/study/icon';
 import ListItem from '@components/study/listItem';
 import Memo from '@components/study/memo';
-import { icon, post } from '@libs/client/dummy';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import { createNotion, fetchNotionPage } from '@libs/client/notion';
+import {
+  createNotion,
+  fetchNotionPage,
+  getThemePage,
+  getThemePageNameGroup,
+  ThemePage,
+} from '@libs/client/notion';
+import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+
+type ThemeContent = {
+  id: string;
+  theme: string;
+  title: string;
+  toggle: boolean;
+};
+
+interface post {
+  id: number;
+  text: string;
+  title: string;
+  theme: string;
+  content: string;
+  toggle: boolean;
+  comments: comment[];
+  commentCount: number;
+  likeCount: number;
+}
+
+interface comment {
+  id: number;
+  user: string;
+  userId: number;
+  postId: number;
+  content: string;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const notion = createNotion();
-  const page = process.env.NOTION_PAGE_ID!;
-  const pageData = await fetchNotionPage(notion, page);
+  const pageId = process.env.NOTION_PAGE_ID!;
+  const mainPage = await fetchNotionPage(notion, pageId);
+  const themeNameGroup = getThemePageNameGroup(mainPage);
+  const themePageGroup = await getThemePage(notion, themeNameGroup);
 
-  const theme: any = [];
-  pageData.results.map((themePage: any) => {
-    if (themePage.type === 'child_page') {
-      return theme.push({
-        id: themePage.id,
-        themeName: themePage.child_page.title,
-      });
-    }
-  });
-
-  const studyData: any = [];
-  await Promise.all(
-    theme.map(async (item: any) => {
-      const themeData = await fetchNotionPage(notion, item.id);
-      return studyData.push({
-        theme: item.themeName,
-        data: themeData,
-      });
-    })
-  );
-
-
-  const studyContent: any = [];
-  studyData.map(({ data, theme }: any) => {
-    data.results.map((study: any) => {
+  const themeContent: ThemeContent[] = [];
+  themePageGroup.map(({ themePageBlocks, themeName }: ThemePage) => {
+    themePageBlocks.results.map((study: UpdateBlockResponse | any) => {
       if (study.type === 'child_page') {
-        return studyContent.push({
+        return themeContent.push({
           id: study.id,
-          theme,
-          studyTitle: study.child_page.title,
+          theme: themeName,
+          title: study.child_page.title,
           toggle: false,
         });
       }
@@ -48,25 +61,30 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   return {
-    props: { studyContent },
+    props: { themeContent },
   };
 };
 
 const Study: NextPage = ({
-  studyContent,
+  themeContent,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [postData, setPostData] = useState<any[]>(studyContent);
-  const [filteredIcon, setfilteredIcon] = useState<icon[]>([]);
+  const [postData, setPostData] = useState<post[]>(themeContent);
+  const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
-  const themeList: string[] = [];
-  studyContent.map((data: any) => {
-    if (!themeList.includes(data.theme)) {
-      themeList.push(data.theme);
-    }
-  });
+  const getThemeFilterTextGroup = (themeContent: post[]) => {
+    const themeTextGroup: string[] = [];
+    themeContent.map((data: post) => {
+      if (!themeTextGroup.includes(data.theme)) {
+        themeTextGroup.push(data.theme);
+      }
+    });
 
-  const onToggle = (item: icon) => () => {
+    return themeTextGroup;
+  };
+  const themeTextGroup = getThemeFilterTextGroup(themeContent);
+
+  const onToggle = (item: string) => () => {
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item));
@@ -103,24 +121,19 @@ const Study: NextPage = ({
             )}
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {themeList.map((theme: any) => (
-              <Icon
-                key={theme}
-                text={theme}
-                fullName
-                onClick={onToggle(theme)}
-              />
+            {themeTextGroup.map((theme, i) => (
+              <Icon key={i} text={theme} fullName onClick={onToggle(theme)} />
             ))}
           </div>
         </div>
         <div className="bg-slate-500 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
           <div className="space-y-3">
-            {filteredList.map((filteredItem: any) => (
+            {filteredList.map((filteredItem: post) => (
               <ListItem
                 id={filteredItem.id}
                 key={filteredItem.id}
                 text={filteredItem.theme}
-                title={filteredItem.studyTitle}
+                title={filteredItem.title}
               />
             ))}
           </div>
@@ -129,13 +142,13 @@ const Study: NextPage = ({
 
       <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {studyContent?.map((post: any) => (
+          {themeContent?.map((post: post) => (
             <Memo
               key={post.id}
               id={post.id}
               text={post.theme}
-              title={post.studyTitle}
-              content={post.studyTitle}
+              title={post.theme}
+              content={post.title}
               commentCount={1}
               likeCount={1}
             />
