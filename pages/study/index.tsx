@@ -97,33 +97,33 @@ const Study: NextPage = ({
       : setfilteredIcon(filteredIcon.concat(item));
 
     setPostData(
-      postData.map((data) =>
-        data.theme === item
+      postData.map((post) =>
+        post.theme === item
           ? {
-              ...data,
-              toggle: !data.toggle,
+              ...post,
+              toggle: !post.toggle,
             }
-          : data
+          : post
       )
     );
   };
 
   useEffect(() => {
-    setFilteredList(postData.filter((data) => data.toggle === true));
+    setFilteredList(postData.filter((post) => post.toggle === true));
   }, [postData]);
 
   return (
     <>
       <div className="flex flex-col px-2 py-2 space-y-8 bg-slate-300 rounded-md shadow-md">
         <div className="flex justify-between px-4 space-x-2">
-          <div className="flex items-center space-x-2 bg-slate-500 px-2 py-2 rounded-md shadow-md">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 items-center gap-2 bg-slate-500 px-2 py-2 rounded-md shadow-md">
             {filteredIcon.length === 0 ? (
-              <span className="text-xl font-bold text-gray-400">
+              <span className="text-xl font-bold text-center text-gray-400">
                 Study Theme
               </span>
             ) : (
-              filteredIcon.map((iconText, i) => (
-                <Icon key={i} text={iconText} />
+              filteredIcon.map((theme, i) => (
+                <Icon key={i} text={theme} onClick={onToggle(theme)} />
               ))
             )}
           </div>
