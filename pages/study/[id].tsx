@@ -26,22 +26,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const themePageGroup = await getThemePage(notion, themeNameGroup);
 
   const getStudyPagePaths = (themePageGroup: ThemePage[]) => {
-    const paths: any = []
+    const paths: any = [];
     themePageGroup.map(({ themePageBlocks }) => {
-      themePageBlocks.results.map((themePageBlock: UpdateBlockResponse | any) => {
-        if (themePageBlock.type === 'child_page') {
-          return paths.push({
-            params: {
-              id: themePageBlock.id,
-            },
-          });
+      themePageBlocks.results.map(
+        (themePageBlock: UpdateBlockResponse | any) => {
+          if (themePageBlock.type === 'child_page') {
+            return paths.push({
+              params: {
+                id: themePageBlock.id,
+              },
+            });
+          }
         }
-      });
+      );
     });
-    
-    return paths; 
-  }
-  const paths = getStudyPagePaths(themePageGroup)
+
+    return paths;
+  };
+  const paths = getStudyPagePaths(themePageGroup);
 
   return {
     paths,

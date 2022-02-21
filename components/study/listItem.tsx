@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { icon } from '@libs/client/dummy';
 import Icon from './icon';
 
 interface ListItemProps {
   id: number;
-  text: icon;
+  text: string;
   title: string;
 }
 

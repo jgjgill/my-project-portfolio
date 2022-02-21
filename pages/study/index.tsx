@@ -11,13 +11,15 @@ import {
   ThemePage,
 } from '@libs/client/notion';
 import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+import useSWR from 'swr';
+import client from '@libs/server/client';
 
 type ThemeContent = {
   id: string;
   theme: string;
   title: string;
   toggle: boolean;
-  createdTime: Date;
+  createdAt: Date;
 };
 
 interface post {
@@ -30,7 +32,7 @@ interface post {
   comments: comment[];
   commentCount: number;
   likeCount: number;
-  createdTime: Date;
+  createdAt: Date;
 }
 
 interface comment {
@@ -57,27 +59,41 @@ export const getStaticProps: GetStaticProps = async () => {
           theme: themeName,
           title: study.child_page.title,
           toggle: false,
-          createdTime: study.created_time,
+          createdAt: study.created_time,
         });
       }
     });
   });
 
-  themeContent.sort(
-    (a, b) => +new Date(b.createdTime) - +new Date(a.createdTime)
+  const postSortedByDate = themeContent.sort(
+    (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)
+  );
+
+  postSortedByDate.map(
+    async (post) =>
+      await client.post.upsert({
+        where: { id: post.id },
+        update: {},
+        create: post,
+      })
   );
 
   return {
-    props: { themeContent },
+    props: { postSortedByDate },
   };
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Study: NextPage = ({
-  themeContent,
+  postSortedByDate,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [postData, setPostData] = useState<post[]>(themeContent);
+  const [postData, setPostData] = useState<post[]>(postSortedByDate);
   const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
+
+  // const { data, error } = useSWR('/', fetcher);
+  // console.log(themeContent)
 
   const getThemeFilterTextGroup = (themeContent: post[]) => {
     const themeTextGroup: string[] = [];
@@ -89,7 +105,7 @@ const Study: NextPage = ({
 
     return themeTextGroup;
   };
-  const themeTextGroup = getThemeFilterTextGroup(themeContent);
+  const themeTextGroup = getThemeFilterTextGroup(postSortedByDate);
 
   const onToggle = (item: string) => () => {
     filteredIcon.includes(item)
@@ -149,7 +165,7 @@ const Study: NextPage = ({
 
       <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {themeContent?.map((post: post) => (
+          {postSortedByDate?.map((post: post, i: number) => (
             <Memo
               key={post.id}
               id={post.id}
