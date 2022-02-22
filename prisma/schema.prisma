@@ -22,14 +22,15 @@ model User {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
-  pageId    String    @unique
-  theme     String
-  title     String
-  toggle    Boolean
-  comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id           Int       @id @default(autoincrement())
+  pageId       String    @unique
+  theme        String
+  title        String
+  toggle       Boolean
+  comments     Comment[]
+  commentCount Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Comment {
@@ -37,8 +38,9 @@ model Comment {
   user      User     @relation(fields: [userId, userName], references: [id, name])
   userId    Int
   userName  String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId, pageId], references: [id, pageId])
   postId    Int
+  pageId    String
   content   String
   createdAt DateTime
   updatedAt DateTime @updatedAt

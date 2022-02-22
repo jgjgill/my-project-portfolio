@@ -19,6 +19,7 @@ type ThemeContent = {
   theme: string;
   title: string;
   toggle: boolean;
+  commentCount: number;
   createdAt: Date;
 };
 
@@ -28,20 +29,10 @@ interface post {
   text: string;
   title: string;
   theme: string;
-  content: string;
   toggle: boolean;
-  comments: comment[];
-  commentCount: number;
   likeCount: number;
+  commentCount: number;
   createdAt: Date;
-}
-
-interface comment {
-  id: number;
-  user: string;
-  userId: number;
-  postId: number;
-  content: string;
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -59,6 +50,7 @@ export const getStaticProps: GetStaticProps = async () => {
           pageId: study.id,
           theme: themeName,
           title: study.child_page.title,
+          commentCount: 0,
           toggle: false,
           createdAt: study.created_time,
         });
@@ -69,16 +61,20 @@ export const getStaticProps: GetStaticProps = async () => {
   const upsertPosts = async () => {
     await Promise.all(
       themeContent.map(async (post) => {
+        const commentCount = await client.comment.count({
+          where: { pageId: post.pageId },
+        });
+
         await client.post.upsert({
           where: { pageId: post.pageId },
-          update: { title: post.title, theme: post.theme },
+          update: { title: post.title, theme: post.theme, commentCount },
           create: post,
         });
       })
     );
   };
-  await upsertPosts()
-  
+  await upsertPosts();
+
   const posts = await client.post.findMany({
     orderBy: [
       {
@@ -178,14 +174,14 @@ const Study: NextPage = ({
 
       <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {posts?.map((post: post, i: number) => (
+          {posts?.map((post: post) => (
             <Memo
               key={post.id}
               id={post.id}
               text={post.theme}
               title={post.theme}
               content={post.title}
-              commentCount={1}
+              commentCount={post.commentCount}
               likeCount={1}
             />
           ))}
