@@ -1,4 +1,3 @@
-import { ParsedUrlQuery } from 'querystring';
 import Input from '@components/input';
 import Comment from '@components/study/comment';
 import PostBoard from '@components/study/postBoard';
@@ -8,51 +7,24 @@ import {
   createNotion,
   fetchNotionPage,
   getBlockData,
-  getThemePage,
-  getThemePageNameGroup,
-  ThemePage,
 } from '@libs/client/notion';
 import {
   GetPageResponse,
   ListBlockChildrenResponse,
-  UpdateBlockResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const notion = createNotion();
-  const pageId = process.env.NOTION_PAGE_ID!;
-  const mainPage = await fetchNotionPage(notion, pageId);
-  const themeNameGroup = getThemePageNameGroup(mainPage);
-  const themePageGroup = await getThemePage(notion, themeNameGroup);
   const postsInfo = await client.post.findMany();
 
-  const getStudyPagePaths = (themePageGroup: ThemePage[]) => {
-    const paths: any = [];
-    postsInfo.map((post) => {
-      return paths.push({
-        params: {
-          id: post.id.toString(),
-        },
-      });
+  const paths: any = [];
+  postsInfo.map((post) => {
+    return paths.push({
+      params: {
+        id: post.id.toString(),
+      },
     });
-    // themePageGroup.map(({ themePageBlocks }) => {
-    //   themePageBlocks.results.map(
-    //     (themePageBlock: UpdateBlockResponse | any) => {
-    //       if (themePageBlock.type === 'child_page') {
-    //         return paths.push({
-    //           params: {
-    //             id: themePageBlock.id,
-    //           },
-    //         });
-    //       }
-    //     }
-    //   );
-    // });
-
-    return paths;
-  };
-  const paths = getStudyPagePaths(themePageGroup);
+  });
 
   return {
     paths,
@@ -64,19 +36,24 @@ export const getStaticProps: GetStaticProps = async ({
   params: { id },
 }: any) => {
   const notion = createNotion();
-
-  const pageInfo = await client.post.findUnique({
+  const postContent = await client.post.findUnique({
     where: { id: parseInt(id) },
   });
+  const postComments = await client.comment.findMany({
+    where: {postId: parseInt(id)}
+  })
+
+  const stringPostComments = JSON.stringify(postComments)
 
   const studyPage: GetPageResponse | any = await notion.pages.retrieve({
-    page_id: pageInfo?.pageId!,
+    page_id: postContent?.pageId!,
   });
 
   const blocks: ListBlockChildrenResponse = await fetchNotionPage(
     notion,
-    pageInfo?.pageId!
+    postContent?.pageId!
   );
+
 
   const studyPageTitle = studyPage.properties.title.title
     .map((title: any) => title.plain_text)
@@ -88,6 +65,7 @@ export const getStaticProps: GetStaticProps = async ({
       post: {
         title: studyPageTitle,
         content: studyPageContent,
+        comment: stringPostComments,
         // blocks
       },
     },
@@ -99,6 +77,7 @@ interface CommentForm {
 }
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const comments = JSON.parse(post.comment)
   const {
     register,
     handleSubmit: commentSubmit,
@@ -108,6 +87,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const commentVaild = (data: CommentForm) => {
     console.log(data);
   };
+  console.log(comments)
 
   return (
     <>
@@ -132,14 +112,14 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </button>
         </form>
         <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {/* {comments.map((item) => (
+          {comments.map((item: any) => (
             <Comment
               id={item.id}
               key={item.id}
-              name={item.user}
+              name={item.userName}
               content={item.content}
             />
-          ))} */}
+          ))}
         </div>
       </div>
     </>
