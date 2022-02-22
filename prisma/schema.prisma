@@ -22,7 +22,8 @@ model User {
 }
 
 model Post {
-  id        String   @unique
+  id        Int      @id @default(autoincrement())
+  pageId    String   @unique
   theme     String
   title     String
   toggle    Boolean

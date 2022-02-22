@@ -63,7 +63,7 @@ const Introduce = ({}: IntoduceProps) => {
             <div className="space-y-2">
               <span className="font-bold text-base text-gray-700">소개</span>
               <p className="text-sm font-semibold text-gray-400">
-                저는 블라블라 개발자를 꿈꾸고 있습니다.
+                배움을 즐기는 개발자
               </p>
             </div>
           </div>

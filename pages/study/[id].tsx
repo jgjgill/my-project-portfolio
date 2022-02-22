@@ -17,6 +17,7 @@ import {
   ListBlockChildrenResponse,
   UpdateBlockResponse,
 } from '@notionhq/client/build/src/api-endpoints';
+import client from '@libs/server/client';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const notion = createNotion();
@@ -24,22 +25,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const mainPage = await fetchNotionPage(notion, pageId);
   const themeNameGroup = getThemePageNameGroup(mainPage);
   const themePageGroup = await getThemePage(notion, themeNameGroup);
+  const postsInfo = await client.post.findMany();
 
   const getStudyPagePaths = (themePageGroup: ThemePage[]) => {
     const paths: any = [];
-    themePageGroup.map(({ themePageBlocks }) => {
-      themePageBlocks.results.map(
-        (themePageBlock: UpdateBlockResponse | any) => {
-          if (themePageBlock.type === 'child_page') {
-            return paths.push({
-              params: {
-                id: themePageBlock.id,
-              },
-            });
-          }
-        }
-      );
+    postsInfo.map((post) => {
+      return paths.push({
+        params: {
+          id: post.id.toString(),
+        },
+      });
     });
+    // themePageGroup.map(({ themePageBlocks }) => {
+    //   themePageBlocks.results.map(
+    //     (themePageBlock: UpdateBlockResponse | any) => {
+    //       if (themePageBlock.type === 'child_page') {
+    //         return paths.push({
+    //           params: {
+    //             id: themePageBlock.id,
+    //           },
+    //         });
+    //       }
+    //     }
+    //   );
+    // });
 
     return paths;
   };
@@ -56,11 +65,18 @@ export const getStaticProps: GetStaticProps = async ({
 }: any) => {
   const notion = createNotion();
 
-  const studyPage: GetPageResponse | any = await notion.pages.retrieve({
-    page_id: id,
+  const pageInfo = await client.post.findUnique({
+    where: { id: parseInt(id) },
   });
 
-  const blocks: ListBlockChildrenResponse = await fetchNotionPage(notion, id);
+  const studyPage: GetPageResponse | any = await notion.pages.retrieve({
+    page_id: pageInfo?.pageId!,
+  });
+
+  const blocks: ListBlockChildrenResponse = await fetchNotionPage(
+    notion,
+    pageInfo?.pageId!
+  );
 
   const studyPageTitle = studyPage.properties.title.title
     .map((title: any) => title.plain_text)
