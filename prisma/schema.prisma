@@ -16,6 +16,7 @@ model User {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   avatar    String?
+  likes     Like[]
   comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -27,10 +28,23 @@ model Post {
   theme        String
   title        String
   toggle       Boolean
+  likes        Like[]
   comments     Comment[]
+  likeCount    Int
   commentCount Int
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [likeUserId], references: [id])
+  likeUserId Int
+  post       Post     @relation(fields: [likePostId, likePageId], references: [id, pageId])
+  likePostId Int
+  likePageId String
+  createdAt  DateTime
+  updatedAt  DateTime @updatedAt
 }
 
 model Comment {

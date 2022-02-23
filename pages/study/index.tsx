@@ -20,6 +20,7 @@ type ThemeContent = {
   title: string;
   toggle: boolean;
   commentCount: number;
+  likeCount: number;
   createdAt: Date;
 };
 
@@ -50,6 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
           pageId: study.id,
           theme: themeName,
           title: study.child_page.title,
+          likeCount: 0,
           commentCount: 0,
           toggle: false,
           createdAt: study.created_time,
@@ -64,16 +66,27 @@ export const getStaticProps: GetStaticProps = async () => {
         const commentCount = await client.comment.count({
           where: { pageId: post.pageId },
         });
+        const likeCount = await client.like.count({
+          where: { likePageId: post.pageId },
+        });
 
         await client.post.upsert({
           where: { pageId: post.pageId },
-          update: { title: post.title, theme: post.theme, commentCount },
+          update: {
+            title: post.title,
+            theme: post.theme,
+            commentCount,
+            likeCount,
+          },
           create: post,
         });
       })
     );
   };
   await upsertPosts();
+
+  // const like = await client.like.findMany()
+  // console.log(like)
 
   const posts = await client.post.findMany({
     orderBy: [
@@ -82,6 +95,7 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     ],
   });
+  // console.log(posts);
 
   const stringPosts = JSON.stringify(posts);
 
@@ -100,6 +114,7 @@ const Study: NextPage = ({
   const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
+  // console.log(posts)
   // const { data, error } = useSWR('/', fetcher);
 
   const getThemeFilterTextGroup = (themeContent: post[]) => {
@@ -182,7 +197,7 @@ const Study: NextPage = ({
               title={post.theme}
               content={post.title}
               commentCount={post.commentCount}
-              likeCount={1}
+              likeCount={post.likeCount}
             />
           ))}
         </div>

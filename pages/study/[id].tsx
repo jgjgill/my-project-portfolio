@@ -86,8 +86,6 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const commentVaild = (data: CommentForm) => {
     console.log(data);
   };
-  // console.log(post)
-  console.log(comments);
 
   return (
     <>
