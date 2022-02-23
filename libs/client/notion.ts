@@ -1,5 +1,8 @@
 import { Client as notionClient } from '@notionhq/client';
-import { ListBlockChildrenResponse, UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+import {
+  ListBlockChildrenResponse,
+  UpdateBlockResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 
 interface ThemeName {
   id: string;
@@ -38,7 +41,10 @@ export const getThemePageNameGroup = (mainPage: ListBlockChildrenResponse) => {
   return themeNameGroup;
 };
 
-export const getThemePage = async (notion: notionClient, themeNameGroup: ThemeName[]) => {
+export const getThemePage = async (
+  notion: notionClient,
+  themeNameGroup: ThemeName[]
+) => {
   const themePageGroup: ThemePage[] = [];
   await Promise.all(
     themeNameGroup.map(async (themePageName) => {
@@ -61,6 +67,7 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
         studyPageContent.push({
           type: 'paragraph',
           text: block.paragraph.text[0].plain_text,
+          annotations: block.paragraph.text[0].annotations
         });
       } else {
         studyPageContent.push({
@@ -69,16 +76,32 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
         });
       }
     }
+
     if (block.type === 'heading_2') {
       studyPageContent.push({
         type: 'heading_2',
         text: block.heading_2.text[0].plain_text,
       });
     }
+
+    if (block.type === 'heading_3') {
+      studyPageContent.push({
+        type: 'heading_3',
+        text: block.heading_3.text[0].plain_text,
+      });
+    }
+
     if (block.type === 'text') {
       studyPageContent.push({
         type: 'text',
         text: block.plain_text,
+      });
+    }
+
+    if (block.type === 'code') {
+      studyPageContent.push({
+        type: 'code',
+        text: block.code.text[0].plain_text,
       });
     }
   });

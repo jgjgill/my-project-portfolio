@@ -1,12 +1,12 @@
+import { cls } from '@libs/client/utils';
 import { useRouter } from 'next/router';
 
 interface PostBoardProps {
-  id: number;
   title: string;
   content: any;
 }
 
-const PostBoard = ({ id, title, content }: PostBoardProps) => {
+const PostBoard = ({ title, content }: PostBoardProps) => {
   const router = useRouter();
 
   const onClickBack = () => {
@@ -17,17 +17,30 @@ const PostBoard = ({ id, title, content }: PostBoardProps) => {
     switch (item.type) {
       case 'paragraph':
         return (
-          <p key={index} className="text-gray-500 font-medium text-base">
+          <p
+            key={index}
+            className={cls(
+              'font-medium text-base text-gray-500',
+              item.annotations?.bold && 'text-gray-900',
+              item.annotations?.code && 'text-red-400'
+            )}
+          >
             {item.text}
             <br />
           </p>
         );
       case 'heading_2':
         return (
-          <h2 key={index} className="text-gray-700 font-semibold text-lg">
+          <h2 key={index} className="text-gray-700 font-semibold text-xl">
+            {item.text}
+          </h2>
+        );
+      case 'heading_3':
+        return (
+          <h3 key={index} className="text-gray-600 font-semibold text-lg">
             {item.text}
             <br />
-          </h2>
+          </h3>
         );
       case 'text':
         return (
@@ -35,7 +48,16 @@ const PostBoard = ({ id, title, content }: PostBoardProps) => {
             {item.text}
             <br />
           </p>
-        )
+        );
+      case 'code':
+        return (
+          <p
+            key={index}
+            className="whitespace-pre-wrap inline-block p-4 border-2 rounded-md shadow-md"
+          >
+            {item.text}
+          </p>
+        );
     }
   };
 
@@ -57,7 +79,7 @@ const PostBoard = ({ id, title, content }: PostBoardProps) => {
             d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
           />
         </svg>
-        <p className="px-8 py-2 w-full text-center text-sm font-semibold text-gray-800 ">
+        <p className="px-8 py-2 w-full text-center text-xl font-semibold text-gray-800 ">
           {title}
         </p>
         <svg

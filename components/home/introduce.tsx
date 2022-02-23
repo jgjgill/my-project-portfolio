@@ -5,6 +5,7 @@ import nextjs from '../../public/nextjs.svg';
 import tailwindcss from '../../public/tailwindcss.svg';
 import typescript from '../../public/typescript.svg';
 import mui from '../../public/mui.svg';
+import prisma from '../../public/prisma.svg';
 import Link from 'next/link';
 
 interface IntoduceProps {}
@@ -18,7 +19,13 @@ const Introduce = ({}: IntoduceProps) => {
           <IntroItem text="이종길" />
           <IntroItem text="Intro1" />
           <IntroItem text="Intro2" />
-          <IntroItem text="Go High" />
+          <IntroItem>
+            <Link href="https://velog.io/@jgjgill">
+              <a target="_blank" rel="noopener noreferrer">
+                <span className="text-xl font-bold">velog</span>
+              </a>
+            </Link>
+          </IntroItem>
           <IntroItem>
             <Link href="https://www.instagram.com/jgjgill/" passHref>
               <a target="_blank" rel="noopener noreferrer">
@@ -58,7 +65,9 @@ const Introduce = ({}: IntoduceProps) => {
               <span className="font-bold text-base text-gray-700">
                 이메일 주소
               </span>
-              <p className="text-sm font-semibold text-gray-400">dbdltm22@naver.com</p>
+              <p className="text-sm font-semibold text-gray-400">
+                dbdltm22@naver.com
+              </p>
             </div>
             <div className="space-y-2">
               <span className="font-bold text-base text-gray-700">소개</span>
@@ -82,6 +91,9 @@ const Introduce = ({}: IntoduceProps) => {
             </div>
             <div>
               <Image src={mui} width={50} height={50} layout="fixed" />
+            </div>
+            <div>
+              <Image src={prisma} width={50} height={50} layout="fixed" />
             </div>
           </div>
         </div>

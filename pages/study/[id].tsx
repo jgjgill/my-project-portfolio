@@ -40,10 +40,10 @@ export const getStaticProps: GetStaticProps = async ({
     where: { id: parseInt(id) },
   });
   const postComments = await client.comment.findMany({
-    where: {postId: parseInt(id)}
-  })
+    where: { postId: parseInt(id) },
+  });
 
-  const stringPostComments = JSON.stringify(postComments)
+  const stringPostComments = JSON.stringify(postComments);
 
   const studyPage: GetPageResponse | any = await notion.pages.retrieve({
     page_id: postContent?.pageId!,
@@ -53,7 +53,6 @@ export const getStaticProps: GetStaticProps = async ({
     notion,
     postContent?.pageId!
   );
-
 
   const studyPageTitle = studyPage.properties.title.title
     .map((title: any) => title.plain_text)
@@ -77,7 +76,7 @@ interface CommentForm {
 }
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const comments = JSON.parse(post.comment)
+  const comments = JSON.parse(post.comment);
   const {
     register,
     handleSubmit: commentSubmit,
@@ -87,12 +86,14 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const commentVaild = (data: CommentForm) => {
     console.log(data);
   };
+  // console.log(post)
+  console.log(comments);
 
   return (
     <>
       {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
 
-      <PostBoard id={post.title} title={post.title} content={post.content} />
+      <PostBoard title={post.title} content={post.content} />
 
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
         <form className="flex flex-col space-y-2">
@@ -110,16 +111,18 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             Submit
           </button>
         </form>
-        <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {comments.map((item: any) => (
-            <Comment
-              id={item.id}
-              key={item.id}
-              name={item.userName}
-              content={item.content}
-            />
-          ))}
-        </div>
+        {comments.length != 0 && (
+          <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
+            {comments.map((item: any) => (
+              <Comment
+                id={item.id}
+                key={item.id}
+                name={item.userName}
+                content={item.content}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
