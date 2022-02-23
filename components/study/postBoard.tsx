@@ -1,5 +1,6 @@
 import { cls } from '@libs/client/utils';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 interface PostBoardProps {
   title: string;
@@ -7,10 +8,15 @@ interface PostBoardProps {
 }
 
 const PostBoard = ({ title, content }: PostBoardProps) => {
+  const [likeColor, setLikeColor] = useState(false);
   const router = useRouter();
 
   const onClickBack = () => {
     router.back();
+  };
+
+  const onToggleLike = () => {
+    setLikeColor((prev) => !prev);
   };
 
   const contentType = (item: any, index: number) => {
@@ -83,7 +89,11 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
           {title}
         </p>
         <svg
-          className="absolute top-0 -right-1 w-8 h-8"
+          onClick={onToggleLike}
+          className={cls(
+            'absolute  top-0 -right-1 cursor-pointer w-8 h-8',
+            likeColor ? 'fill-gray-700 stroke-gray-700' : ''
+          )}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
