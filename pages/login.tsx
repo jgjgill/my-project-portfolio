@@ -13,10 +13,18 @@ const Login: NextPage = () => {
     register,
     handleSubmit: loginSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginForm>();
 
-  const loginValid = (data: LoginForm) => {
-    console.log(data);
+  const loginValid = async (data: LoginForm) => {
+    fetch('/api/users/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    reset({ email: '' });
   };
 
   return (

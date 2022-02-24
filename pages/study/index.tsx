@@ -85,9 +85,6 @@ export const getStaticProps: GetStaticProps = async () => {
   };
   await upsertPosts();
 
-  // const like = await client.like.findMany()
-  // console.log(like)
-
   const posts = await client.post.findMany({
     orderBy: [
       {
@@ -95,7 +92,6 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     ],
   });
-  // console.log(posts);
 
   const stringPosts = JSON.stringify(posts);
 
@@ -129,7 +125,7 @@ const Study: NextPage = ({
   };
   const themeTextGroup = getThemeFilterTextGroup(posts);
 
-  const onToggle = (item: string) => () => {
+  const onToggleList = (item: string) => () => {
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item));
@@ -162,14 +158,14 @@ const Study: NextPage = ({
             ) : (
               <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-2 items-center">
                 {filteredIcon.map((theme, i) => (
-                  <Icon key={i} text={theme} onClick={onToggle(theme)} />
+                  <Icon key={i} text={theme} onClick={onToggleList(theme)} />
                 ))}
               </div>
             )}
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {themeTextGroup.map((theme, i) => (
-              <Icon key={i} text={theme} fullName onClick={onToggle(theme)} />
+              <Icon key={i} text={theme} fullName onClick={onToggleList(theme)} />
             ))}
           </div>
         </div>

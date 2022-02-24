@@ -14,7 +14,8 @@ datasource db {
 
 model User {
   id        Int       @id @default(autoincrement())
-  name      String    @unique
+  email     String    @unique
+  name      String
   avatar    String?
   likes     Like[]
   comments  Comment[]
@@ -45,6 +46,7 @@ model Like {
   likePageId String
   createdAt  DateTime
   updatedAt  DateTime @updatedAt
+
 }
 
 model Comment {
