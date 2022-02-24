@@ -4,13 +4,20 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email } = req.body;
-  const user =
-    (await client.user.findUnique({
-      where: { email },
-      include: { comments: true, likes: true },
-    })) || (await client.user.create({ data: { name: 'anoy', email } }));
 
-  console.log(user);
+  const token = await client.token.create({
+    data: {
+      payload: '333333',
+      user: {
+        connectOrCreate: {
+          where: { email },
+          create: { name: 'Anonymouse', email },
+        },
+      },
+    },
+  });
+  console.log(token);
+
   return res.status(200).end();
 };
 
