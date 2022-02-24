@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import Input from '@components/input';
 import axios from 'axios';
+import useMutation from '@libs/client/useMutation';
 
 interface LoginForm {
   email?: string;
@@ -9,6 +10,7 @@ interface LoginForm {
 }
 
 const Login: NextPage = () => {
+  const [enter, { loading, data, error }] = useMutation('/api/users/enter');
   const {
     register,
     handleSubmit: loginSubmit,
@@ -16,14 +18,8 @@ const Login: NextPage = () => {
     reset,
   } = useForm<LoginForm>();
 
-  const loginValid = async (data: LoginForm) => {
-    fetch('/api/users/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+  const loginValid = (data: LoginForm) => {
+    enter(data);
     reset({ email: '' });
   };
 
@@ -45,7 +41,7 @@ const Login: NextPage = () => {
           type="submit"
           className="bg-slate-300 w-full text-base font-medium text-gray-700  rounded-md shadow-md"
         >
-          Login
+          {loading ? 'Loading...' : 'Login'}
         </button>
       </form>
     </div>
