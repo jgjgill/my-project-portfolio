@@ -6,8 +6,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(email);
 
   const user =
-    (await client.user.findUnique({ where: { email } })) ||
-    (await client.user.create({ data: { name: 'anoy', email } }));
+    (await client.user.findUnique({
+      where: { email },
+      include: { comments: true, likes: true },
+    })) || (await client.user.create({ data: { name: 'anoy', email } }));
 
   console.log(user);
   return res.status(200).end();

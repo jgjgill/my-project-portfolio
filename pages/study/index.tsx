@@ -19,8 +19,6 @@ type ThemeContent = {
   theme: string;
   title: string;
   toggle: boolean;
-  commentCount: number;
-  likeCount: number;
   createdAt: Date;
 };
 
@@ -31,9 +29,9 @@ interface post {
   title: string;
   theme: string;
   toggle: boolean;
-  likeCount: number;
-  commentCount: number;
   createdAt: Date;
+  comments: any;
+  likes: any;
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -51,8 +49,6 @@ export const getStaticProps: GetStaticProps = async () => {
           pageId: study.id,
           theme: themeName,
           title: study.child_page.title,
-          likeCount: 0,
-          commentCount: 0,
           toggle: false,
           createdAt: study.created_time,
         });
@@ -63,20 +59,11 @@ export const getStaticProps: GetStaticProps = async () => {
   const upsertPosts = async () => {
     await Promise.all(
       themeContent.map(async (post) => {
-        const commentCount = await client.comment.count({
-          where: { pageId: post.pageId },
-        });
-        const likeCount = await client.like.count({
-          where: { likePageId: post.pageId },
-        });
-
         await client.post.upsert({
           where: { pageId: post.pageId },
           update: {
             title: post.title,
             theme: post.theme,
-            commentCount,
-            likeCount,
           },
           create: post,
         });
@@ -91,6 +78,10 @@ export const getStaticProps: GetStaticProps = async () => {
         createdAt: 'desc',
       },
     ],
+    include: {
+      comments: true,
+      likes: true,
+    },
   });
 
   const stringPosts = JSON.stringify(posts);
@@ -110,7 +101,7 @@ const Study: NextPage = ({
   const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
-  // console.log(posts)
+  console.log(posts);
   // const { data, error } = useSWR('/', fetcher);
 
   const getThemeFilterTextGroup = (themeContent: post[]) => {
@@ -165,7 +156,12 @@ const Study: NextPage = ({
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {themeTextGroup.map((theme, i) => (
-              <Icon key={i} text={theme} fullName onClick={onToggleList(theme)} />
+              <Icon
+                key={i}
+                text={theme}
+                fullName
+                onClick={onToggleList(theme)}
+              />
             ))}
           </div>
         </div>
@@ -192,8 +188,8 @@ const Study: NextPage = ({
               text={post.theme}
               title={post.theme}
               content={post.title}
-              commentCount={post.commentCount}
-              likeCount={post.likeCount}
+              commentCount={post.comments.length}
+              likeCount={post.likes.length}
             />
           ))}
         </div>

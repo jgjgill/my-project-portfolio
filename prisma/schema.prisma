@@ -31,8 +31,6 @@ model Post {
   toggle       Boolean
   likes        Like[]
   comments     Comment[]
-  likeCount    Int
-  commentCount Int
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
