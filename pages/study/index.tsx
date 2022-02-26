@@ -11,7 +11,6 @@ import {
   ThemePage,
 } from '@libs/client/notion';
 import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
-import useSWR from 'swr';
 import client from '@libs/server/client';
 
 type ThemeContent = {
@@ -91,7 +90,6 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Study: NextPage = ({
   stringPosts,
@@ -101,8 +99,6 @@ const Study: NextPage = ({
   const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
   const [filteredList, setFilteredList] = useState<post[]>([]);
 
-  console.log(posts);
-  // const { data, error } = useSWR('/', fetcher);
 
   const getThemeFilterTextGroup = (themeContent: post[]) => {
     const themeTextGroup: string[] = [];

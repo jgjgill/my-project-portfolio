@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import Input from '@components/input';
-import axios from 'axios';
 import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -19,6 +18,7 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
+
   const [
     confirmEmail,
     { loading: emailLoading, data: emailData, error: emailError },
