@@ -40,7 +40,7 @@ model Like {
   id         Int      @id @default(autoincrement())
   user       User     @relation(fields: [likeUserId], references: [id])
   likeUserId Int
-  post       Post     @relation(fields: [likePostId, likePageId], references: [id, pageId])
+  post       Post     @relation(fields: [likePostId, likePageId], references: [id, pageId], onDelete: Cascade)
   likePostId Int
   likePageId String
   createdAt  DateTime
@@ -53,7 +53,7 @@ model Comment {
   user      User     @relation(fields: [userId, userName], references: [id, name])
   userId    Int
   userName  String
-  post      Post     @relation(fields: [postId, pageId], references: [id, pageId])
+  post      Post     @relation(fields: [postId, pageId], references: [id, pageId], onDelete: Cascade)
   postId    Int
   pageId    String
   content   String
@@ -64,7 +64,7 @@ model Comment {
 model Token {
   id        Int      @id @default(autoincrement())
   payload   String   @unique
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
