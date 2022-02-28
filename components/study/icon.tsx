@@ -1,13 +1,13 @@
 import { cls } from '@libs/client/utils';
+import { TextGroup } from 'pages/study';
 
 interface IconProps {
-  themeGroup?: string[];
-  text: string;
+  text: TextGroup;
   fullName?: boolean;
   [key: string]: any;
 }
 
-const Icon = ({themeGroup, text, fullName, ...rest }: IconProps) => {
+const Icon = ({text, fullName, ...rest }: IconProps) => {
   return (
     <div
       className="flex items-center justify-center cursor-pointer min-w-[2rem] px-2 rounded-md shadow-md bg-slate-400"

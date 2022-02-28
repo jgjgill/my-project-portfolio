@@ -22,6 +22,8 @@ type ThemeContent = {
   createdAt: Date;
 };
 
+export type TextGroup = Post['theme'];
+
 interface PostWithCount extends Post {
   _count: {
     comments: number;
@@ -93,25 +95,28 @@ export const getStaticProps: GetStaticProps = async () => {
 const Study: NextPage = ({
   stringPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const posts = JSON.parse(stringPosts);
+  const posts: PostWithCount[] = JSON.parse(stringPosts);
   const [postData, setPostData] = useState<PostWithCount[]>(posts);
-  const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
+  const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
   const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
 
   console.log(posts);
-  const getThemeFilterTextGroup = (themeContent: PostWithCount[]) => {
-    const themeTextGroup: string[] = [];
+
+  const getThemeFilteredTextGroup = (
+    themeContent: PostWithCount[]
+  ): TextGroup[] => {
+    const themeFilteredTextGroup: TextGroup[] = [];
     themeContent.map((data: PostWithCount) => {
-      if (!themeTextGroup.includes(data.theme)) {
-        themeTextGroup.push(data.theme);
+      if (!themeFilteredTextGroup.includes(data.theme)) {
+        themeFilteredTextGroup.push(data.theme);
       }
     });
 
-    return themeTextGroup;
+    return themeFilteredTextGroup;
   };
-  const themeTextGroup = getThemeFilterTextGroup(posts);
+  const themeFilteredTextGroup: TextGroup[] = getThemeFilteredTextGroup(posts);
 
-  const onToggleList = (item: string) => () => {
+  const onToggleList = (item: TextGroup) => () => {
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item));
@@ -150,7 +155,7 @@ const Study: NextPage = ({
             )}
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {themeTextGroup.map((theme, i) => (
+            {themeFilteredTextGroup.map((theme, i) => (
               <Icon
                 key={i}
                 text={theme}
@@ -162,7 +167,7 @@ const Study: NextPage = ({
         </div>
         <div className="bg-slate-500 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
           <div className="space-y-3">
-            {filteredList.map((filteredItem: PostWithCount) => (
+            {filteredList.map((filteredItem) => (
               <ListItem
                 key={filteredItem.id}
                 id={filteredItem.id}
