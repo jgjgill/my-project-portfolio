@@ -12,6 +12,7 @@ import {
 } from '@libs/client/notion';
 import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
+import { Post } from '@prisma/client';
 
 type ThemeContent = {
   pageId: string;
@@ -21,16 +22,11 @@ type ThemeContent = {
   createdAt: Date;
 };
 
-interface post {
-  id: number;
-  pageId: string;
-  text: string;
-  title: string;
-  theme: string;
-  toggle: boolean;
-  createdAt: Date;
-  comments: any;
-  likes: any;
+interface PostWithCount extends Post {
+  _count: {
+    comments: number;
+    likes: number;
+  };
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -78,8 +74,12 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     ],
     include: {
-      comments: true,
-      likes: true,
+      _count: {
+        select: {
+          comments: true,
+          likes: true,
+        },
+      },
     },
   });
 
@@ -90,19 +90,18 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-
 const Study: NextPage = ({
   stringPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const posts = JSON.parse(stringPosts);
-  const [postData, setPostData] = useState<post[]>(posts);
+  const [postData, setPostData] = useState<PostWithCount[]>(posts);
   const [filteredIcon, setfilteredIcon] = useState<any[]>([]);
-  const [filteredList, setFilteredList] = useState<post[]>([]);
+  const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
 
-
-  const getThemeFilterTextGroup = (themeContent: post[]) => {
+  console.log(posts);
+  const getThemeFilterTextGroup = (themeContent: PostWithCount[]) => {
     const themeTextGroup: string[] = [];
-    themeContent.map((data: post) => {
+    themeContent.map((data: PostWithCount) => {
       if (!themeTextGroup.includes(data.theme)) {
         themeTextGroup.push(data.theme);
       }
@@ -163,7 +162,7 @@ const Study: NextPage = ({
         </div>
         <div className="bg-slate-500 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
           <div className="space-y-3">
-            {filteredList.map((filteredItem: post) => (
+            {filteredList.map((filteredItem: PostWithCount) => (
               <ListItem
                 key={filteredItem.id}
                 id={filteredItem.id}
@@ -177,15 +176,15 @@ const Study: NextPage = ({
 
       <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {posts?.map((post: post) => (
+          {posts?.map((post: PostWithCount) => (
             <Memo
               key={post.id}
               id={post.id}
               text={post.theme}
               title={post.theme}
               content={post.title}
-              commentCount={post.comments.length}
-              likeCount={post.likes.length}
+              commentCount={post._count.comments}
+              likeCount={post._count.likes}
             />
           ))}
         </div>

@@ -43,7 +43,7 @@ model Like {
   post       Post     @relation(fields: [likePostId, likePageId], references: [id, pageId], onDelete: Cascade)
   likePostId Int
   likePageId String
-  createdAt  DateTime
+  createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
 }
@@ -57,7 +57,7 @@ model Comment {
   postId    Int
   pageId    String
   content   String
-  createdAt DateTime
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
