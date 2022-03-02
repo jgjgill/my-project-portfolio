@@ -1,6 +1,7 @@
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
 import { useRouter } from 'next/router';
+import { PostResponse } from 'pages/study/[id]';
 import useSWR from 'swr';
 
 interface PostBoardProps {
@@ -8,20 +9,13 @@ interface PostBoardProps {
   content: any;
 }
 
-interface PostDataResponse {
-  ok: boolean;
-  isLiked: boolean;
-}
-
 const PostBoard = ({ title, content }: PostBoardProps) => {
   const router = useRouter();
 
-  const { data, mutate } = useSWR<PostDataResponse>(
+  const { data, mutate } = useSWR<PostResponse>(
     `/api/posts/${router.query.id}`
   );
   const [toggleLike] = useMutation(`/api/posts/${router.query.id}/like`);
-
-  console.log(data);
 
   const onClickBack = () => {
     router.back();

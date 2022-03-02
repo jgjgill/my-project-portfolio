@@ -11,7 +11,6 @@ const handler = async (
     query: { id },
     session: { user },
   } = req;
-  console.log(id);
 
   const isLiked = Boolean(
     await client.like.findFirst({
@@ -24,15 +23,18 @@ const handler = async (
       },
     })
   );
-  console.log(isLiked);
 
-  // 갖고와야할 데이터 - 좋아요, 댓글  + 유저?
+  const comments = await client.comment.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return res.json({
     ok: true,
     isLiked,
+    comments,
   });
 };
 
-export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler })
-);
+export default withApiSession(withHandler({ methods: ['GET'], handler }));

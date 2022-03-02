@@ -22,7 +22,7 @@ type ThemeContent = {
   createdAt: Date;
 };
 
-export type TextGroup = Post['theme'];
+export type TextGroup = PostWithCount['theme'];
 
 interface PostWithCount extends Post {
   _count: {

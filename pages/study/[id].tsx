@@ -13,6 +13,11 @@ import {
   ListBlockChildrenResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
+import useSWR from 'swr';
+import useMutation from '@libs/client/useMutation';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { Comment as CommentType } from '@prisma/client';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
@@ -75,26 +80,50 @@ interface CommentForm {
   comment: string;
 }
 
+export interface PostResponse {
+  ok: boolean;
+  isLiked: boolean;
+  comments: CommentType[];
+}
+
+interface CommentResponse {
+  ok: boolean;
+  comment: CommentType;
+}
+
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const comments = JSON.parse(post.comment);
+  const router = useRouter();
   const {
     register,
+    reset,
     handleSubmit: commentSubmit,
     formState: { errors },
   } = useForm<CommentForm>();
+  const { data, mutate } = useSWR<PostResponse>(
+    `/api/posts/${router.query.id}`
+  );
+  const [comment, { loading, data: commentData, error }] =
+    useMutation<CommentResponse>(`/api/posts/${router.query.id}/comment`);
 
   const commentVaild = (data: CommentForm) => {
-    console.log(data);
+    loading || comment(data);
+    reset();
   };
+
+  useEffect(() => {
+    mutate();
+  }, [commentData]);
 
   return (
     <>
       {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
 
       <PostBoard title={post.title} content={post.content} />
-
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
-        <form className="flex flex-col space-y-2">
+        <form
+          className="flex flex-col space-y-2"
+          onSubmit={commentSubmit(commentVaild)}
+        >
           <Input
             label="Comment"
             name="comment"
@@ -109,18 +138,16 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             Submit
           </button>
         </form>
-        {comments.length != 0 && (
-          <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-            {comments.map((item: any) => (
-              <Comment
-                id={item.id}
-                key={item.id}
-                name={item.userName}
-                content={item.content}
-              />
-            ))}
-          </div>
-        )}
+        <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
+          {data?.comments?.map((comment) => (
+            <Comment
+              id={comment.id}
+              key={comment.id}
+              name={comment.userName}
+              content={comment.content}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
