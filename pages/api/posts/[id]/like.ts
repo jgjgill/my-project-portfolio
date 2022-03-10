@@ -11,7 +11,6 @@ const handler = async (
     query: { id },
     session: { user },
   } = req;
-  console.log(id);
 
   const alreadyExists = await client.like.findFirst({
     where: {
@@ -42,8 +41,6 @@ const handler = async (
       },
     });
   }
-
-  console.log(alreadyExists);
 
   return res.json({
     ok: true,

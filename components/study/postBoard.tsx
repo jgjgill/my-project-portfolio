@@ -1,5 +1,4 @@
 import useMutation from '@libs/client/useMutation';
-import useUser from '@libs/client/useUser';
 import { cls } from '@libs/client/utils';
 import { useRouter } from 'next/router';
 import { PostResponse, UserResponse } from 'pages/study/[id]';

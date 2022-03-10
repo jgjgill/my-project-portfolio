@@ -10,7 +10,14 @@ interface MemoProps {
   likeCount: number;
 }
 
-const Memo = ({ id, text, title, content, commentCount, likeCount }: MemoProps) => {
+const Memo = ({
+  id,
+  text,
+  title,
+  content,
+  commentCount,
+  likeCount,
+}: MemoProps) => {
   return (
     <Link href={`/study/${id}`}>
       <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-300 max-h-80 cursor-pointer rounded-md shadow-md">

@@ -67,7 +67,7 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
         studyPageContent.push({
           type: 'paragraph',
           text: block.paragraph.text[0].plain_text,
-          annotations: block.paragraph.text[0].annotations
+          annotations: block.paragraph.text[0].annotations,
         });
       } else {
         studyPageContent.push({
