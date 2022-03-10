@@ -100,7 +100,7 @@ const Study: NextPage = ({
   const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
   const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
 
-  console.log(posts);
+  // console.log(posts);
 
   const getThemeFilteredTextGroup = (
     themeContent: PostWithCount[]

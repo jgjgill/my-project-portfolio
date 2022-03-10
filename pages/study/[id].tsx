@@ -91,8 +91,15 @@ interface CommentResponse {
   comment: CommentType;
 }
 
+export interface UserResponse {
+  ok: boolean;
+  error?: string;
+}
+
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
+  const { data: user } = useSWR<UserResponse>('/api/users/me');
+
   const {
     register,
     reset,
@@ -106,8 +113,12 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
     useMutation<CommentResponse>(`/api/posts/${router.query.id}/comment`);
 
   const commentVaild = (data: CommentForm) => {
-    loading || comment(data);
-    reset();
+    if (user?.ok) {
+      loading || comment(data);
+      reset();
+    } else {
+      alert(user?.error);
+    }
   };
 
   useEffect(() => {

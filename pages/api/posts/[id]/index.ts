@@ -28,6 +28,9 @@ const handler = async (
     orderBy: {
       createdAt: 'desc',
     },
+    where: {
+      postId: +id,
+    },
   });
 
   return res.json({

@@ -13,7 +13,7 @@ interface ConfigType {
   isPrivate?: boolean;
 }
 
-const withHandler = ({ methods, handler, isPrivate = true }: ConfigType) => {
+const withHandler = ({ methods, handler, isPrivate = false }: ConfigType) => {
   return async function (
     req: NextApiRequest,
     res: NextApiResponse
@@ -23,7 +23,7 @@ const withHandler = ({ methods, handler, isPrivate = true }: ConfigType) => {
     }
 
     if (isPrivate && !req.session.user) {
-      return res.status(401).json({ ok: false, error: 'Please Login' });
+      return res.json({ ok: false, error: 'Please Login' });
     }
 
     try {
