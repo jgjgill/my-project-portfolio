@@ -139,9 +139,9 @@ const Study: NextPage = ({
 
   return (
     <>
-      <div className="flex flex-col px-2 py-2 space-y-8 bg-slate-300 rounded-md shadow-md">
+      <div className="flex flex-col px-2 py-2 space-y-8 bg-slate-200 rounded-md shadow-md">
         <div className="flex justify-between px-4 space-x-2">
-          <div className="flex items-center text-center bg-slate-500 px-2 py-2 rounded-md shadow-md">
+          <div className="flex items-center text-center bg-slate-400 px-2 py-2 rounded-md shadow-md">
             {filteredIcon.length === 0 ? (
               <span className="text-xl font-bold text-gray-400">
                 Study Theme
@@ -165,7 +165,7 @@ const Study: NextPage = ({
             ))}
           </div>
         </div>
-        <div className="bg-slate-500 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
+        <div className="bg-slate-400 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
           <div className="space-y-3">
             {filteredList.map((filteredItem) => (
               <ListItem
@@ -179,7 +179,7 @@ const Study: NextPage = ({
         </div>
       </div>
 
-      <div className="px-5 py-5 bg-slate-500 rounded-md shadow-md">
+      <div className="px-5 py-5 bg-slate-200 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {posts?.map((post: PostWithCount) => (
             <Memo

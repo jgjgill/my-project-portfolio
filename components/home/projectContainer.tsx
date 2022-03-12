@@ -12,7 +12,7 @@ const ProjectContainer = ({
   git,
 }: ProjectContainerProps) => {
   return (
-    <div className="bg-slate-300 space-y-4 px-4 py-2 rounded-md shadow-md">
+    <div className="bg-slate-400 space-y-4 px-4 py-2 rounded-md shadow-md">
       <div className="flex items-center px-4 py-2  justify-between text-xl font-bold text-gray-700">
         <div className="flex space-x-8">
           <span>{title}</span>

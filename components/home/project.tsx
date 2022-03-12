@@ -4,9 +4,9 @@ interface ProjectProps {}
 
 const Project = ({}: ProjectProps) => {
   return (
-    <div className="bg-slate-400 w-full py-4 px-2 text-center space-y-8">
+    <div className="bg-slate-200 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
       <ProjectContainer
-        title="프로젝트1"
+        title="My Blog"
         date="2022-02-09"
         git="https://github.com/jgjgill/my_project_portfolio"
       />

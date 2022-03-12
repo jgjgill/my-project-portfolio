@@ -4,6 +4,7 @@ import Input from '@components/input';
 import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Button from '@components/button';
 
 interface LoginForm {
   email: string;
@@ -18,7 +19,6 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
-
   const [
     confirmEmail,
     { loading: emailLoading, data: emailData, error: emailError },
@@ -75,12 +75,7 @@ const Login: NextPage = () => {
               register={tokenRegister('token', { required: true })}
               required
             />
-            <button
-              type="submit"
-              className="bg-slate-300 w-full text-base font-medium text-gray-700  rounded-md shadow-md"
-            >
-              {tokenLoading ? 'Loading...' : 'Confirm Token'}
-            </button>
+            <Button text="Confirm Token" loading={tokenLoading} />
           </form>
         </>
       ) : (
@@ -96,12 +91,7 @@ const Login: NextPage = () => {
             register={loginRegister('email', { required: true })}
             required
           />
-          <button
-            type="submit"
-            className="bg-slate-300 w-full text-base font-medium text-gray-700  rounded-md shadow-md"
-          >
-            {emailLoading ? 'Loading...' : 'Get Login Link'}
-          </button>
+          <Button text="Get Login Link" loading={emailLoading} />
         </form>
       )}
     </div>

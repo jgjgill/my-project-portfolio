@@ -16,8 +16,9 @@ import client from '@libs/server/client';
 import useSWR from 'swr';
 import useMutation from '@libs/client/useMutation';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Comment as CommentType } from '@prisma/client';
+import Button from '@components/button';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
@@ -109,20 +110,25 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data, mutate } = useSWR<PostResponse>(
     `/api/posts/${router.query.id}`
   );
-  const [comment, { loading, data: commentData, error }] =
+  const [comment, { loading: commentLoading, data: commentData, error }] =
     useMutation<CommentResponse>(`/api/posts/${router.query.id}/comment`);
 
   const commentVaild = (data: CommentForm) => {
     if (user?.ok) {
-      loading || comment(data);
+      commentLoading || comment(data);
       reset();
     } else {
       alert(user?.error);
     }
   };
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    mutate();
+    mutate().then(() => {
+      if (scrollRef.current)
+        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
   }, [commentData]);
 
   return (
@@ -145,21 +151,25 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             })}
             required
           />
-          <button type="submit" className="border rounded-md shadow-md">
+          <Button text="Submit" loading={commentLoading} />
+          {/* <button type="submit" className="border border-slate-500 py-1 rounded-md shadow-md">
             Submit
-          </button>
+          </button> */}
         </form>
-        <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
-          {data?.comments?.map((comment) => (
-            <Comment
-              id={comment.id}
-              key={comment.id}
-              name={comment.userName}
-              content={comment.content}
-            />
-          ))}
-        </div>
+        {data?.comments.length !== 0 && (
+          <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
+            {data?.comments?.map((comment) => (
+              <Comment
+                id={comment.id}
+                key={comment.id}
+                name={comment.userName}
+                content={comment.content}
+              />
+            ))}
+          </div>
+        )}
       </div>
+      <div ref={scrollRef} className="pt-20" />
     </>
   );
 };

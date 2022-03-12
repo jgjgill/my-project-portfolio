@@ -10,7 +10,7 @@ interface IconProps {
 const Icon = ({ text, fullName, ...rest }: IconProps) => {
   return (
     <div
-      className="flex items-center justify-center cursor-pointer min-w-[2rem] px-2 rounded-md shadow-md bg-slate-400"
+      className="flex items-center justify-center cursor-pointer min-w-[2rem] px-2 rounded-md shadow-md bg-slate-500"
       {...rest}
     >
       <div

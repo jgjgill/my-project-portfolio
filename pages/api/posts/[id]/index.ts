@@ -26,7 +26,7 @@ const handler = async (
 
   const comments = await client.comment.findMany({
     orderBy: {
-      createdAt: 'desc',
+      createdAt: 'asc',
     },
     where: {
       postId: +id,
