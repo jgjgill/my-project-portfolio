@@ -4,7 +4,19 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        list: {
+          '0%': {
+            opacity: 0,
+            transform: 'rotate(-3deg) translateX(-100px)',
+          },
+        },
+      },
+      animation: {
+        list: 'list 1s',
+      },
+    },
   },
   plugins: [],
 };

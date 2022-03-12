@@ -125,11 +125,12 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    mutate().then(() => {
-      if (scrollRef.current)
-        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    });
-  }, [commentData]);
+    mutate();
+    if (scrollRef.current && commentData) {
+      console.log(commentData)
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [commentVaild]);
 
   return (
     <>
@@ -152,9 +153,6 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             required
           />
           <Button text="Submit" loading={commentLoading} />
-          {/* <button type="submit" className="border border-slate-500 py-1 rounded-md shadow-md">
-            Submit
-          </button> */}
         </form>
         {data?.comments.length !== 0 && (
           <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">

@@ -10,7 +10,7 @@ const Project = ({}: ProjectProps) => {
         date="2022-02-09"
         git="https://github.com/jgjgill/my_project_portfolio"
       />
-      <ProjectContainer
+      {/* <ProjectContainer
         title="프로젝트2"
         date="2022-02-10"
         git="https://github.com/jgjgill/my_project_portfolio"
@@ -19,7 +19,7 @@ const Project = ({}: ProjectProps) => {
         title="프로젝트3"
         date="2022-02-11"
         git="https://github.com/jgjgill/my_project_portfolio"
-      />
+      /> */}
     </div>
   );
 };

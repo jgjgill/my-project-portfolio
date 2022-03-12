@@ -20,7 +20,7 @@ const Memo = ({
 }: MemoProps) => {
   return (
     <Link href={`/study/${id}`}>
-      <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-400 max-h-80 cursor-pointer rounded-md shadow-md">
+      <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-400 max-h-80 transition hover:scale-[102%] cursor-pointer rounded-md shadow-md">
         <div className="flex relative items-center pl-2">
           <div className="absolute -top-6 -left-4">
             <Icon text={text} />
