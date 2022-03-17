@@ -46,6 +46,7 @@ model Like {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
+  @@index([likeUserId, likePostId])
 }
 
 model Comment {
@@ -59,6 +60,8 @@ model Comment {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Token {
@@ -68,4 +71,6 @@ model Token {
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

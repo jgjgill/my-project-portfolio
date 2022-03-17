@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^0.4.13",
-    "@prisma/client": "^3.10.0",
+    "@prisma/client": "^3.11.0",
     "@sendgrid/mail": "^7.6.1",
     "axios": "^0.26.0",
     "iron-session": "^6.0.5",
