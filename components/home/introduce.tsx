@@ -17,8 +17,8 @@ const Introduce = ({}: IntoduceProps) => {
         <div className="w-28 h-28 bg-slate-400" />
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 bg-slate-300 px-2 py-2 rounded-md shadow-md">
           <IntroItem text="이종길" />
-          <IntroItem text="Intro1" />
-          <IntroItem text="Intro2" />
+          <IntroItem text="Intro" />
+          <IntroItem text="Intro" />
           <IntroItem>
             <Link href="https://velog.io/@jgjgill">
               <a target="_blank" rel="noopener noreferrer">
