@@ -22,7 +22,7 @@ const handler = async (
       user: {
         connectOrCreate: {
           where: { email },
-          create: { name: 'Anonymouse', email },
+          create: { name: 'Anonymous', email },
         },
       },
     },

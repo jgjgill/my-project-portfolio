@@ -108,14 +108,16 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
     formState: { errors },
   } = useForm<CommentForm>();
   const { data, mutate } = useSWR<PostResponse>(
-    `/api/posts/${router.query.id}`
+    router.query.id ? `/api/posts/${router.query.id}` : null
   );
   const [comment, { loading: commentLoading, data: commentData, error }] =
     useMutation<CommentResponse>(`/api/posts/${router.query.id}/comment`);
 
   const commentVaild = (data: CommentForm) => {
+    if (commentLoading) return;
+
     if (user?.ok) {
-      commentLoading || comment(data);
+      comment(data);
       reset();
     } else {
       alert(user?.error);
@@ -125,9 +127,8 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    mutate();
-    if (scrollRef.current && commentData) {
-      console.log(commentData)
+    if (scrollRef.current && commentData?.ok) {
+      mutate();
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [commentVaild]);
