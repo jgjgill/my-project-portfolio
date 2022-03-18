@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react';
 import Icon from '@components/study/icon';
 import ListItem from '@components/study/listItem';
 import Memo from '@components/study/memo';
-import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import {
   createNotion,
   fetchNotionPage,
@@ -36,7 +32,12 @@ interface PostWithCount extends Post {
   };
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+interface posts {
+  ok: boolean;
+  posts: PostWithCount[];
+}
+
+export const getStaticProps: GetStaticProps = async () => {
   const notion = createNotion();
   const pageId = process.env.NOTION_PAGE_ID!;
   const mainPage = await fetchNotionPage(notion, pageId);
@@ -97,15 +98,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const Study: NextPage = ({
-  stringPosts,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const posts: PostWithCount[] = JSON.parse(stringPosts);
-  const [postData, setPostData] = useState<PostWithCount[]>(posts);
+const Study: NextPage = () => {
+  const { data } = useSWR<posts>('/api/posts');
+  const [postData, setPostData] = useState(data?.posts);
   const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
   const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
 
-  // console.log(posts);
+  useEffect(() => {
+    setPostData(data?.posts);
+  }, [data]);
 
   const getThemeFilteredTextGroup = (
     themeContent: PostWithCount[]
@@ -116,30 +117,33 @@ const Study: NextPage = ({
         themeFilteredTextGroup.push(data.theme);
       }
     });
-
     return themeFilteredTextGroup;
   };
-  const themeFilteredTextGroup: TextGroup[] = getThemeFilteredTextGroup(posts);
+
+  const themeFilteredTextGroup = data
+    ? getThemeFilteredTextGroup(data.posts)
+    : [];
 
   const onToggleList = (item: TextGroup) => () => {
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item));
-
-    setPostData(
-      postData.map((post) =>
-        post.theme === item
-          ? {
-              ...post,
-              toggle: !post.toggle,
-            }
-          : post
-      )
-    );
+    postData &&
+      setPostData(
+        postData.map((post) =>
+          post.theme === item
+            ? {
+                ...post,
+                toggle: !post.toggle,
+              }
+            : post
+        )
+      );
   };
 
   useEffect(() => {
-    setFilteredList(postData.filter((post) => post.toggle === true));
+    postData &&
+      setFilteredList(postData.filter((post) => post.toggle === true));
   }, [postData]);
 
   return (
@@ -160,14 +164,15 @@ const Study: NextPage = ({
             )}
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {themeFilteredTextGroup.map((theme, i) => (
-              <Icon
-                key={i}
-                text={theme}
-                fullName
-                onClick={onToggleList(theme)}
-              />
-            ))}
+            {data &&
+              themeFilteredTextGroup.map((theme, i) => (
+                <Icon
+                  key={i}
+                  text={theme}
+                  fullName
+                  onClick={onToggleList(theme)}
+                />
+              ))}
           </div>
         </div>
         <div className="bg-slate-400 py-2 px-2 min-h-[12rem] rounded-md shadow-md">
@@ -186,7 +191,7 @@ const Study: NextPage = ({
 
       <div className="px-5 py-5 bg-slate-200 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {posts?.map((post: PostWithCount) => (
+          {data?.posts.map((post) => (
             <Memo
               key={post.id}
               id={post.id}
