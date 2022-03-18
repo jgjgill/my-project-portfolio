@@ -131,7 +131,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
       mutate();
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [commentVaild]);
+  }, [commentData]);
 
   return (
     <>
