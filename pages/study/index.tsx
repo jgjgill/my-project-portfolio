@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import Icon from '@components/study/icon';
 import ListItem from '@components/study/listItem';
 import Memo from '@components/study/memo';
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next';
 import {
   createNotion,
   fetchNotionPage,
@@ -13,6 +17,7 @@ import {
 import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
 import { Post } from '@prisma/client';
+import useSWR from 'swr';
 
 type ThemeContent = {
   pageId: string;
@@ -31,7 +36,7 @@ interface PostWithCount extends Post {
   };
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const notion = createNotion();
   const pageId = process.env.NOTION_PAGE_ID!;
   const mainPage = await fetchNotionPage(notion, pageId);
@@ -94,7 +99,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Study: NextPage = ({
   stringPosts,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const posts: PostWithCount[] = JSON.parse(stringPosts);
   const [postData, setPostData] = useState<PostWithCount[]>(posts);
   const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
