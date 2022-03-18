@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { UserResponse } from 'pages/study/[id]';
+import useSWR from 'swr';
 
 interface NavbarProps {}
 
@@ -6,9 +8,12 @@ const nav = [
   { name: 'Home', href: '/' },
   { name: 'Study', href: '/study' },
   { name: 'Login', href: '/login' },
+  { name: 'Profile', href: '/profile'}
 ];
 
 const Navbar = ({}: NavbarProps) => {
+  const { data: user } = useSWR<UserResponse>('/api/users/me');
+  
   return (
     <nav className="flex justify-between bg-slate-200 px-4 py-2 rounded-md shadow-md">
       <Link href="/">

@@ -17,7 +17,7 @@ import useSWR from 'swr';
 import useMutation from '@libs/client/useMutation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { Comment as CommentType } from '@prisma/client';
+import { Comment as CommentType, User } from '@prisma/client';
 import Button from '@components/button';
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -94,6 +94,7 @@ interface CommentResponse {
 
 export interface UserResponse {
   ok: boolean;
+  profile: User;
   error?: string;
 }
 
