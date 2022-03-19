@@ -21,8 +21,9 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
-  const { data: user, mutate: nicknameMutate } =
-    useSWR<UserResponse>('/api/users/me');
+  const router = useRouter();
+
+  const { data: user } = useSWR<UserResponse>('/api/users/me');
 
   const [
     confirmEmail,
@@ -56,10 +57,9 @@ const Login: NextPage = () => {
     confirmToken(tokenForm);
   };
 
-  const router = useRouter();
   useEffect(() => {
     if (tokenData?.ok) {
-      router.push('/');
+      router.replace('/');
     }
   }, [tokenData]);
 
