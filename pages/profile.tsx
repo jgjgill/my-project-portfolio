@@ -66,7 +66,7 @@ const Profile: NextPage = () => {
           register={nicknameRegister('nickname', { required: true })}
           required
         />
-        <Button text="Enter" loading={nicknameLoading} />
+        <Button text="Enter" loading={false} />
       </form>
     </div>
   );

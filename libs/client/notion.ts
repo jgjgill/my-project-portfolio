@@ -62,12 +62,13 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
   const studyPageContent: any = [];
 
   blocks.results.map((block: UpdateBlockResponse | any) => {
+    console.log(block)
     if (block.type === 'paragraph') {
-      if (block.paragraph.text[0]?.plain_text) {
+      if (block.paragraph.rich_text[0]?.plain_text) {
         studyPageContent.push({
           type: 'paragraph',
-          text: block.paragraph.text[0].plain_text,
-          annotations: block.paragraph.text[0].annotations,
+          text: block.paragraph.rich_text[0].plain_text,
+          annotations: block.paragraph.rich_text[0].annotations,
         });
       } else {
         studyPageContent.push({
@@ -80,14 +81,14 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
     if (block.type === 'heading_2') {
       studyPageContent.push({
         type: 'heading_2',
-        text: block.heading_2.text[0].plain_text,
+        text: block.heading_2.rich_text[0].plain_text,
       });
     }
 
     if (block.type === 'heading_3') {
       studyPageContent.push({
         type: 'heading_3',
-        text: block.heading_3.text[0].plain_text,
+        text: block.heading_3.rich_text[0].plain_text,
       });
     }
 
@@ -101,7 +102,7 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
     if (block.type === 'code') {
       studyPageContent.push({
         type: 'code',
-        text: block.code.text[0].plain_text,
+        text: block.code.rich_text[0].plain_text,
       });
     }
   });
