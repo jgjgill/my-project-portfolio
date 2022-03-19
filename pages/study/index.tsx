@@ -152,7 +152,7 @@ const Study: NextPage = () => {
         <div className="flex justify-between px-4 space-x-2">
           <div className="flex items-center text-center bg-slate-400 px-2 py-2 rounded-md shadow-md">
             {filteredIcon.length === 0 ? (
-              <span className="text-xl font-bold text-gray-400">
+              <span className="text-xl font-bold text-gray-500">
                 Study Theme
               </span>
             ) : (
