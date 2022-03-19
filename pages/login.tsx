@@ -5,6 +5,8 @@ import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Button from '@components/button';
+import useSWR from 'swr';
+import { UserResponse } from './study/[id]';
 
 interface LoginForm {
   email: string;
@@ -19,6 +21,10 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
+  const { data: user } = useSWR<UserResponse>('/api/users/me');
+
   const [
     confirmEmail,
     { loading: emailLoading, data: emailData, error: emailError },
@@ -38,7 +44,7 @@ const Login: NextPage = () => {
 
   const {
     register: tokenRegister,
-    handleSubmit: TokenSubmit,
+    handleSubmit: tokenSubmit,
     formState: { errors: tokenErrors },
     reset: tokenReset,
   } = useForm<TokenForm>();
@@ -51,20 +57,27 @@ const Login: NextPage = () => {
     confirmToken(tokenForm);
   };
 
-  const router = useRouter();
   useEffect(() => {
     if (tokenData?.ok) {
-      router.push('/');
+      router.replace('/');
     }
   }, [tokenData]);
 
+  useEffect(() => {
+    if (user && user.ok) {
+      router.replace('/');
+    }
+  }, [user]);
+
   return (
-    <div className="bg-slate-400 px-2 py-2 rounded-md shadow-md">
+    <div className="bg-slate-200 px-2 py-2 space-y-2 rounded-md shadow-md">
+      <div className="text-xl font-bold text-slate-700">Login</div>
+
       {emailData?.ok ? (
         <>
           <p className="flex justify-center">이메일로 토큰을 전송했습니다!</p>
           <form
-            onSubmit={TokenSubmit(tokenValid)}
+            onSubmit={tokenSubmit(tokenValid)}
             className="flex flex-col space-y-2 items-center"
           >
             <Input
