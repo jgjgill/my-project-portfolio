@@ -48,7 +48,7 @@ const Profile: NextPage = () => {
     if (!(user && user?.ok)) {
       router.replace('/');
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="bg-slate-200 px-2 py-2 space-y-2 rounded-md shadow-md">

@@ -96,7 +96,7 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
               )}
             </button>
           </div>
-          <div className="px-4 py-4 min-h-[20rem] bg-slate-300 rounded-md shadow-md">
+          <div className="px-4 py-4 min-h-[20rem] whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
             {content.map((item: any, i: number) => contentType(item, i))}
           </div>
         </>

@@ -78,22 +78,58 @@ const Introduce = ({}: IntoduceProps) => {
           </div>
           <div className="grid grid-cols-3 gap-7 text-center border-2 border-gray-400 p-4 rounded-md shadow-md">
             <div>
-              <Image src={react} width={50} height={50} layout="fixed" />
+              <Image
+                src={react}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="react"
+              />
             </div>
             <div>
-              <Image src={typescript} width={50} height={50} layout="fixed" />
+              <Image
+                src={typescript}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="typescript"
+              />
             </div>
             <div>
-              <Image src={nextjs} width={50} height={50} layout="fixed" />
+              <Image
+                src={nextjs}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="nextjs"
+              />
             </div>
             <div>
-              <Image src={tailwindcss} width={50} height={50} layout="fixed" />
+              <Image
+                src={tailwindcss}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="tailwindcss"
+              />
             </div>
             <div>
-              <Image src={mui} width={50} height={50} layout="fixed" />
+              <Image
+                src={mui}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="mui"
+              />
             </div>
             <div>
-              <Image src={prisma} width={50} height={50} layout="fixed" />
+              <Image
+                src={prisma}
+                width={50}
+                height={50}
+                layout="fixed"
+                alt="prisma"
+              />
             </div>
           </div>
         </div>
