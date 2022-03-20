@@ -1,4 +1,4 @@
-import { cls } from "./utils";
+import { cls } from './utils';
 
 export const contentType = (item: any, index: number) => {
   switch (item.type) {
@@ -38,12 +38,14 @@ export const contentType = (item: any, index: number) => {
       );
     case 'code':
       return (
-        <p
-          key={index}
-          className="whitespace-pre-wrap inline-block p-4 border-2 rounded-md shadow-md"
-        >
-          {item.text}
-        </p>
+        <>
+          <p
+            key={index}
+            className="whitespace-pre-wrap inline-block p-4 border-2 rounded-md shadow-md"
+          >
+            {item.text}
+          </p>
+        </>
       );
   }
 };

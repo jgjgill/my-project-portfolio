@@ -62,7 +62,6 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
   const studyPageContent: any = [];
 
   blocks.results.map((block: UpdateBlockResponse | any) => {
-    console.log(block)
     if (block.type === 'paragraph') {
       if (block.paragraph.rich_text[0]?.plain_text) {
         studyPageContent.push({

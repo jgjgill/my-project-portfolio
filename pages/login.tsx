@@ -18,6 +18,7 @@ interface TokenForm {
 
 interface MutationResult {
   ok: boolean;
+  error?: string;
 }
 
 const Login: NextPage = () => {
@@ -57,24 +58,29 @@ const Login: NextPage = () => {
     confirmToken(tokenForm);
   };
 
+  const onEmailBack = () => {
+    router.reload();
+  };
+
   useEffect(() => {
-    if (tokenData?.ok) {
-      router.replace('/');
+    if (tokenData?.error) {
+      alert(tokenData.error);
+      tokenReset();
     }
   }, [tokenData]);
 
   useEffect(() => {
-    if (user && user.ok) {
+    if ((user && user.ok) || tokenData?.ok) {
       router.replace('/');
     }
-  }, [user]);
+  }, [user, tokenData]);
 
   return (
     <div className="bg-slate-200 px-2 py-2 space-y-2 rounded-md shadow-md">
       <div className="text-xl font-bold text-slate-700">Login</div>
 
       {emailData?.ok ? (
-        <>
+        <div className="space-y-4">
           <p className="flex justify-center">이메일로 토큰을 전송했습니다!</p>
           <form
             onSubmit={tokenSubmit(tokenValid)}
@@ -90,7 +96,13 @@ const Login: NextPage = () => {
             />
             <Button text="Confirm Token" loading={tokenLoading} />
           </form>
-        </>
+          <span
+            className="text-sm underline text-center block cursor-pointer"
+            onClick={onEmailBack}
+          >
+            이메일 다시 입력
+          </span>
+        </div>
       ) : (
         <form
           onSubmit={loginSubmit(loginValid)}
