@@ -204,6 +204,7 @@ const Study: NextPage = () => {
               text={post.theme}
               title={post.theme}
               content={post.title}
+              createdAt={post.createdAt}
               commentCount={post._count.comments}
               likeCount={post._count.likes}
             />

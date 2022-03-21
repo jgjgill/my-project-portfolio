@@ -74,12 +74,12 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
               {title}
             </p>
             <button
-              className={cls(data.isLiked ? 'text-red-400' : 'text-gray-700')}
+              className={cls(data.isLiked ? 'text-slate-600' : 'text-gray-700')}
               onClick={onToggleLike}
             >
               {data.isLiked ? (
                 <svg
-                  className="w-6 h-6"
+                  className="w-8 h-8"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
                 </svg>
               ) : (
                 <svg
-                  className="h-6 w-6"
+                  className="h-8 w-8"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -109,7 +109,7 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
               )}
             </button>
           </div>
-          <div className="px-4 py-4 min-h-[20rem] whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
+          <div className="px-4 py-4 min-h-[20rem] overflow-x-hidden whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
             {content.map((item: PostContent, i: number) =>
               contentType(item, i)
             )}

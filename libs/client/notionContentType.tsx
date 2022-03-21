@@ -43,7 +43,7 @@ export const contentType = (item: PostContent, index: number) => {
         <>
           <p
             key={index}
-            className="whitespace-pre-wrap inline-block p-4 border-2 rounded-md shadow-md"
+            className="whitespace-pre-wrap overflow-x-auto inline-block p-4 border-2 rounded-md shadow-md"
           >
             {item.text}
           </p>
