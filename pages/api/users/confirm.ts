@@ -22,7 +22,10 @@ const handler = async (
     where: { payload: token },
   });
 
-  if (!existToken) return res.status(404).end();
+  if (!existToken)
+    return res
+      .status(404)
+      .json({ ok: false, error: '토큰 번호를 잘못 입력했습니다!' });
 
   req.session.user = {
     id: existToken.userId,

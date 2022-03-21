@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Icon from '@components/study/icon';
 import ListItem from '@components/study/listItem';
 import Memo from '@components/study/memo';
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import {
   createNotion,
   fetchNotionPage,
@@ -10,7 +10,10 @@ import {
   getThemePageNameGroup,
   ThemePage,
 } from '@libs/client/notion';
-import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+import {
+  // BlockObjectResponse,
+  UpdateBlockResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
 import { Post } from '@prisma/client';
 import useSWR from 'swr';
@@ -20,7 +23,7 @@ type ThemeContent = {
   theme: string;
   title: string;
   toggle: boolean;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export type TextGroup = PostWithCount['theme'];
@@ -46,14 +49,17 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const themeContent: ThemeContent[] = [];
   themePageGroup.map(({ themePageBlocks, themeName }: ThemePage) => {
-    themePageBlocks.results.map((study: UpdateBlockResponse | any) => {
-      if (study.type === 'child_page') {
+    themePageBlocks.results.map((study: UpdateBlockResponse) => {
+      // const blockObjectResponse = study as BlockObjectResponse;
+      const blockObjectResponse = study as any;
+
+      if (blockObjectResponse.type === 'child_page') {
         return themeContent.push({
           pageId: study.id,
           theme: themeName,
-          title: study.child_page.title,
+          title: blockObjectResponse.child_page.title,
           toggle: false,
-          createdAt: study.created_time,
+          createdAt: blockObjectResponse.created_time,
         });
       }
     });
@@ -198,6 +204,7 @@ const Study: NextPage = () => {
               text={post.theme}
               title={post.theme}
               content={post.title}
+              createdAt={post.createdAt}
               commentCount={post._count.comments}
               likeCount={post._count.likes}
             />

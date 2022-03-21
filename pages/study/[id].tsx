@@ -23,7 +23,7 @@ import Button from '@components/button';
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
 
-  const paths: any = [];
+  const paths: { params: { id: string } }[] = [];
   postsInfo.map((post) => {
     return paths.push({
       params: {
@@ -71,7 +71,6 @@ export const getStaticProps: GetStaticProps = async ({
         title: studyPageTitle,
         content: studyPageContent,
         comment: stringPostComments,
-        // blocks
       },
     },
   };
@@ -132,12 +131,10 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
       mutate();
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [commentData]);
+  }, [commentData, mutate]);
 
   return (
     <>
-      {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
-
       <PostBoard title={post.title} content={post.content} />
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
         <form
