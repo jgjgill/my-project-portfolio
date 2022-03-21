@@ -1,6 +1,8 @@
+import { PostContent } from '@components/study/postBoard';
 import { cls } from './utils';
 
-export const contentType = (item: any, index: number) => {
+export const contentType = (item: PostContent, index: number) => {
+
   switch (item.type) {
     case 'paragraph':
       return (
@@ -8,8 +10,8 @@ export const contentType = (item: any, index: number) => {
           key={index}
           className={cls(
             'font-medium text-base text-gray-500',
-            item.annotations?.bold && 'text-gray-900',
-            item.annotations?.code && 'text-red-400'
+            item.annotations?.bold! && 'text-gray-900',
+            item.annotations?.code! && 'text-red-400'
           )}
         >
           {item.text}

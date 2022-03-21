@@ -1,5 +1,6 @@
 import { Client as notionClient } from '@notionhq/client';
 import {
+  BlockObjectResponse,
   ListBlockChildrenResponse,
   UpdateBlockResponse,
 } from '@notionhq/client/build/src/api-endpoints';
@@ -10,7 +11,7 @@ interface ThemeName {
 }
 
 export interface ThemePage {
-  themeName: any;
+  themeName: string;
   themePageBlocks: ListBlockChildrenResponse;
 }
 
@@ -30,11 +31,13 @@ export const fetchNotionPage = async (notion: notionClient, pageId: string) => {
 
 export const getThemePageNameGroup = (mainPage: ListBlockChildrenResponse) => {
   const themeNameGroup: ThemeName[] = [];
-  mainPage.results.map((mainPageBlock: UpdateBlockResponse | any) => {
-    if (mainPageBlock.type === 'child_page') {
+  mainPage.results.map((mainPageBlock: UpdateBlockResponse) => {
+    const blockObjectResponse = mainPageBlock as BlockObjectResponse;
+
+    if (blockObjectResponse.type === 'child_page') {
       return themeNameGroup.push({
         id: mainPageBlock.id,
-        themeName: mainPageBlock.child_page.title,
+        themeName: blockObjectResponse.child_page.title,
       });
     }
   });
@@ -58,16 +61,24 @@ export const getThemePage = async (
   return themePageGroup;
 };
 
-export const getBlockData = (blocks: ListBlockChildrenResponse) => {
-  const studyPageContent: any = [];
+interface StudyPageContent {
+  type: string;
+  text: string;
+  annotations?: object;
+}
 
-  blocks.results.map((block: UpdateBlockResponse | any) => {
-    if (block.type === 'paragraph') {
-      if (block.paragraph.rich_text[0]?.plain_text) {
+export const getBlockData = (blocks: ListBlockChildrenResponse) => {
+  const studyPageContent: StudyPageContent[] = [];
+
+  blocks.results.map((block: UpdateBlockResponse) => {
+    const blockObjectResponse = block as BlockObjectResponse;
+
+    if (blockObjectResponse.type === 'paragraph') {
+      if (blockObjectResponse.paragraph.rich_text[0]?.plain_text) {
         studyPageContent.push({
           type: 'paragraph',
-          text: block.paragraph.rich_text[0].plain_text,
-          annotations: block.paragraph.rich_text[0].annotations,
+          text: blockObjectResponse.paragraph.rich_text[0].plain_text,
+          annotations: blockObjectResponse.paragraph.rich_text[0].annotations,
         });
       } else {
         studyPageContent.push({
@@ -77,31 +88,24 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
       }
     }
 
-    if (block.type === 'heading_2') {
+    if (blockObjectResponse.type === 'heading_2') {
       studyPageContent.push({
         type: 'heading_2',
-        text: block.heading_2.rich_text[0].plain_text,
+        text: blockObjectResponse.heading_2.rich_text[0].plain_text,
       });
     }
 
-    if (block.type === 'heading_3') {
+    if (blockObjectResponse.type === 'heading_3') {
       studyPageContent.push({
         type: 'heading_3',
-        text: block.heading_3.rich_text[0].plain_text,
+        text: blockObjectResponse.heading_3.rich_text[0].plain_text,
       });
     }
 
-    if (block.type === 'text') {
-      studyPageContent.push({
-        type: 'text',
-        text: block.plain_text,
-      });
-    }
-
-    if (block.type === 'code') {
+    if (blockObjectResponse.type === 'code') {
       studyPageContent.push({
         type: 'code',
-        text: block.code.rich_text[0].plain_text,
+        text: blockObjectResponse.code.rich_text[0].plain_text,
       });
     }
   });

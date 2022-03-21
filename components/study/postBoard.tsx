@@ -5,9 +5,22 @@ import { useRouter } from 'next/router';
 import { PostResponse, UserResponse } from 'pages/study/[id]';
 import useSWR from 'swr';
 
-interface PostBoardProps {
+export interface PostContent {
+  type: string;
+  text: string;
+  annotations?: {
+    bold: boolean;
+    code: string;
+    color: boolean;
+    italic: boolean;
+    strikethrough: boolean;
+    underline: boolean;
+  };
+}
+
+export interface PostBoardProps {
   title: string;
-  content: any;
+  content: PostContent[];
 }
 
 const PostBoard = ({ title, content }: PostBoardProps) => {
@@ -97,7 +110,9 @@ const PostBoard = ({ title, content }: PostBoardProps) => {
             </button>
           </div>
           <div className="px-4 py-4 min-h-[20rem] whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
-            {content.map((item: any, i: number) => contentType(item, i))}
+            {content.map((item: PostContent, i: number) =>
+              contentType(item, i)
+            )}
           </div>
         </>
       ) : (
