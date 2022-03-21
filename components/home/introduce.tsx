@@ -7,6 +7,7 @@ import typescript from '../../public/typescript.svg';
 import mui from '../../public/mui.svg';
 import prisma from '../../public/prisma.svg';
 import Link from 'next/link';
+import IntroText from './introText';
 
 interface IntoduceProps {}
 
@@ -17,8 +18,8 @@ const Introduce = ({}: IntoduceProps) => {
         <div className="w-28 h-28 bg-slate-400" />
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 bg-slate-300 px-2 py-2 rounded-md shadow-md">
           <IntroItem text="이종길" />
-          <IntroItem text="Intro" />
-          <IntroItem text="Intro" />
+          <IntroItem text="ing..." />
+          <IntroItem text="ing..." />
           <IntroItem>
             <Link href="https://velog.io/@jgjgill">
               <a target="_blank" rel="noopener noreferrer">
@@ -60,77 +61,47 @@ const Introduce = ({}: IntoduceProps) => {
           My Stack
         </p>
         <div className="flex flex-col sm:flex-row justify-between space-y-2 px-2">
-          <div className="flex flex-col text-center sm:text-left break-words justify-around ">
-            <div className="space-y-2 ">
-              <span className="font-bold text-base text-gray-700">
-                이메일 주소
-              </span>
-              <p className="text-sm font-semibold text-gray-400">
-                dbdltm22@naver.com
-              </p>
-            </div>
-            <div className="space-y-2">
-              <span className="font-bold text-base text-gray-700">소개</span>
-              <p className="text-sm font-semibold text-gray-400">
-                배움을 즐기는 개발자
-              </p>
-            </div>
+          <div className="flex flex-col text-center sm:text-left break-words justify-around">
+            <IntroText title="소개" text="개발을 즐기면서 배우고 있습니다." />
+            <IntroText title="이메일 주소" text="dbdltm22@naver.com" />
           </div>
           <div className="grid grid-cols-3 gap-7 text-center border-2 border-gray-400 p-4 rounded-md shadow-md">
-            <div>
-              <Image
-                src={react}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="react"
-              />
-            </div>
-            <div>
-              <Image
-                src={typescript}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="typescript"
-              />
-            </div>
-            <div>
-              <Image
-                src={nextjs}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="nextjs"
-              />
-            </div>
-            <div>
-              <Image
-                src={tailwindcss}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="tailwindcss"
-              />
-            </div>
-            <div>
-              <Image
-                src={mui}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="mui"
-              />
-            </div>
-            <div>
-              <Image
-                src={prisma}
-                width={50}
-                height={50}
-                layout="fixed"
-                alt="prisma"
-              />
-            </div>
+            <Image
+              src={react}
+              width={50}
+              height={50}
+              layout="fixed"
+              alt="react"
+            />
+            <Image
+              src={typescript}
+              width={50}
+              height={50}
+              layout="fixed"
+              alt="typescript"
+            />
+            <Image
+              src={nextjs}
+              width={50}
+              height={50}
+              layout="fixed"
+              alt="nextjs"
+            />
+            <Image
+              src={tailwindcss}
+              width={50}
+              height={50}
+              layout="fixed"
+              alt="tailwindcss"
+            />
+            <Image src={mui} width={50} height={50} layout="fixed" alt="mui" />
+            <Image
+              src={prisma}
+              width={50}
+              height={50}
+              layout="fixed"
+              alt="prisma"
+            />
           </div>
         </div>
       </div>
