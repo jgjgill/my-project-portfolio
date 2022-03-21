@@ -1,6 +1,6 @@
 import { Client as notionClient } from '@notionhq/client';
 import {
-  BlockObjectResponse,
+  // BlockObjectResponse,
   ListBlockChildrenResponse,
   UpdateBlockResponse,
 } from '@notionhq/client/build/src/api-endpoints';
@@ -32,7 +32,8 @@ export const fetchNotionPage = async (notion: notionClient, pageId: string) => {
 export const getThemePageNameGroup = (mainPage: ListBlockChildrenResponse) => {
   const themeNameGroup: ThemeName[] = [];
   mainPage.results.map((mainPageBlock: UpdateBlockResponse) => {
-    const blockObjectResponse = mainPageBlock as BlockObjectResponse;
+    // const blockObjectResponse = mainPageBlock as BlockObjectResponse;
+    const blockObjectResponse = mainPageBlock as any;
 
     if (blockObjectResponse.type === 'child_page') {
       return themeNameGroup.push({
@@ -71,7 +72,8 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
   const studyPageContent: StudyPageContent[] = [];
 
   blocks.results.map((block: UpdateBlockResponse) => {
-    const blockObjectResponse = block as BlockObjectResponse;
+    // const blockObjectResponse = block as BlockObjectResponse;
+    const blockObjectResponse = block as any;
 
     if (blockObjectResponse.type === 'paragraph') {
       if (blockObjectResponse.paragraph.rich_text[0]?.plain_text) {

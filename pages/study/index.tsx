@@ -10,7 +10,10 @@ import {
   getThemePageNameGroup,
   ThemePage,
 } from '@libs/client/notion';
-import { BlockObjectResponse, UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+import {
+  // BlockObjectResponse,
+  UpdateBlockResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 import client from '@libs/server/client';
 import { Post } from '@prisma/client';
 import useSWR from 'swr';
@@ -47,8 +50,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const themeContent: ThemeContent[] = [];
   themePageGroup.map(({ themePageBlocks, themeName }: ThemePage) => {
     themePageBlocks.results.map((study: UpdateBlockResponse) => {
-      const blockObjectResponse = study as BlockObjectResponse;
-      
+      // const blockObjectResponse = study as BlockObjectResponse;
+      const blockObjectResponse = study as any;
+
       if (blockObjectResponse.type === 'child_page') {
         return themeContent.push({
           pageId: study.id,
