@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 import Icon from './icon';
 
@@ -8,28 +9,16 @@ interface MemoProps {
   title: string;
   content: string;
   createdAt: Date;
-  // commentCount: number;
-  // likeCount: number;
 }
 
-const Memo = ({
-  id,
-  text,
-  title,
-  content,
-  createdAt,
-}: // commentCount,
-// likeCount,
-MemoProps) => {
+const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
   const timestamp = new Date(createdAt);
   const time = `${timestamp.getFullYear()}-${
     timestamp.getMonth() + 1
   }-${timestamp.getDate()}`;
 
-  const { data } = useSWR(`/api/posts/${id}/length`);
-
-  console.log(123)
-
+  const { data, mutate } = useSWR(`/api/posts/${id}/length`);
+  mutate()
   return (
     <Link href={`/study/${id}`}>
       <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-400 max-h-80 transition hover:scale-[102%] cursor-pointer rounded-md shadow-md">
