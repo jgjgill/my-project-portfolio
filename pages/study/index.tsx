@@ -104,13 +104,15 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Study: NextPage = ({stringPosts}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Study: NextPage = ({
+  stringPosts,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data } = useSWR<posts>('/api/posts');
   const [postData, setPostData] = useState(data?.posts);
   const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
   const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
 
-  const posts: PostWithCount[] = JSON.parse(stringPosts)
+  const posts: PostWithCount[] = JSON.parse(stringPosts);
 
   useEffect(() => {
     setPostData(data?.posts);
@@ -207,8 +209,6 @@ const Study: NextPage = ({stringPosts}: InferGetStaticPropsType<typeof getStatic
               title={post.theme}
               content={post.title}
               createdAt={post.createdAt}
-              commentCount={post._count.comments}
-              likeCount={post._count.likes}
             />
           ))}
         </div>
