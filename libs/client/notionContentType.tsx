@@ -1,4 +1,4 @@
-import { PostContent } from '@components/study/postBoard';
+import { PostContent } from 'pages/study/[id]';
 import { cls } from './utils';
 
 export const contentType = (item: PostContent, index: number) => {

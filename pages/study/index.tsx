@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Icon from '@components/study/icon';
 import ListItem from '@components/study/listItem';
 import Memo from '@components/study/memo';
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import {
   createNotion,
   fetchNotionPage,
@@ -104,11 +104,13 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Study: NextPage = () => {
+const Study: NextPage = ({stringPosts}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data } = useSWR<posts>('/api/posts');
   const [postData, setPostData] = useState(data?.posts);
   const [filteredIcon, setfilteredIcon] = useState<TextGroup[]>([]);
   const [filteredList, setFilteredList] = useState<PostWithCount[]>([]);
+
+  const posts: PostWithCount[] = JSON.parse(stringPosts)
 
   useEffect(() => {
     setPostData(data?.posts);
@@ -197,7 +199,7 @@ const Study: NextPage = () => {
 
       <div className="px-5 py-5 bg-slate-200 rounded-md shadow-md">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {data?.posts.map((post) => (
+          {posts.map((post) => (
             <Memo
               key={post.id}
               id={post.id}
