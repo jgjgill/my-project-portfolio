@@ -1,6 +1,5 @@
 import Input from '@components/input';
 import Comment from '@components/study/comment';
-import PostBoard from '@components/study/postBoard';
 import { useForm } from 'react-hook-form';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import {
@@ -19,6 +18,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Comment as CommentType, User } from '@prisma/client';
 import Button from '@components/button';
+import { cls } from '@libs/client/utils';
+import { contentType } from '@libs/client/notionContentType';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
@@ -97,9 +98,50 @@ export interface UserResponse {
   error?: string;
 }
 
+export interface PostContent {
+  type: string;
+  text: string;
+  annotations?: {
+    bold: boolean;
+    code: string;
+    color: boolean;
+    italic: boolean;
+    strikethrough: boolean;
+    underline: boolean;
+  };
+}
+
+export interface PostBoardProps {
+  title: string;
+  content: PostContent[];
+}
+
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { data: user } = useSWR<UserResponse>('/api/users/me');
+
+  const { data: likeData, mutate: likeMutate } = useSWR<PostResponse>(
+    router.query.id ? `/api/posts/${router.query.id}` : null
+  );
+
+  const [toggleLike, { loading }] = useMutation(
+    `/api/posts/${router.query.id}/like`
+  );
+
+  const onClickBack = () => {
+    router.back();
+  };
+
+  const onToggleLike = () => {
+    if (loading) return;
+
+    if (user?.ok) {
+      toggleLike({});
+      likeMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
+    } else {
+      alert(user?.error);
+    }
+  };
 
   const {
     register,
@@ -135,7 +177,70 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <>
-      <PostBoard title={post.title} content={post.content} />
+      <div className="px-2 py-2 space-y-2 bg-slate-400 rounded-md shadow-md">
+        <div className="relative flex">
+          <svg
+            className="absolute top-0 -left-1 w-8 h-8 cursor-pointer"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            onClick={onClickBack}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
+            />
+          </svg>
+          <p className="px-8 py-2 w-full text-center text-xl font-semibold text-gray-800 ">
+            {post.title}
+          </p>
+          <button
+            className={cls(
+              likeData?.isLiked ? 'text-slate-600' : 'text-gray-700'
+            )}
+            onClick={onToggleLike}
+          >
+            {likeData?.isLiked ? (
+              <svg
+                className="w-8 h-8"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="h-8 w-8"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+        <div className="px-4 py-4 min-h-[20rem] overflow-x-hidden whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
+          {post.content.map((item: PostContent, i: number) =>
+            contentType(item, i)
+          )}
+        </div>
+      </div>
       <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
         <form
           className="flex flex-col space-y-2"
