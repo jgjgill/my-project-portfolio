@@ -17,8 +17,12 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
     timestamp.getMonth() + 1
   }-${timestamp.getDate()}`;
 
-  const { data, mutate } = useSWR(`/api/posts/${id}/length`);
-  mutate()
+  const { data } = useSWR(
+    `/api/posts/${id}/length`,
+    (url) => fetch(url).then((res) => res.json()),
+    { refreshInterval: 1000 }
+  );
+
   return (
     <Link href={`/study/${id}`}>
       <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-400 max-h-80 transition hover:scale-[102%] cursor-pointer rounded-md shadow-md">
@@ -31,8 +35,8 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
         <p className="text-ellipsis overflow-hidden text-sm font-medium text-gray-900">
           {content}
         </p>
-        <div className="absolute bottom-0 right-1 w-full pl-3 flex justify-between text-sm font-medium text-gray-700">
-          <div className="text-sm font-normal text-slate-700">{time}</div>
+        <div className="absolute bottom-0 right-1 w-full pl-2 flex justify-between text-sm font-medium text-gray-700">
+          <div className="text-xs font-normal text-slate-700">{time}</div>
           <div className="flex space-x-2">
             <div className="flex items-center space-x-1">
               <svg
