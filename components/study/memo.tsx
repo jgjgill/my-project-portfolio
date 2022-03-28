@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { useEffect } from 'react';
+import useSWR from 'swr';
 import Icon from './icon';
 
 interface MemoProps {
@@ -7,21 +9,19 @@ interface MemoProps {
   title: string;
   content: string;
   createdAt: Date;
-  commentCount: number;
-  likeCount: number;
 }
 
-const Memo = ({
-  id,
-  text,
-  title,
-  content,
-  createdAt,
-  commentCount,
-  likeCount,
-}: MemoProps) => {
+const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
   const timestamp = new Date(createdAt);
-  const time = `${timestamp.getFullYear()}-${timestamp.getMonth() + 1}-${timestamp.getDate()}`;
+  const time = `${timestamp.getFullYear()}-${
+    timestamp.getMonth() + 1
+  }-${timestamp.getDate()}`;
+
+  const { data } = useSWR(
+    `/api/posts/${id}/length`,
+    (url) => fetch(url).then((res) => res.json()),
+    { refreshInterval: 1000 }
+  );
 
   return (
     <Link href={`/study/${id}`}>
@@ -35,8 +35,8 @@ const Memo = ({
         <p className="text-ellipsis overflow-hidden text-sm font-medium text-gray-900">
           {content}
         </p>
-        <div className="absolute bottom-0 right-1 w-full pl-3 flex justify-between text-sm font-medium text-gray-700">
-          <div className="text-sm font-normal text-slate-700">{time}</div>
+        <div className="absolute bottom-0 right-1 w-full pl-2 flex justify-between text-sm font-medium text-gray-700">
+          <div className="text-xs font-normal text-slate-700">{time}</div>
           <div className="flex space-x-2">
             <div className="flex items-center space-x-1">
               <svg
@@ -53,7 +53,7 @@ const Memo = ({
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
               </svg>
-              <span>{likeCount}</span>
+              <span>{data ? data.likes : 0}</span>
             </div>
             <div className="flex items-center space-x-1">
               <svg
@@ -70,7 +70,7 @@ const Memo = ({
                   d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                 />
               </svg>
-              <span>{commentCount}</span>
+              <span>{data ? data.comments : 0}</span>
             </div>
           </div>
         </div>
