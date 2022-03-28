@@ -28,15 +28,15 @@ const handler = async (
     },
   });
 
-  // if (token) {
-  //   await mail.send({
-  //     from: process.env.MY_EMAIL!,
-  //     to: email,
-  //     subject: 'Login Token Mail',
-  //     text: payload,
-  //     html: `<strong>Your token is ${payload}</strong>`,
-  //   });
-  // }
+  if (token) {
+    await mail.send({
+      from: process.env.MY_EMAIL!,
+      to: email,
+      subject: 'Login Token Mail',
+      text: payload,
+      html: `<strong>Your token is ${payload}</strong>`,
+    });
+  }
 
   console.log(token);
 
