@@ -110,6 +110,15 @@ export const getBlockData = (blocks: ListBlockChildrenResponse) => {
         text: blockObjectResponse.code.rich_text[0].plain_text,
       });
     }
+
+    if (blockObjectResponse.type === 'bulleted_list_item') {
+      studyPageContent.push({
+        type: 'bulleted_list_item',
+        text: blockObjectResponse.bulleted_list_item.rich_text[0].plain_text,
+      });
+    }
+
+
   });
 
   return studyPageContent;
