@@ -119,6 +119,7 @@ export interface PostBoardProps {
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { data: user } = useSWR<UserResponse>('/api/users/me');
+  // console.log(post)
 
   const { data: likeData, mutate: likeMutate } = useSWR<PostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
