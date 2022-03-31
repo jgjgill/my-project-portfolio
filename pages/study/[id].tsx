@@ -119,7 +119,6 @@ export interface PostBoardProps {
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { data: user } = useSWR<UserResponse>('/api/users/me');
-  // console.log(post)
 
   const { data: likeData, mutate: likeMutate } = useSWR<PostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
@@ -200,11 +199,11 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </p>
           <button
             className={cls(
-              likeData?.isLiked ? 'text-slate-600' : 'text-gray-700'
+              user?.ok && likeData?.isLiked ? 'text-slate-600' : 'text-gray-700'
             )}
             onClick={onToggleLike}
           >
-            {likeData?.isLiked ? (
+            {user?.ok && likeData?.isLiked ? (
               <svg
                 className="w-8 h-8"
                 fill="currentColor"
