@@ -30,7 +30,7 @@ const ProjectContainer = ({ title, date, git, children }: ProjectContainerProps)
           </Link>
         </div>
       </div>
-      <div className="bg-slate-200 h-full flex flex-col space-y-8 py-4 rounded-md shadow-md">
+      <div className="bg-slate-200 h-full flex flex-col space-y-8 p-4 rounded-md shadow-md">
         {children}        
       </div>
     </div>

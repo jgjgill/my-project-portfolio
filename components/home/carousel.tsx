@@ -12,19 +12,21 @@ interface CarouselProps {
 
 const Carousel = ({ imgsInfo }: CarouselProps) => {
   return (
-    <div className="flex flex-col px-8 w-full">
+    <div className="flex flex-col px-8 w-full border-2 border-slate-400 rounded-md shadow-md">
       <Slider
         dots={true}
         speed={500}
         infinite={true}
         slidesToShow={1}
         slidesToScroll={1}
-        className="w-full"
+        autoplay={true}
+        autoplaySpeed={5000}
+        className="w-full p-4"
       >
         {imgsInfo.map((imgInfo, i) => (
           <div key={i}>
             <div className="flex flex-col text-center">
-              <span className="text-2xl font-semibold text-slate-700">
+              <span className="text-2xl font-semibold mb-4 text-slate-700">
                 {imgInfo.title}
               </span>
               <Image src={imgInfo.src} />
