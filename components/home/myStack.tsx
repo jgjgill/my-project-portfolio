@@ -5,45 +5,82 @@ import tailwindcss from '../../public/tailwindcss.svg';
 import typescript from '../../public/typescript.svg';
 import mui from '../../public/mui.svg';
 import prisma from '../../public/prisma.svg';
+import { useState } from 'react';
+import MyStackImg, { MyStackImgProps } from './myStackImg';
 interface MyStackProps {}
 
 const MyStack = ({}: MyStackProps) => {
+  const [reactToggle, setReactToggle] = useState(false);
+  const [tsToggle, setTsToggle] = useState(false);
+  const [nextjsToggle, setNextjsToggle] = useState(false);
+  const [tailwindcssToggle, setTailwindcssToggle] = useState(false);
+  const [muiToggle, setMuiToggle] = useState(false);
+  const [prismaToggle, setPrismaToggle] = useState(false);
+
+  const myStacks: MyStackImgProps[] = [
+    {
+      src: react,
+      stack: 'react',
+      enterToggle: () => setReactToggle(true),
+      leaveToggle: () => setReactToggle(false),
+      toggle: reactToggle,
+      contents: [
+        '선언적 프로그래밍으로 생산성을 높일 수 있다.',
+        '컴포넌트를 통해서 유지보수가 용이하다.',
+        'Virtual DOM의 활용으로 렌더링 시 높은 성능을 유지할 수 있다.',
+      ],
+    },
+    {
+      src: typescript,
+      stack: 'typescript',
+      enterToggle: () => setTsToggle(true),
+      leaveToggle: () => setTsToggle(false),
+      toggle: tsToggle,
+      contents: ['자동완성을 통해 생산성을 높일 수 있다.'],
+    },
+    {
+      src: nextjs,
+      stack: 'nextjs',
+      enterToggle: () => setNextjsToggle(true),
+      leaveToggle: () => setNextjsToggle(false),
+      toggle: nextjsToggle,
+      contents: ['페이지 설정', 'SEO', 'SSR, CSR, SSG 렌더링'],
+    },
+    {
+      src: tailwindcss,
+      stack: 'tailwindcss',
+      enterToggle: () => setTailwindcssToggle(true),
+      leaveToggle: () => setTailwindcssToggle(false),
+      toggle: tailwindcssToggle,
+      contents: ['CSS 코드 관리 용이'],
+    },
+    {
+      src: mui,
+      stack: 'mui',
+      enterToggle: () => setMuiToggle(true),
+      leaveToggle: () => setMuiToggle(false),
+      toggle: muiToggle,
+      contents: ['쉽고 빠른 디자인'],
+    },
+    {
+      src: prisma,
+      stack: 'prisma',
+      enterToggle: () => setPrismaToggle(true),
+      leaveToggle: () => setPrismaToggle(false),
+      toggle: prismaToggle,
+      contents: ['생산성 증가'],
+    },
+  ];
+
   return (
     <div className="bg-slate-200 px-2 py-2 space-y-4 rounded-md shadow-md">
       <p className="text-4xl text-center font-semibold text-gray-700">
         My Stack
       </p>
       <div className="grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md">
-        <Image src={react} width={70} height={70} layout="fixed" alt="react" />
-        <Image
-          src={typescript}
-          width={70}
-          height={70}
-          layout="fixed"
-          alt="typescript"
-        />
-        <Image
-          src={nextjs}
-          width={70}
-          height={70}
-          layout="fixed"
-          alt="nextjs"
-        />
-        <Image
-          src={tailwindcss}
-          width={70}
-          height={70}
-          layout="fixed"
-          alt="tailwindcss"
-        />
-        <Image src={mui} width={70} height={70} layout="fixed" alt="mui" />
-        <Image
-          src={prisma}
-          width={70}
-          height={70}
-          layout="fixed"
-          alt="prisma"
-        />
+        {myStacks.map((myStack) => (
+          <MyStackImg {...myStack} key={myStack.stack} />
+        ))}
       </div>
     </div>
   );
