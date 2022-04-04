@@ -50,7 +50,7 @@ const Project = ({}: ProjectProps) => {
   } = useForm();
 
   const developValid = () => {
-    console.log('develop');
+    console.log('development log');
   };
 
   return (
@@ -63,7 +63,7 @@ const Project = ({}: ProjectProps) => {
         <Carousel imgsInfo={MyBlogCarouselImgs} />
         <Content contents={MyBlogContents} />
         <form onSubmit={developSubmit(developValid)}>
-          <Button text="develop" loading={false} />
+          <Button text="Development Log" loading={false} />
         </form>
       </ProjectContainer>
       <ProjectContainer
