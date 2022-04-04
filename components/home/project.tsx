@@ -1,8 +1,9 @@
-import Link from 'next/link';
 import Carousel from './carousel';
 import ProjectContainer from './projectContainer';
 import study1 from '../../public/study1.png';
 import Content from './content';
+import Button from '@components/button';
+import { useForm } from 'react-hook-form';
 
 interface ProjectProps {}
 
@@ -42,6 +43,16 @@ const Project = ({}: ProjectProps) => {
     },
   ];
 
+  const {
+    register: developRegister,
+    handleSubmit: developSubmit,
+    formState: { errors: developErrors },
+  } = useForm();
+
+  const developValid = () => {
+    console.log('develop');
+  };
+
   return (
     <div className="bg-slate-200 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
       <ProjectContainer
@@ -51,6 +62,9 @@ const Project = ({}: ProjectProps) => {
       >
         <Carousel imgsInfo={MyBlogCarouselImgs} />
         <Content contents={MyBlogContents} />
+        <form onSubmit={developSubmit(developValid)}>
+          <Button text="develop" loading={false} />
+        </form>
       </ProjectContainer>
       <ProjectContainer
         title="Calendar-Project"
