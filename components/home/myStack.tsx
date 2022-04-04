@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import react from '../../public/react.svg';
 import nextjs from '../../public/nextjs.svg';
 import tailwindcss from '../../public/tailwindcss.svg';
@@ -24,11 +23,7 @@ const MyStack = ({}: MyStackProps) => {
       enterToggle: () => setReactToggle(true),
       leaveToggle: () => setReactToggle(false),
       toggle: reactToggle,
-      contents: [
-        '선언적 프로그래밍으로 생산성을 높일 수 있다.',
-        '컴포넌트를 통해서 유지보수가 용이하다.',
-        'Virtual DOM의 활용으로 렌더링 시 높은 성능을 유지할 수 있다.',
-      ],
+      contents: ['선언적 프로그래밍', '컴포넌트', 'Virtual DOM'],
     },
     {
       src: typescript,
@@ -36,7 +31,7 @@ const MyStack = ({}: MyStackProps) => {
       enterToggle: () => setTsToggle(true),
       leaveToggle: () => setTsToggle(false),
       toggle: tsToggle,
-      contents: ['자동완성을 통해 생산성을 높일 수 있다.'],
+      contents: ['자동완성'],
     },
     {
       src: nextjs,
@@ -44,11 +39,11 @@ const MyStack = ({}: MyStackProps) => {
       enterToggle: () => setNextjsToggle(true),
       leaveToggle: () => setNextjsToggle(false),
       toggle: nextjsToggle,
-      contents: ['페이지 설정', 'SEO', 'SSR, CSR, SSG 렌더링'],
+      contents: ['페이지 설정', 'SEO', 'SSR, CSR, SSG'],
     },
     {
       src: tailwindcss,
-      stack: 'tailwindcss',
+      stack: 'tailwind',
       enterToggle: () => setTailwindcssToggle(true),
       leaveToggle: () => setTailwindcssToggle(false),
       toggle: tailwindcssToggle,

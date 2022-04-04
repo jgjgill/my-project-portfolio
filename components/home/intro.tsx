@@ -8,7 +8,7 @@ const Intro = ({}: IntroProps) => {
       </p>
       <div className="text-right text-sm font-normal text-slate-500">
         <span>Last Update:</span>
-        <span>2022.03.30</span>
+        <span>2022.04.04</span>
       </div>
     </div>
   );

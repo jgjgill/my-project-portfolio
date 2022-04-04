@@ -1,20 +1,44 @@
 import Button from '@components/button';
 import Input from '@components/input';
 import useMutation from '@libs/client/useMutation';
+import { User } from '@prisma/client';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
-import { UserResponse } from './study/[id]';
 
 interface NicknameForm {
   nickname: string;
 }
 
+interface LikeAndCommentWithUser extends User {
+  likes: {
+    post: {
+      id: number;
+      title: string;
+    };
+  }[];
+  comments: {
+    id: number;
+    content: string;
+    post: {
+      id: number;
+      title: string;
+    };
+  }[];
+}
+
+interface UserResponse {
+  ok: boolean;
+  profile: LikeAndCommentWithUser;
+  error?: string;
+}
+
 const Profile: NextPage = () => {
   const { data: user, mutate: nicknameMutate } =
-    useSWR<UserResponse>('/api/users/me');
+    useSWR<UserResponse>('/api/profile/me');
 
   const router = useRouter();
 
@@ -68,6 +92,28 @@ const Profile: NextPage = () => {
         />
         <Button text="Enter" loading={false} />
       </form>
+
+      <div className="space-y-2">
+        <h3>좋아요 페이지</h3>
+        <div className="flex flex-col space-y-2">
+          {user?.profile.likes.map((like) => (
+            <Link key={like.post.id} href={`study/${like.post.id}`}>
+              <a className="underline hover:text-lg">{like.post.title}</a>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <h3>댓글 작성 내역</h3>
+        <div className="flex flex-col space-y-2">
+          {user?.profile.comments.map((comment) => (
+            <Link key={comment.id} href={`study/${comment.post.id}`}>
+              <a className="underline hover:text-lg">{comment.content}</a>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
