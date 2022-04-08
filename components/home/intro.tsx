@@ -14,7 +14,7 @@ const Intro = ({}: IntroProps) => {
       </div>
       <div className="absolute bottom-5 right-2 text-xs sm:text-right font-normal text-slate-50">
         <span>Last Update:</span>
-        <span>2022.04.04</span>
+        <span>2022.04.08</span>
       </div>
     </div>
   );

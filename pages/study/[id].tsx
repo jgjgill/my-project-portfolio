@@ -20,6 +20,7 @@ import { Comment as CommentType, User } from '@prisma/client';
 import Button from '@components/button';
 import { cls } from '@libs/client/utils';
 import { contentType } from '@libs/client/notionContentType';
+import Head from 'next/head';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
@@ -177,6 +178,10 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <>
+      <Head>
+        <title>Study</title>
+      </Head>
+    
       <div className="px-2 py-2 space-y-2 border border-slate-400 rounded-md shadow-md">
         <div className="relative flex">
           <svg

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Button from '@components/button';
 import useSWR from 'swr';
 import { UserResponse } from './study/[id]';
+import Head from 'next/head';
 
 interface LoginForm {
   email: string;
@@ -77,11 +78,17 @@ const Login: NextPage = () => {
 
   return (
     <div className="border border-slate-400 px-2 py-2 space-y-2 rounded-md shadow-md">
+      <Head>
+        <title>Login</title>
+      </Head>
+
       <div className="text-xl font-bold text-slate-400">Login</div>
 
       {emailData?.ok ? (
         <div className="space-y-4">
-          <p className="flex justify-center text-slate-400">이메일로 토큰을 전송했습니다!</p>
+          <p className="flex justify-center text-slate-400">
+            이메일로 토큰을 전송했습니다!
+          </p>
           <form
             onSubmit={tokenSubmit(tokenValid)}
             className="flex flex-col space-y-2 items-center"

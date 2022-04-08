@@ -17,6 +17,7 @@ import {
 import client from '@libs/server/client';
 import { Post } from '@prisma/client';
 import useSWR from 'swr';
+import Head from 'next/head';
 
 type ThemeContent = {
   pageId: string;
@@ -158,6 +159,10 @@ const Study: NextPage = ({
 
   return (
     <>
+      <Head>
+        <title>Study</title>
+      </Head>
+
       <div className="flex flex-col px-2 py-2 space-y-8 border border-slate-400 rounded-md shadow-md">
         <div className="flex justify-between px-4 space-x-2">
           <div className="flex items-center text-center px-2 py-2 border border-slate-400 rounded-md shadow-md">

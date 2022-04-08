@@ -22,10 +22,10 @@ const Navbar = ({}: NavbarProps) => {
     <nav className="flex sticky top-0 z-10 justify-between bg-slate-800 px-4 py-2 rounded-md shadow-md">
       <Link href="/">
         <a className="flex items-center space-x- px-2">
-          <span className="text-slate-400 text-xl font-semibold">JG</span>
+          <span className="text-slate-50 text-xl font-semibold">JG</span>
         </a>
       </Link>
-      <ul className="flex items-center space-x-4 justify-between text-xl font-semibold text-slate-400">
+      <ul className="flex items-center space-x-4 justify-between text-xl font-semibold text-slate-50">
         {filteredNav.map((item) => (
           <li key={item.name}>
             <Link href={item.href}>

@@ -11,6 +11,9 @@ declare module 'iron-session' {
 const cookieOptions = {
   cookieName: 'loginSession',
   password: process.env.COOKIE_PASSWORD!,
+  cookieOptions: {
+    maxAge: undefined,
+  },
 };
 
 export const withApiSession = (fn: any) => {
