@@ -20,6 +20,7 @@ import { Comment as CommentType, User } from '@prisma/client';
 import Button from '@components/button';
 import { cls } from '@libs/client/utils';
 import { contentType } from '@libs/client/notionContentType';
+import Head from 'next/head';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany();
@@ -177,10 +178,14 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <>
-      <div className="px-2 py-2 space-y-2 bg-slate-400 rounded-md shadow-md">
+      <Head>
+        <title>Study</title>
+      </Head>
+    
+      <div className="px-2 py-2 space-y-2 border border-slate-400 rounded-md shadow-md">
         <div className="relative flex">
           <svg
-            className="absolute top-0 -left-1 w-8 h-8 cursor-pointer"
+            className="absolute top-0 -left-1 w-8 h-8 cursor-pointer fill-slate-400 stroke-slate-700"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -194,13 +199,11 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
               d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
             />
           </svg>
-          <p className="px-8 py-2 w-full text-center text-xl font-semibold text-gray-800 ">
+          <p className="px-8 py-2 w-full text-center text-xl font-semibold text-slate-400 ">
             {post.title}
           </p>
           <button
-            className={cls(
-              user?.ok && likeData?.isLiked ? 'text-slate-600' : 'text-gray-700'
-            )}
+            className='text-slate-400'
             onClick={onToggleLike}
           >
             {user?.ok && likeData?.isLiked ? (
@@ -235,13 +238,13 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             )}
           </button>
         </div>
-        <div className="px-4 py-4 min-h-[20rem] overflow-x-hidden whitespace-pre-wrap bg-slate-300 rounded-md shadow-md">
+        <div className="px-4 py-4 min-h-[20rem] overflow-x-hidden whitespace-pre-wrap border border-slate-400 rounded-md shadow-md">
           {post.content.map((item: PostContent, i: number) =>
             contentType(item, i)
           )}
         </div>
       </div>
-      <div className="px-2 py-2 bg-slate-400 space-y-2 rounded-md shadow-md">
+      <div className="px-2 py-2 border border-slate-400 space-y-2 rounded-md shadow-md">
         <form
           className="flex flex-col space-y-2"
           onSubmit={commentSubmit(commentVaild)}
@@ -259,7 +262,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <Button text="Submit" loading={commentLoading} />
         </form>
         {data?.comments.length !== 0 && (
-          <div className="space-y-2 px-2 py-2 bg-slate-300 rounded-md shadow-md divide-y-2 divide-gray-400">
+          <div className="space-y-2 px-2 py-2 bg-slate-400 rounded-md shadow-md divide-y-2 divide-slate-400">
             {data?.comments?.map((comment) => (
               <Comment
                 id={comment.id}

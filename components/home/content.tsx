@@ -11,13 +11,13 @@ const Content = ({ contents }: ContentProps) => {
         <div key={i} className="space-y-2">
           {content.link ? (
             <>
-              <h3 className="text-slate-500 text-2xl font-semibold">Address</h3>
+              <h3 className="text-slate-400 text-2xl font-semibold">Address</h3>
               <p>
                 <Link href={`https://${content.content}`} passHref>
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-400 text-lg font-semibold"
+                    className="text-slate-50 text-lg font-semibold"
                   >
                     {content.content}
                   </a>
@@ -26,10 +26,10 @@ const Content = ({ contents }: ContentProps) => {
             </>
           ) : (
             <>
-              <h3 className="text-slate-500 text-2xl font-semibold">
+              <h3 className="text-slate-400 text-2xl font-semibold">
                 {content.title}
               </h3>
-              <p className="text-slate-700 text-lg font-semibold">
+              <p className="text-slate-50 text-lg font-semibold">
                 {content.content}
               </p>
             </>

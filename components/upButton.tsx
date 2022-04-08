@@ -8,7 +8,7 @@ const UpButton = ({}: UpButtonProps) => {
   return (
     <svg
       onClick={onClickTop}
-      className="w-16 h-16 hover:w-[4.25rem] hover:h-[4.25rem] fixed bottom-5 right-5 stroke-slate-500 hover:cursor-pointer"
+      className="w-16 h-16 hover:w-[4.25rem] hover:h-[4.25rem] fixed bottom-5 right-5 stroke-slate-50 hover:cursor-pointer"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"

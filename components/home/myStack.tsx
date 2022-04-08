@@ -68,8 +68,8 @@ const MyStack = ({}: MyStackProps) => {
   ];
 
   return (
-    <div className="bg-slate-200 px-2 py-2 space-y-4 rounded-md shadow-md">
-      <p className="text-4xl text-center font-semibold text-gray-700">
+    <div className="border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md">
+      <p className="text-4xl text-center font-semibold text-slate-400">
         My Stack
       </p>
       <div className="grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md">

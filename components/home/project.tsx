@@ -54,7 +54,7 @@ const Project = ({}: ProjectProps) => {
   };
 
   return (
-    <div className="bg-slate-200 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
+    <div className="border border-slate-400 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
       <ProjectContainer
         title="My Blog"
         date="2022-02-08 ~ ing..."

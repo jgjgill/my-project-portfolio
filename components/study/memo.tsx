@@ -25,22 +25,22 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
 
   return (
     <Link href={`/study/${id}`}>
-      <a className="relative flex flex-col px-2 py-6 space-y-2 bg-slate-400 max-h-80 transition hover:scale-[102%] cursor-pointer rounded-md shadow-md">
+      <a className="relative flex flex-col px-2 py-6 space-y-2 border border-slate-400 max-h-80 transition hover:scale-[102%] cursor-pointer rounded-md shadow-md">
         <div className="flex relative items-center pl-2">
-          <div className="absolute -top-6 -left-4">
+          <div className="absolute -top-8 -left-4">
             <Icon text={text} />
           </div>
-          <span className="text-sm font-semibold text-gray-700">{title}</span>
+          <span className="text-sm font-semibold text-slate-400">{title}</span>
         </div>
-        <p className="text-ellipsis overflow-hidden text-sm font-medium text-gray-900">
+        <p className="text-ellipsis overflow-hidden text-sm font-medium text-slate-50">
           {content}
         </p>
         <div className="absolute bottom-0 right-1 w-full pl-2 flex justify-between text-sm font-medium text-gray-700">
-          <div className="text-xs font-normal text-slate-700">{time}</div>
+          <div className="text-xs font-normal text-slate-50">{time}</div>
           <div className="flex space-x-2">
             <div className="flex items-center space-x-1">
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 fill-slate-50"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -53,11 +53,11 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
               </svg>
-              <span>{data ? data.likes : 0}</span>
+              <span className='text-slate-50'>{data ? data.likes : 0}</span>
             </div>
             <div className="flex items-center space-x-1">
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 fill-slate-50"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -70,7 +70,7 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
                   d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                 />
               </svg>
-              <span>{data ? data.comments : 0}</span>
+              <span className='text-slate-50'>{data ? data.comments : 0}</span>
             </div>
           </div>
         </div>

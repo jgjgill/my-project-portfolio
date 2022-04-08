@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Carousel from './carousel';
 
 interface ProjectContainerProps {
   title: string;
@@ -10,9 +9,9 @@ interface ProjectContainerProps {
 
 const ProjectContainer = ({ title, date, git, children }: ProjectContainerProps) => {
   return (
-    <div className="bg-slate-400 space-y-4 px-4 py-2 h-full rounded-md shadow-md">
+    <div className="space-y-4 px-4 py-2 h-full border border-slate-400 rounded-md shadow-md">
       <div className="flex items-center px-4 py-2 justify-between text-sm md:text-xl font-bold text-gray-700">
-        <div className="flex space-x-8">
+        <div className="flex text-slate-400 space-x-8">
           <span>{title}</span>
           <span>{date}</span>
         </div>
@@ -20,7 +19,7 @@ const ProjectContainer = ({ title, date, git, children }: ProjectContainerProps)
           <Link href={git} passHref>
             <a target="_blank" rel="noopener noreferrer">
               <svg
-                className="w-6 h-6 hover:w-7 hover:h-7"
+                className="w-6 h-6 fill-slate-400 hover:w-7 hover:h-7"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -30,7 +29,7 @@ const ProjectContainer = ({ title, date, git, children }: ProjectContainerProps)
           </Link>
         </div>
       </div>
-      <div className="bg-slate-200 h-full flex flex-col space-y-8 p-4 rounded-md shadow-md">
+      <div className="h-full flex flex-col space-y-8 p-4">
         {children}        
       </div>
     </div>
