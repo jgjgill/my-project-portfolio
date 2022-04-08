@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const { data: user } = useSWR<UserResponse>('/api/users/me');
 
   return (
-    <>
+    <div className='space-y-20'>
       <Head>
         <title>Home</title>
       </Head>
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       <MyStack />
       <Project />
       <UpButton />
-    </>
+    </div>
   );
 };
 

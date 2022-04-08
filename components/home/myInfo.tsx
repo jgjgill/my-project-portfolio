@@ -5,7 +5,7 @@ interface MyInfoProps {}
 const MyInfo = ({}: MyInfoProps) => {
   return (
     <>
-      <p className="text-4xl text-center font-semibold text-gray-700">
+      <p className="text-4xl text-center font-semibold text-slate-400">
         My Info
       </p>
       <div className="border-slate-400 border-2 px-4 py-2 rounded-md shadow-md">

@@ -10,16 +10,16 @@ interface IconProps {
 const Icon = ({ text, fullName, ...rest }: IconProps) => {
   return (
     <div
-      className="flex items-center justify-center bg-slate-500 cursor-pointer min-w-[2rem] px-2 transition hover:scale-105 rounded-md shadow-md "
+      className="flex items-center justify-center border border-slate-400 cursor-pointer min-w-[2rem] px-2 transition hover:scale-105 rounded-md shadow-md "
       {...rest}
     >
       <div
         className={cls(
           'text-xl text-center font-semibold',
-          text === 'FrontEnd' ? 'text-teal-300' : '',
-          text === 'BackEnd' ? 'text-sky-300' : '',
-          text === 'UX/UI' ? 'text-orange-300' : '',
-          text === 'Clean Code' ? 'text-indigo-300' : ''
+          text === 'FrontEnd' ? 'text-sky-700' : '',
+          text === 'BackEnd' ? 'text-indigo-700' : '',
+          text === 'UX/UI' ? 'text-cyan-700' : '',
+          text === 'Clean Code' ? 'text-teal-700' : ''
         )}
       >
         {fullName ? text : text[0]}

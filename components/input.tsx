@@ -23,7 +23,7 @@ const Input = ({
     <div className="w-full flex flex-col">
       <label
         htmlFor={name}
-        className="text-base font-medium text-gray-700 cursor-pointer"
+        className="text-base font-medium text-slate-400 cursor-pointer"
       >
         {label}
       </label>
@@ -33,10 +33,12 @@ const Input = ({
         placeholder={placeholder}
         {...register}
         required={required}
-        className="px-2 py-1 rounded-md shadow-md"
+        className="px-2 py-1  bg-slate-50 border border-slate-400 placeholder-slate-400 rounded-md shadow-md"
       />
       {errors && (
-        <p className="text-center text-gray-700 text-base font-medium">{errors.message}</p>
+        <p className="text-center text-slate-400 text-base font-medium">
+          {errors.message}
+        </p>
       )}
     </div>
   );

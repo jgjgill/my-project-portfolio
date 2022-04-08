@@ -6,17 +6,17 @@ interface IntoduceProps {}
 
 const Introduce = ({}: IntoduceProps) => {
   return (
-    <div className="bg-slate-200 px-2 py-2 space-y-4 rounded-md shadow-md">
+    <div className="border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md">
       <div className="flex justify-between">
 
         <div className="w-20 h-20 sm:w-32 sm:h-32 bg-slate-400" />
         
-        <div className="h-20 sm:h-32 bg-slate-300 px-2 py-2 rounded-md shadow-md">
+        <div className="h-20 sm:h-32 border border-slate-400 px-2 py-2 rounded-md shadow-md">
           <div className="flex">
             <IntroItem>
               <Link href="https://velog.io/@jgjgill">
                 <a target="_blank" rel="noopener noreferrer">
-                  <span className="text-xl font-bold hover:text-2xl">velog</span>
+                  <span className="text-xl font-bold text-slate-50 hover:text-2xl">velog</span>
                 </a>
               </Link>
             </IntroItem>
@@ -24,7 +24,7 @@ const Introduce = ({}: IntoduceProps) => {
               <Link href="https://www.instagram.com/jgjgill/" passHref>
                 <a target="_blank" rel="noopener noreferrer">
                   <svg
-                    className="w-6 h-6 hover:w-7 hover:h-7"
+                    className="w-6 h-6 fill-slate-50 hover:w-7 hover:h-7"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -37,7 +37,7 @@ const Introduce = ({}: IntoduceProps) => {
               <Link href="https://github.com/jgjgill" passHref>
                 <a target="_blank" rel="noopener noreferrer">
                   <svg
-                  className='w-6 h-6 hover:w-7 hover:h-7'
+                  className='w-6 h-6 fill-slate-50 hover:w-7 hover:h-7'
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
