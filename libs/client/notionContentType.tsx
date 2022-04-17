@@ -25,7 +25,7 @@ export const contentType = (item: PostContent, index: number) => {
       );
     case 'heading_3':
       return (
-        <h3 key={index} className="text-slate-100 font-semibold">
+        <h3 key={index} className="text-slate-50 font-semibold">
           {item.text}
           <br />
         </h3>
