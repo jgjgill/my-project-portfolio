@@ -58,8 +58,8 @@ const DevelopmentLog = ({ contents }: DevelopmentLogProps) => {
               </svg>
             </button>
             <div className="text-slate-50 space-y-4 py-5">
-              {contents.map((content) => (
-                <div className="grid grid-cols-6 gap-4">
+              {contents.map((content, i) => (
+                <div key={i} className="grid grid-cols-6 gap-4">
                   <span className="col-span-1 flex justify-center items-center break-all">
                     {content.title}
                   </span>
