@@ -16,7 +16,7 @@ const Introduce = ({}: IntoduceProps) => {
             <IntroItem>
               <Link href="https://velog.io/@jgjgill">
                 <a target="_blank" rel="noopener noreferrer">
-                  <span className="text-xl font-bold text-slate-50 hover:text-2xl">velog</span>
+                  <span className="text-xl font-bold text-slate-50 hover:text-[1.3rem]">velog</span>
                 </a>
               </Link>
             </IntroItem>
@@ -24,7 +24,7 @@ const Introduce = ({}: IntoduceProps) => {
               <Link href="https://www.instagram.com/jgjgill/" passHref>
                 <a target="_blank" rel="noopener noreferrer">
                   <svg
-                    className="w-6 h-6 fill-slate-50 hover:w-7 hover:h-7"
+                    className="w-6 h-6 fill-slate-50 hover:scale-105 transition"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -37,7 +37,7 @@ const Introduce = ({}: IntoduceProps) => {
               <Link href="https://github.com/jgjgill" passHref>
                 <a target="_blank" rel="noopener noreferrer">
                   <svg
-                  className='w-6 h-6 fill-slate-50 hover:w-7 hover:h-7'
+                  className='w-6 h-6 fill-slate-50 hover:scale-105 transition'
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >

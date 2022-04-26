@@ -19,7 +19,7 @@ const ProjectContainer = ({ title, date, git, children }: ProjectContainerProps)
           <Link href={git} passHref>
             <a target="_blank" rel="noopener noreferrer">
               <svg
-                className="w-6 h-6 fill-slate-400 hover:w-7 hover:h-7"
+                className="w-6 h-6 fill-slate-400 hover:scale-105 transition"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >

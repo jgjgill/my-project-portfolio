@@ -2,8 +2,7 @@ import Carousel from './carousel';
 import ProjectContainer from './projectContainer';
 import study1 from '../../public/study1.png';
 import Content from './content';
-import Button from '@components/button';
-import { useForm } from 'react-hook-form';
+import DevelopmentLog from './developmentLog';
 
 interface ProjectProps {}
 
@@ -43,15 +42,21 @@ const Project = ({}: ProjectProps) => {
     },
   ];
 
-  const {
-    register: developRegister,
-    handleSubmit: developSubmit,
-    formState: { errors: developErrors },
-  } = useForm();
+  const developmentLogContents = [
+    {
+      title: '개발 과정',
+      content: '열심히 작성하고 있습니다! 기다려주세요...',
+    },
+    {
+      title: '배운 점',
+      content: '열심히 작성하고 있습니다! 기다려주세요...',
+    },
+    {
+      title: '보완할 점',
 
-  const developValid = () => {
-    console.log('development log');
-  };
+      content: '열심히 작성하고 있습니다! 기다려주세요...',
+    },
+  ];
 
   return (
     <div className="border border-slate-400 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
@@ -62,16 +67,14 @@ const Project = ({}: ProjectProps) => {
       >
         <Carousel imgsInfo={MyBlogCarouselImgs} />
         <Content contents={MyBlogContents} />
-        <form onSubmit={developSubmit(developValid)}>
-          <Button text="Development Log" loading={false} />
-        </form>
+        <DevelopmentLog contents={developmentLogContents} />
       </ProjectContainer>
       <ProjectContainer
         title="Calendar-Project"
         date="2022-01-05 ~ 2022-01-30"
         git="https://github.com/JS-TFT/Calendar-Project"
       >
-        ing...
+        coming soon...
       </ProjectContainer>
     </div>
   );

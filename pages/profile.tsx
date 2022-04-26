@@ -1,10 +1,13 @@
 import Button from '@components/button';
 import Input from '@components/input';
+import Loading from '@components/loading';
+import UserComment from '@components/profile/userComment';
+import UserLike from '@components/profile/userLike';
+import UserNickname from '@components/profile/userNickname';
 import useMutation from '@libs/client/useMutation';
 import { User } from '@prisma/client';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,26 +17,10 @@ interface NicknameForm {
   nickname: string;
 }
 
-interface LikeAndCommentWithUser extends User {
-  likes: {
-    post: {
-      id: number;
-      title: string;
-    };
-  }[];
-  comments: {
-    id: number;
-    content: string;
-    post: {
-      id: number;
-      title: string;
-    };
-  }[];
-}
 
 interface UserResponse {
   ok: boolean;
-  profile: LikeAndCommentWithUser;
+  profile: User;
   error?: string;
 }
 
@@ -97,7 +84,9 @@ const Profile: NextPage = () => {
       </Head>
 
       <div className="text-xl font-bold text-slate-400">Profile</div>
-      <span className="text-slate-50">{user?.profile?.name}</span>
+      <Loading>
+        <UserNickname />
+      </Loading>
       <form
         onSubmit={nicknameSubmit(nicknameValid)}
         className="flex flex-col space-y-2 items-center"
@@ -115,27 +104,20 @@ const Profile: NextPage = () => {
 
       <div className="space-y-2 ">
         <h3 className="text-slate-400">좋아요 페이지 내역</h3>
+
         <div className="flex flex-col space-y-2">
-          {user?.profile.likes.map((like) => (
-            <Link key={like.post.id} href={`study/${like.post.id}`}>
-              <a className="underline text-slate-50 hover:translate-y-1 transition">
-                {like.post.title}
-              </a>
-            </Link>
-          ))}
+          <Loading>
+            <UserLike />
+          </Loading>
         </div>
       </div>
 
       <div className="space-y-2">
         <h3 className="text-slate-400">댓글 작성 내역</h3>
         <div className="flex flex-col space-y-2">
-          {user?.profile.comments.map((comment) => (
-            <Link key={comment.id} href={`study/${comment.post.id}`}>
-              <a className="underline text-slate-50 hover:translate-y-1 transition">
-                {comment.content}
-              </a>
-            </Link>
-          ))}
+          <Loading>
+            <UserComment />
+          </Loading>
         </div>
       </div>
 
