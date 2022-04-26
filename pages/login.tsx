@@ -126,6 +126,11 @@ const Login: NextPage = () => {
           <Button text="Get Login Link" loading={emailLoading} />
         </form>
       )}
+
+      <div className='text-slate-50 flex flex-col space-y-2 items-center'>
+        <span>이메일로 로그인 토큰을 보내드립니다.</span>
+        <span>브라우저를 닫으면 자동으로 쿠키를 삭제해 로그아웃 처리됩니다.</span>
+      </div>
     </div>
   );
 };
