@@ -21,7 +21,7 @@ const Carousel = ({ imgsInfo }: CarouselProps) => {
         slidesToScroll={1}
         autoplay={true}
         autoplaySpeed={5000}
-        className="w-[700px] flex p-4"
+        className="w-[300px] sm:w-[450px] lg:w-[800px] flex p-4"
       >
         {imgsInfo.map((imgInfo, i) => (
           <div key={i}>
