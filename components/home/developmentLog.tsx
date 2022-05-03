@@ -1,15 +1,14 @@
 import Button from '@components/button';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { DevelopmentLogContents } from './project';
 
 interface DevelopmentLogProps {
-  contents: {
-    title: string;
-    content: string;
-  }[];
+  logContents: DevelopmentLogContents[];
 }
 
-const DevelopmentLog = ({ contents }: DevelopmentLogProps) => {
+const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
   const [showDevelopmentLog, setShowDevelopmentLog] = useState(false);
 
   const {
@@ -39,7 +38,9 @@ const DevelopmentLog = ({ contents }: DevelopmentLogProps) => {
             className="fixed -top-8 left-0 right-0 bottom-0 bg-none"
           />
           <div className="fixed overflow-y-auto top-20 left-10 right-10 bottom-10 px-2 py-8 bg-slate-800 rounded-md shadow-md">
-            <span className="absolute top-0 left-1/2 -translate-x-1/2 p-1 text-2xl font-semibold text-slate-50">개발일지</span>
+            <span className="absolute top-0 left-1/2 -translate-x-1/2 p-1 text-2xl font-semibold text-slate-50">
+              개발일지
+            </span>
             <button
               className="absolute right-0 top-0 p-1 cursor-pointer"
               onClick={onToggleDevelopmentLog}
@@ -57,15 +58,34 @@ const DevelopmentLog = ({ contents }: DevelopmentLogProps) => {
                 />
               </svg>
             </button>
-            <div className="text-slate-50 space-y-4 py-5">
-              {contents.map((content, i) => (
-                <div key={i} className="grid grid-cols-6 gap-4">
-                  <span className="col-span-1 flex justify-center items-center break-all">
-                    {content.title}
+            <div className="text-slate-50 space-y-4 py-5 divide-y-4">
+              {logContents.map((logContent, i) => (
+                <div key={i} className="grid grid-cols-9 gap-4">
+                  <span className="col-span-2 flex justify-center items-center break-all text-2xl font-bold">
+                    {logContent.paragraph}
                   </span>
-                  <p className="col-span-5 flex items-center break-all justify-start">
-                    {content.content}
-                  </p>
+
+                  <div className="col-span-7 break-all space-y-5 divide-y-2">
+                    {logContent.contents.map((content, i) => (
+                      <div
+                        key={i}
+                        className="flex flex-col items-start space-y-2"
+                      >
+                        <span className="text-lg font-semibold">
+                          {content.contentTitle}
+                        </span>
+                        <p className="text-left">{content.contentText}</p>
+
+                        {content.contentLink && (
+                          <Link href="study/36">
+                            <a target="_blank" rel="noopener noreferrer">
+                              <span className='transition underline hover:font-bold'>관련 게시글</span>
+                            </a>
+                          </Link>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>

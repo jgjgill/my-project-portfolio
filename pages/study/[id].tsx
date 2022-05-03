@@ -18,7 +18,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Comment as CommentType, User } from '@prisma/client';
 import Button from '@components/button';
-import { cls } from '@libs/client/utils';
 import { contentType } from '@libs/client/notionContentType';
 import Head from 'next/head';
 
