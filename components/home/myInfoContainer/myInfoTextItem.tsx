@@ -1,10 +1,10 @@
-interface IntroTextProps {
+interface MyInfoTextItemProps {
   title: string
   text: string
   svg: string
 }
 
-const IntroText = ({ title, text, svg }: IntroTextProps) => {
+const MyInfoTextItem = ({ title, text, svg }: MyInfoTextItemProps) => {
   return (
     <div className='flex flex-col md:flex-row md:space-x-4'>
       <div className='flex space-x-1'>
@@ -26,4 +26,4 @@ const IntroText = ({ title, text, svg }: IntroTextProps) => {
   )
 }
 
-export default IntroText
+export default MyInfoTextItem

@@ -1,23 +1,26 @@
 import { NextPage } from 'next'
-import Introduce from '@components/home/introduce'
-import Project from '@components/home/project'
+import MyInfoContainer from '@components/home/myInfoContainer'
 import Head from 'next/head'
-import MyStack from '@components/home/myStack'
-import Intro from '@components/home/intro'
+import ImageContainer from '@components/home/imageContainer'
 import UpButton from '@components/upButton'
+import MyStackContainer from '@components/home/myStackContainer'
+import MyProjectContainer from '@components/home/myProjectContainer'
 
 const Home: NextPage = () => {
   return (
-    <div className='space-y-20'>
+    <>
       <Head>
         <title>Home</title>
       </Head>
-      <Intro />
-      <Introduce />
-      <MyStack />
-      <Project />
-      <UpButton />
-    </div>
+
+      <div className='space-y-20'>
+        <ImageContainer />
+        <MyInfoContainer />
+        <MyStackContainer />
+        <MyProjectContainer />
+        <UpButton />
+      </div>
+    </>
   )
 }
 

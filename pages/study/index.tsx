@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-const themeFilteredTextGroup = ['FrontEnd', 'Clean Code', 'BackEnd', 'UX/UI']
+const THEME_GROUP = ['FrontEnd', 'Clean Code', 'BackEnd', 'UX/UI']
 
 const Study: NextPage = ({ stringPosts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data } = useSWR<posts>('/api/posts')
@@ -124,7 +124,7 @@ const Study: NextPage = ({ stringPosts }: InferGetStaticPropsType<typeof getStat
           </div>
 
           <div className='grid grid-cols-2 gap-2 sm:grid-cols-4'>
-            {themeFilteredTextGroup.map((theme) => (
+            {THEME_GROUP.map((theme) => (
               <Icon key={theme} text={theme} fullName onClick={onToggleList(theme)} />
             ))}
           </div>
