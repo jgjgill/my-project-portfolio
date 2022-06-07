@@ -2,8 +2,6 @@ import { User } from '@prisma/client'
 import Link from 'next/link'
 import useSWR from 'swr'
 
-interface UserCommentProps {}
-
 interface LikeAndCommentWithUser extends User {
   likes: {
     post: {
@@ -27,19 +25,19 @@ interface UserResponse {
   error?: string
 }
 
-const UserComment = ({}: UserCommentProps) => {
-  const { data: user, mutate } = useSWR<UserResponse>('/api/profile/me', {
+const UserComment = () => {
+  const { data: user } = useSWR<UserResponse>('/api/profile/me', {
     suspense: true,
   })
 
   return (
-    <>
+    <div>
       {user?.profile.comments.map((comment) => (
         <Link key={comment.id} href={`study/${comment.post.id}`}>
           <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>
         </Link>
       ))}
-    </>
+    </div>
   )
 }
 

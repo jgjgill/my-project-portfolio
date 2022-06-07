@@ -2,19 +2,17 @@ import Link from 'next/link'
 import { UserResponse } from 'pages/study/[id]'
 import useSWR from 'swr'
 
-interface NavbarProps {}
-
-const nav = [
+const NAV = [
   { name: 'Home', href: '/' },
   { name: 'Study', href: '/study' },
   { name: 'Login', href: '/login' },
   { name: 'Profile', href: '/profile' },
 ]
 
-const Navbar = ({}: NavbarProps) => {
+const Navbar = () => {
   const { data: user } = useSWR<UserResponse>('/api/users/me')
 
-  const filteredNav = nav.filter((item) => (user?.ok ? item.name !== 'Login' : item.name !== 'Profile'))
+  const filteredNav = NAV.filter((item) => (user?.ok ? item.name !== 'Login' : item.name !== 'Profile'))
 
   return (
     <nav className='flex sticky top-0 z-10 justify-between bg-slate-800 px-4 py-2 rounded-md shadow-md'>

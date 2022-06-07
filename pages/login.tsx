@@ -27,25 +27,13 @@ const Login: NextPage = () => {
 
   const { data: user } = useSWR<UserResponse>('/api/users/me')
 
-  const [confirmEmail, { loading: emailLoading, data: emailData, error: emailError }] =
-    useMutation<MutationResult>('/api/users/enter')
+  const [confirmEmail, { loading: emailLoading, data: emailData }] = useMutation<MutationResult>('/api/users/enter')
 
-  const [confirmToken, { loading: tokenLoading, data: tokenData, error: tokenError }] =
-    useMutation<MutationResult>('/api/users/confirm')
+  const [confirmToken, { loading: tokenLoading, data: tokenData }] = useMutation<MutationResult>('/api/users/confirm')
 
-  const {
-    register: loginRegister,
-    handleSubmit: loginSubmit,
-    formState: { errors: loginErrors },
-    reset: loginReset,
-  } = useForm<LoginForm>()
+  const { register: loginRegister, handleSubmit: loginSubmit } = useForm<LoginForm>()
 
-  const {
-    register: tokenRegister,
-    handleSubmit: tokenSubmit,
-    formState: { errors: tokenErrors },
-    reset: tokenReset,
-  } = useForm<TokenForm>()
+  const { register: tokenRegister, handleSubmit: tokenSubmit, reset: tokenReset } = useForm<TokenForm>()
 
   const loginValid = (emailForm: LoginForm) => {
     confirmEmail(emailForm)
@@ -61,7 +49,6 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (tokenData?.error) {
-      alert(tokenData.error)
       tokenReset()
     }
   }, [tokenData, tokenReset])

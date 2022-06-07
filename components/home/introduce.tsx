@@ -2,9 +2,7 @@ import IntroItem from './introItem'
 import Link from 'next/link'
 import MyInfo from './myInfo'
 
-interface IntoduceProps {}
-
-const Introduce = ({}: IntoduceProps) => {
+const Introduce = () => {
   return (
     <div className='border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md'>
       <div className='flex justify-between'>

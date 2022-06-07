@@ -32,18 +32,9 @@ const Profile: NextPage = () => {
 
   const [logout, { loading: logoutLoading }] = useMutation('/api/profile/logout')
 
-  const {
-    register: nicknameRegister,
-    handleSubmit: nicknameSubmit,
-    formState: { errors: nicknameErrors },
-    reset: nicknameReset,
-  } = useForm<NicknameForm>()
+  const { register: nicknameRegister, handleSubmit: nicknameSubmit, reset: nicknameReset } = useForm<NicknameForm>()
 
-  const {
-    register: logoutRegister,
-    handleSubmit: logoutSubmit,
-    formState: { errors: logoutErrors },
-  } = useForm()
+  const { handleSubmit: logoutSubmit } = useForm()
 
   const nicknameValid = (nicknameForm: NicknameForm) => {
     nicknameChange(nicknameForm)

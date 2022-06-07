@@ -7,9 +7,7 @@ import prisma from '../../public/prisma.svg'
 import { useState } from 'react'
 import MyStackImg, { MyStackImgProps } from './myStackImg'
 
-interface MyStackProps {}
-
-const MyStack = ({}: MyStackProps) => {
+const MyStack = () => {
   const [reactToggle, setReactToggle] = useState(false)
   const [tsToggle, setTsToggle] = useState(false)
   const [nextjsToggle, setNextjsToggle] = useState(false)

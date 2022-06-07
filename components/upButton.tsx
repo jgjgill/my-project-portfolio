@@ -1,6 +1,4 @@
-interface UpButtonProps {}
-
-const UpButton = ({}: UpButtonProps) => {
+const UpButton = () => {
   const onClickTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

@@ -2,7 +2,15 @@ import Button from '@components/button'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { DevelopmentLogContents } from './project'
+
+interface DevelopmentLogContents {
+  paragraph: string
+  contents: {
+    contentTitle: string
+    contentText: string
+    contentLink?: string
+  }[]
+}
 
 interface DevelopmentLogProps {
   logContents: DevelopmentLogContents[]
@@ -11,11 +19,7 @@ interface DevelopmentLogProps {
 const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
   const [showDevelopmentLog, setShowDevelopmentLog] = useState(false)
 
-  const {
-    register: developRegister,
-    handleSubmit: developSubmit,
-    formState: { errors: developErrors },
-  } = useForm()
+  const { handleSubmit: developSubmit } = useForm()
 
   const developValid = () => {
     setShowDevelopmentLog((prev) => !prev)
@@ -33,12 +37,15 @@ const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
 
       {showDevelopmentLog && (
         <div>
-          <div onClick={onToggleDevelopmentLog} className='fixed -top-8 left-0 right-0 bottom-0 bg-none' />
           <div className='fixed overflow-y-auto top-20 left-10 right-10 bottom-10 px-2 py-8 bg-slate-800 rounded-md shadow-md'>
             <span className='absolute top-0 left-1/2 -translate-x-1/2 p-1 text-2xl font-semibold text-slate-50'>
               개발일지
             </span>
-            <button className='absolute right-0 top-0 p-1 cursor-pointer' onClick={onToggleDevelopmentLog}>
+            <button
+              type='button'
+              className='absolute right-0 top-0 p-1 cursor-pointer'
+              onClick={onToggleDevelopmentLog}
+            >
               <svg
                 className='w-6 h-6 stroke-slate-50 hover:scale-105 transition'
                 fill='currentColor'
@@ -60,8 +67,8 @@ const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
                   </span>
 
                   <div className='col-span-7 break-all space-y-5 divide-y-2'>
-                    {logContent.contents.map((content, i) => (
-                      <div key={i} className='flex flex-col items-start space-y-2'>
+                    {logContent.contents.map((content, index) => (
+                      <div key={index} className='flex flex-col items-start space-y-2'>
                         <span className='text-lg font-semibold'>{content.contentTitle}</span>
                         <p className='text-left'>{content.contentText}</p>
 
