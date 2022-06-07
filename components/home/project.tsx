@@ -4,8 +4,6 @@ import study1 from '../../public/study1.png'
 import Content from './content'
 import DevelopmentLog from './developmentLog'
 
-interface ProjectProps {}
-
 export interface DevelopmentLogContents {
   paragraph: string
   contents: {
@@ -15,7 +13,7 @@ export interface DevelopmentLogContents {
   }[]
 }
 
-const Project = ({}: ProjectProps) => {
+const Project = () => {
   const MyBlogCarouselImgs = [
     { title: 'Study', src: study1 },
     { title: 'Test', src: study1 },

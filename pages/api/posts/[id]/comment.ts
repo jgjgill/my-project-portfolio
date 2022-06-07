@@ -1,14 +1,14 @@
-import client from '@libs/server/client';
-import withHandler from '@libs/server/withHandler';
-import { withApiSession } from '@libs/server/withSession';
-import { NextApiRequest, NextApiResponse } from 'next';
+import client from '@libs/server/client'
+import withHandler from '@libs/server/withHandler'
+import { withApiSession } from '@libs/server/withSession'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     query: { id },
     session: { user },
     body: { comment },
-  } = req;
+  } = req
 
   const newComment = await client.comment.create({
     data: {
@@ -24,12 +24,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       content: comment,
     },
-  });
+  })
 
   return res.json({
     ok: true,
     comment: newComment,
-  });
-};
+  })
+}
 
-export default withApiSession(withHandler({ methods: ['POST'], handler }));
+export default withApiSession(withHandler({ methods: ['POST'], handler }))

@@ -35,10 +35,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params: { id } }: any) => {
   const notion = createNotion()
   const postContent = await client.post.findUnique({
-    where: { id: parseInt(id) },
+    where: { id: Number(id) },
   })
   const postComments = await client.comment.findMany({
-    where: { postId: parseInt(id) },
+    where: { postId: Number(id) },
   })
 
   const stringPostComments = JSON.stringify(postComments)
@@ -122,30 +122,21 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
     if (user?.ok) {
       toggleLike({})
       likeMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false)
-    } else {
-      alert(user?.error)
     }
   }
 
-  const {
-    register,
-    reset,
-    handleSubmit: commentSubmit,
-    formState: { errors },
-  } = useForm<CommentForm>()
+  const { register, reset, handleSubmit: commentSubmit } = useForm<CommentForm>()
   const { data, mutate } = useSWR<PostResponse>(router.query.id ? `/api/posts/${router.query.id}` : null)
   const [comment, { loading: commentLoading, data: commentData, error }] = useMutation<CommentResponse>(
     `/api/posts/${router.query.id}/comment`
   )
 
-  const commentVaild = (data: CommentForm) => {
+  const commentVaild = (commentValidData: CommentForm) => {
     if (commentLoading) return
 
     if (user?.ok) {
-      comment(data)
+      comment(commentValidData)
       reset()
-    } else {
-      alert(user?.error)
     }
   }
 

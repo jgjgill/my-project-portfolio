@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import test from '../../public/test1.png'
 
-interface IntroProps {}
-
-const Intro = ({}: IntroProps) => {
+const Intro = () => {
   return (
     <div className='relative'>
       <Image src={test} height={500} />

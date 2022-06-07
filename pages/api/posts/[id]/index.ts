@@ -1,16 +1,13 @@
-import client from '@libs/server/client';
-import withHandler, { ResponseType } from '@libs/server/withHandler';
-import { withApiSession } from '@libs/server/withSession';
-import { NextApiRequest, NextApiResponse } from 'next';
+import client from '@libs/server/client'
+import withHandler, { ResponseType } from '@libs/server/withHandler'
+import { withApiSession } from '@libs/server/withSession'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseType>
-) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseType>) => {
   const {
     query: { id },
     session: { user },
-  } = req;
+  } = req
 
   const isLiked = Boolean(
     await client.like.findFirst({
@@ -22,7 +19,7 @@ const handler = async (
         id: true,
       },
     })
-  );
+  )
 
   const comments = await client.comment.findMany({
     orderBy: {
@@ -31,13 +28,13 @@ const handler = async (
     where: {
       postId: +id,
     },
-  });
+  })
 
   return res.json({
     ok: true,
     isLiked,
     comments,
-  });
-};
+  })
+}
 
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(withHandler({ methods: ['GET'], handler }))

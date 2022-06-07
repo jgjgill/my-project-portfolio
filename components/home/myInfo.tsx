@@ -1,8 +1,6 @@
 import IntroText from './introText'
 
-interface MyInfoProps {}
-
-const MyInfo = ({}: MyInfoProps) => {
+const MyInfo = () => {
   return (
     <>
       <p className='text-4xl text-center font-semibold text-slate-400'>My Info</p>
