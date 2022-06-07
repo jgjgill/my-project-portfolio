@@ -173,7 +173,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             />
           </svg>
           <p className='px-8 py-2 w-full text-center text-xl font-semibold text-slate-400 '>{post.title}</p>
-          <button className='text-slate-400' onClick={onToggleLike}>
+          <button type='button' className='text-slate-400' onClick={onToggleLike}>
             {user?.ok && likeData?.isLiked ? (
               <svg className='w-8 h-8' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
                 <path
@@ -221,8 +221,13 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
         </form>
         {data?.comments.length !== 0 && (
           <div className='space-y-2 px-2 py-2 bg-slate-400 rounded-md shadow-md divide-y-2 divide-slate-400'>
-            {data?.comments?.map((comment) => (
-              <Comment id={comment.id} key={comment.id} name={comment.userName} content={comment.content} />
+            {data?.comments?.map((commentItem) => (
+              <Comment
+                id={commentItem.id}
+                key={commentItem.id}
+                name={commentItem.userName}
+                content={commentItem.content}
+              />
             ))}
           </div>
         )}
