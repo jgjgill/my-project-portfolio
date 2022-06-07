@@ -127,7 +127,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { register, reset, handleSubmit: commentSubmit } = useForm<CommentForm>()
   const { data, mutate } = useSWR<PostResponse>(router.query.id ? `/api/posts/${router.query.id}` : null)
-  const [comment, { loading: commentLoading, data: commentData, error }] = useMutation<CommentResponse>(
+  const [comment, { loading: commentLoading, data: commentData }] = useMutation<CommentResponse>(
     `/api/posts/${router.query.id}/comment`
   )
 

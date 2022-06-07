@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-interface DevelopmentLogContents {
+interface DevelopmentLogContent {
   paragraph: string
   contents: {
     contentTitle: string
@@ -12,11 +12,11 @@ interface DevelopmentLogContents {
   }[]
 }
 
-interface DevelopmentLogProps {
-  logContents: DevelopmentLogContents[]
+interface ProjectDevelopmentLogProps {
+  logContents: DevelopmentLogContent[]
 }
 
-const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
+const ProjectDevelopmentLog = ({ logContents }: ProjectDevelopmentLogProps) => {
   const [showDevelopmentLog, setShowDevelopmentLog] = useState(false)
 
   const { handleSubmit: developSubmit } = useForm()
@@ -92,4 +92,4 @@ const DevelopmentLog = ({ logContents }: DevelopmentLogProps) => {
   )
 }
 
-export default DevelopmentLog
+export default ProjectDevelopmentLog
