@@ -22,7 +22,7 @@ export const createNotion = () => {
   return notion;
 };
 
-export const fetchNotionPage = async (notion: notionClient, pageId: string) => {
+export const asyncFetchNotionPage = async (notion: notionClient, pageId: string) => {
   const pageData = await notion.blocks.children.list({
     block_id: pageId,
   });
@@ -31,9 +31,11 @@ export const fetchNotionPage = async (notion: notionClient, pageId: string) => {
 
 export const getThemePageNameGroup = (mainPage: ListBlockChildrenResponse) => {
   const themeNameGroup: ThemeName[] = [];
-  mainPage.results.map((mainPageBlock: UpdateBlockResponse) => {
-    // const blockObjectResponse = mainPageBlock as BlockObjectResponse;
+  mainPage.results.map((mainPageBlock) => {
+    // const blockObjectResponse = mainPageBlock;
+    // PartialBlockObjectResponse | BlockObjectResponse
     const blockObjectResponse = mainPageBlock as any;
+
 
     if (blockObjectResponse.type === 'child_page') {
       return themeNameGroup.push({
@@ -52,7 +54,7 @@ export const getThemePage = async (
   const themePageGroup: ThemePage[] = [];
   await Promise.all(
     themeNameGroup.map(async (themePageName) => {
-      const themePage = await fetchNotionPage(notion, themePageName.id);
+      const themePage = await asyncFetchNotionPage(notion, themePageName.id);
       themePageGroup.push({
         themeName: themePageName.themeName,
         themePageBlocks: themePage,
