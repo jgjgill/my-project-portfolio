@@ -1,20 +1,21 @@
-import react from '../../public/react.svg';
-import nextjs from '../../public/nextjs.svg';
-import tailwindcss from '../../public/tailwindcss.svg';
-import typescript from '../../public/typescript.svg';
-import mui from '../../public/mui.svg';
-import prisma from '../../public/prisma.svg';
-import { useState } from 'react';
-import MyStackImg, { MyStackImgProps } from './myStackImg';
+import react from '../../public/react.svg'
+import nextjs from '../../public/nextjs.svg'
+import tailwindcss from '../../public/tailwindcss.svg'
+import typescript from '../../public/typescript.svg'
+import mui from '../../public/mui.svg'
+import prisma from '../../public/prisma.svg'
+import { useState } from 'react'
+import MyStackImg, { MyStackImgProps } from './myStackImg'
+
 interface MyStackProps {}
 
 const MyStack = ({}: MyStackProps) => {
-  const [reactToggle, setReactToggle] = useState(false);
-  const [tsToggle, setTsToggle] = useState(false);
-  const [nextjsToggle, setNextjsToggle] = useState(false);
-  const [tailwindcssToggle, setTailwindcssToggle] = useState(false);
-  const [muiToggle, setMuiToggle] = useState(false);
-  const [prismaToggle, setPrismaToggle] = useState(false);
+  const [reactToggle, setReactToggle] = useState(false)
+  const [tsToggle, setTsToggle] = useState(false)
+  const [nextjsToggle, setNextjsToggle] = useState(false)
+  const [tailwindcssToggle, setTailwindcssToggle] = useState(false)
+  const [muiToggle, setMuiToggle] = useState(false)
+  const [prismaToggle, setPrismaToggle] = useState(false)
 
   const myStacks: MyStackImgProps[] = [
     {
@@ -65,20 +66,18 @@ const MyStack = ({}: MyStackProps) => {
       toggle: prismaToggle,
       contents: ['생산성 증가'],
     },
-  ];
+  ]
 
   return (
-    <div className="border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md">
-      <p className="text-4xl text-center font-semibold text-slate-400">
-        My Stack
-      </p>
-      <div className="grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md">
+    <div className='border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md'>
+      <p className='text-4xl text-center font-semibold text-slate-400'>My Stack</p>
+      <div className='grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md'>
         {myStacks.map((myStack) => (
           <MyStackImg {...myStack} key={myStack.stack} />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MyStack;
+export default MyStack

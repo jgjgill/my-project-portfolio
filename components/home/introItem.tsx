@@ -1,15 +1,15 @@
 interface IntroItemProps {
-  text?: string;
-  children?: React.ReactNode;
+  text?: string
+  children?: React.ReactNode
 }
 
 const IntroItem = ({ text, children }: IntroItemProps) => {
   return (
-    <div className="flex items-center justify-center w-16 h-10">
-      <span className="text-xl font-bold">{text}</span>
+    <div className='flex items-center justify-center w-16 h-10'>
+      <span className='text-xl font-bold'>{text}</span>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default IntroItem;
+export default IntroItem

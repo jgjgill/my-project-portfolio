@@ -1,25 +1,25 @@
-import Carousel from './carousel';
-import ProjectContainer from './projectContainer';
-import study1 from '../../public/study1.png';
-import Content from './content';
-import DevelopmentLog from './developmentLog';
+import Carousel from './carousel'
+import ProjectContainer from './projectContainer'
+import study1 from '../../public/study1.png'
+import Content from './content'
+import DevelopmentLog from './developmentLog'
 
 interface ProjectProps {}
 
 export interface DevelopmentLogContents {
-  paragraph: string;
+  paragraph: string
   contents: {
-    contentTitle: string;
-    contentText: string;
-    contentLink?: string;
-  }[];
+    contentTitle: string
+    contentText: string
+    contentLink?: string
+  }[]
 }
 
 const Project = ({}: ProjectProps) => {
   const MyBlogCarouselImgs = [
     { title: 'Study', src: study1 },
     { title: 'Test', src: study1 },
-  ];
+  ]
 
   const MyBlogContents = [
     {
@@ -49,7 +49,7 @@ const Project = ({}: ProjectProps) => {
       content: 'jgjgill.vercel.app',
       link: true,
     },
-  ];
+  ]
 
   const developmentLogContents: DevelopmentLogContents[] = [
     {
@@ -66,7 +66,8 @@ const Project = ({}: ProjectProps) => {
       contents: [
         {
           contentTitle: 'Suspense',
-          contentText: '로딩 컴포넌트를 만들어 Suspnese 적용해봤습니다. 직접 구현해보면서 선언적으로 로딩 기능을 처리할 수 있었습니다. 또한, 데이터가 이미 있을거라 가정하면서 코드를 작성할 수 있었습니다.',
+          contentText:
+            '로딩 컴포넌트를 만들어 Suspnese 적용해봤습니다. 직접 구현해보면서 선언적으로 로딩 기능을 처리할 수 있었습니다. 또한, 데이터가 이미 있을거라 가정하면서 코드를 작성할 수 있었습니다.',
           contentLink: 'study/36',
         },
         {
@@ -100,28 +101,28 @@ const Project = ({}: ProjectProps) => {
         },
       ],
     },
-  ];
+  ]
 
   return (
-    <div className="border border-slate-400 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md">
+    <div className='border border-slate-400 w-full py-4 px-2 text-center space-y-8 shadow-md rounded-md'>
       <ProjectContainer
-        title="My Blog"
-        date="2022-02-08 ~ ing..."
-        git="https://github.com/jgjgill/my_project_portfolio"
+        title='My Blog'
+        date='2022-02-08 ~ ing...'
+        git='https://github.com/jgjgill/my_project_portfolio'
       >
         <Carousel imgsInfo={MyBlogCarouselImgs} />
         <Content contents={MyBlogContents} />
         <DevelopmentLog logContents={developmentLogContents} />
       </ProjectContainer>
       <ProjectContainer
-        title="Calendar-Project"
-        date="2022-01-05 ~ 2022-01-30"
-        git="https://github.com/JS-TFT/Calendar-Project"
+        title='Calendar-Project'
+        date='2022-01-05 ~ 2022-01-30'
+        git='https://github.com/JS-TFT/Calendar-Project'
       >
         coming soon...
       </ProjectContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Project;
+export default Project
