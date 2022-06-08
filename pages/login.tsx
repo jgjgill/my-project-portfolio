@@ -1,63 +1,11 @@
 import { NextPage } from 'next'
-import { useForm } from 'react-hook-form'
-import Input from '@components/input'
-import useMutation from '@libs/client/useMutation'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import Button from '@components/button'
-import useSWR from 'swr'
-import { UserResponse } from './study/[id]'
+import { useState } from 'react'
 import Head from 'next/head'
-
-interface LoginForm {
-  email: string
-}
-
-interface TokenForm {
-  token: string
-}
-
-interface MutationResult {
-  ok: boolean
-  error?: string
-}
+import EmailForm from '@components/login/emailForm'
+import TokenForm from '@components/login/tokenForm'
 
 const Login: NextPage = () => {
-  const router = useRouter()
-
-  const { data: user } = useSWR<UserResponse>('/api/users/me')
-
-  const [confirmEmail, { loading: emailLoading, data: emailData }] = useMutation<MutationResult>('/api/users/enter')
-
-  const [confirmToken, { loading: tokenLoading, data: tokenData }] = useMutation<MutationResult>('/api/users/confirm')
-
-  const { register: loginRegister, handleSubmit: loginSubmit } = useForm<LoginForm>()
-
-  const { register: tokenRegister, handleSubmit: tokenSubmit, reset: tokenReset } = useForm<TokenForm>()
-
-  const loginValid = (emailForm: LoginForm) => {
-    confirmEmail(emailForm)
-  }
-
-  const tokenValid = (tokenForm: TokenForm) => {
-    confirmToken(tokenForm)
-  }
-
-  const onEmailBack = () => {
-    router.reload()
-  }
-
-  useEffect(() => {
-    if (tokenData?.error) {
-      tokenReset()
-    }
-  }, [tokenData, tokenReset])
-
-  useEffect(() => {
-    if ((user && user.ok) || tokenData?.ok) {
-      router.replace('/')
-    }
-  }, [user, tokenData, router])
+  const [isView, setIsView] = useState(false)
 
   return (
     <div className='border border-slate-400 px-2 py-2 space-y-2 rounded-md shadow-md'>
@@ -65,43 +13,10 @@ const Login: NextPage = () => {
         <title>Login</title>
       </Head>
 
-      <div className='text-xl font-bold text-slate-400'>Login</div>
+      <h1 className='text-xl font-bold text-slate-400'>Login</h1>
 
-      {emailData?.ok ? (
-        <div className='space-y-4'>
-          <p className='flex justify-center text-slate-400'>이메일로 토큰을 전송했습니다!</p>
-          <form onSubmit={tokenSubmit(tokenValid)} className='flex flex-col space-y-2 items-center'>
-            <Input
-              label='Token'
-              name='token'
-              type='text'
-              placeholder='토큰을 입력해주세요'
-              register={tokenRegister('token', { required: true })}
-              required
-            />
-            <Button text='Confirm Token' loading={tokenLoading} />
-          </form>
-          <button
-            type='button'
-            className='text-sm underline text-center text-slate-400 block cursor-pointer'
-            onClick={onEmailBack}
-          >
-            이메일 다시 입력
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={loginSubmit(loginValid)} className='flex flex-col space-y-2 items-center'>
-          <Input
-            label='Email'
-            name='email'
-            type='email'
-            placeholder='이메일을 입력해주세요'
-            register={loginRegister('email', { required: true })}
-            required
-          />
-          <Button text='Get Login Link' loading={emailLoading} />
-        </form>
-      )}
+      <EmailForm isView={!isView} setIsView={setIsView} />
+      <TokenForm isView={isView} />
 
       <div className='text-slate-50 flex flex-col space-y-2 items-center'>
         <span>이메일로 로그인 토큰을 보내드립니다.</span>
