@@ -1,4 +1,4 @@
-import Input from '@components/input'
+import Input from '@components/common/input'
 import Comment from '@components/study/comment'
 import { useForm } from 'react-hook-form'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
