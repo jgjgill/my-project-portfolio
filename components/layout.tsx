@@ -1,4 +1,7 @@
-import Navbar from './navbar'
+import dynamic from 'next/dynamic'
+import Loading from './loading'
+
+const Navbar = dynamic(() => import('./navbar'), { suspense: true })
 
 interface LayoutProps {
   children: React.ReactNode
@@ -7,7 +10,9 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className='bg-slate-700 min-h-screen flex flex-col space-y-2 px-4 py-2 w-full'>
-      <Navbar />
+      <Loading>
+        <Navbar />
+      </Loading>
       {children}
     </div>
   )

@@ -27,7 +27,7 @@ interface UserResponse {
 
 const UserComment = () => {
   const { data: user } = useSWR<UserResponse>('/api/profile/me', {
-    suspense: true,
+    // suspense: true,
   })
 
   return (
