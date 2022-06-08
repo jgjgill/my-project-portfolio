@@ -10,7 +10,9 @@ const NAV = [
 ]
 
 const Navbar = () => {
-  const { data: user } = useSWR<UserResponse>('/api/users/me')
+  const { data: user } = useSWR<UserResponse>('/api/users/me', {
+    // suspense: true,
+  })
 
   const filteredNav = NAV.filter((item) => (user?.ok ? item.name !== 'Login' : item.name !== 'Profile'))
 

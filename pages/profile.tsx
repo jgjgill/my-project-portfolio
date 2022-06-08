@@ -1,21 +1,21 @@
 import Button from '@components/button'
 import Input from '@components/input'
 import Loading from '@components/loading'
-import UserComment from '@components/profile/userComment'
-import UserLike from '@components/profile/userLike'
-import UserNickname from '@components/profile/userNickname'
+import NicknameForm from '@components/profile/nicknameForm'
+import UserHistroy from '@components/profile/userHistory'
 import useMutation from '@libs/client/useMutation'
 import { User } from '@prisma/client'
 import { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import useSWR from 'swr'
 
-interface NicknameForm {
-  nickname: string
-}
+const UserNickname = dynamic(() => import('@components/profile/userNickname'), { suspense: true })
+const UserLike = dynamic(() => import('@components/profile/userLike'), { suspense: true })
+const UserComment = dynamic(() => import('@components/profile/userComment'), { suspense: true })
 
 interface UserResponse {
   ok: boolean
@@ -28,29 +28,9 @@ const Profile: NextPage = () => {
 
   const router = useRouter()
 
-  const [nicknameChange, { loading: nicknameLoading }] = useMutation('/api/profile')
-
   const [logout, { loading: logoutLoading }] = useMutation('/api/profile/logout')
 
-  const { register: nicknameRegister, handleSubmit: nicknameSubmit, reset: nicknameReset } = useForm<NicknameForm>()
-
   const { handleSubmit: logoutSubmit } = useForm()
-
-  const nicknameValid = (nicknameForm: NicknameForm) => {
-    nicknameChange(nicknameForm)
-    nicknameMutate(
-      (prev) =>
-        prev && {
-          ...prev,
-          profile: {
-            ...prev.profile,
-            name: nicknameForm.nickname,
-          },
-        },
-      false
-    )
-    nicknameReset()
-  }
 
   const logoutValid = () => {
     logout({})
@@ -64,50 +44,27 @@ const Profile: NextPage = () => {
   }, [user, router])
 
   return (
-    <div className='border border-slate-400 px-2 py-2 space-y-2 rounded-md shadow-md'>
+    <>
       <Head>
         <title>Profile</title>
       </Head>
 
-      <div className='text-xl font-bold text-slate-400'>Profile</div>
-      <Loading>
-        <UserNickname />
-      </Loading>
-      <form onSubmit={nicknameSubmit(nicknameValid)} className='flex flex-col space-y-2 items-center'>
-        <Input
-          label='Nickname'
-          name='nickname'
-          type='text'
-          placeholder='Nickname Change'
-          register={nicknameRegister('nickname', { required: true })}
-          required
-        />
-        <Button text='Enter' loading={nicknameLoading} />
-      </form>
+      <div className='border border-slate-400 px-2 py-2 space-y-2 rounded-md shadow-md'>
+        <div className='text-xl font-bold text-slate-400'>Profile</div>
+        <Loading>
+          <UserNickname />
+        </Loading>
 
-      <div className='space-y-2 '>
-        <h3 className='text-slate-400'>좋아요 페이지 내역</h3>
+        <NicknameForm nicknameMutate={nicknameMutate} />
 
-        <div className='flex flex-col space-y-2'>
-          <Loading>
-            <UserLike />
-          </Loading>
-        </div>
+        <UserHistroy title='좋아요 페이지 내역' component={<UserLike />} />
+        <UserHistroy title='댓글 페이지 내역' component={<UserComment />} />
+
+        <form onSubmit={logoutSubmit(logoutValid)} className=''>
+          <Button text='Logout' loading={logoutLoading} />
+        </form>
       </div>
-
-      <div className='space-y-2'>
-        <h3 className='text-slate-400'>댓글 작성 내역</h3>
-        <div className='flex flex-col space-y-2'>
-          <Loading>
-            <UserComment />
-          </Loading>
-        </div>
-      </div>
-
-      <form onSubmit={logoutSubmit(logoutValid)} className=''>
-        <Button text='Logout' loading={logoutLoading} />
-      </form>
-    </div>
+    </>
   )
 }
 
