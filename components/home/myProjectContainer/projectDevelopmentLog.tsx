@@ -1,4 +1,4 @@
-import Button from '@components/button'
+import Button from '@components/common/button'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'

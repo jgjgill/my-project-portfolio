@@ -1,5 +1,5 @@
+import Loading from '@components/common/loading'
 import dynamic from 'next/dynamic'
-import Loading from './loading'
 
 const Navbar = dynamic(() => import('./navbar'), { suspense: true })
 
