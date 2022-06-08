@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react'
 import Icon from '@components/study/icon'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import { asyncFetchNotionPage, createNotion, getThemePage, getThemePageNameGroup, ThemePage } from '@libs/client/notion'
-import {
-  // BlockObjectResponse,
-  UpdateBlockResponse,
-} from '@notionhq/client/build/src/api-endpoints'
+import { UpdateBlockResponse } from '@notionhq/client/build/src/api-endpoints'
 import client from '@libs/server/client'
 import { Post } from '@prisma/client'
 import useSWR from 'swr'

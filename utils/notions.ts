@@ -1,4 +1,4 @@
-import client from "@libs/server/client"
+import client from '@libs/server/client'
 
 type ThemeContent = {
   pageId: string
@@ -10,12 +10,12 @@ type ThemeContent = {
 
 export const upsertPosts = (themePosts: ThemeContent[]) => {
   Promise.all(
-    themePosts.map((post) => (
+    themePosts.map((post) =>
       client.post.upsert({
-        where: { pageId: post.pageId},
-        update: {title: post.title, theme: post.theme},
-        create: post
+        where: { pageId: post.pageId },
+        update: { title: post.title, theme: post.theme },
+        create: post,
       })
-    ))
+    )
   )
 }
