@@ -83,6 +83,8 @@ const Study: NextPage = ({ stringPosts }: InferGetStaticPropsType<typeof getStat
   const posts: PostWithCount[] = JSON.parse(stringPosts)
 
   const onToggleList = (item: TextGroup) => () => {
+    if (postData.length === 0) return
+
     filteredIcon.includes(item)
       ? setfilteredIcon(filteredIcon.filter((icon) => icon !== item))
       : setfilteredIcon(filteredIcon.concat(item))

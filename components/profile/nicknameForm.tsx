@@ -1,4 +1,4 @@
-import Button from '@components/button'
+import Button from '@components/common/button'
 import Input from '@components/input'
 import useMutation from '@libs/client/useMutation'
 import { UserResponse } from 'pages/study/[id]'

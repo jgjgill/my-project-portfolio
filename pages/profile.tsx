@@ -1,4 +1,4 @@
-import Button from '@components/button'
+import Button from '@components/common/button'
 import Input from '@components/input'
 import Loading from '@components/loading'
 import NicknameForm from '@components/profile/nicknameForm'
