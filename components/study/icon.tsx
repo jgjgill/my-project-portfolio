@@ -1,16 +1,25 @@
-import { cls } from '@libs/client/utils';
-import { TextGroup } from 'pages/study';
+import { cls } from '@libs/client/utils'
+import { Post } from '@prisma/client'
+
+interface PostWithCount extends Post {
+  _count: {
+    comments: number
+    likes: number
+  }
+}
+
+export type TextGroup = PostWithCount['theme']
 
 interface IconProps {
-  text: TextGroup;
-  fullName?: boolean;
-  [key: string]: any;
+  text: TextGroup
+  fullName?: boolean
+  [key: string]: any
 }
 
 const Icon = ({ text, fullName, ...rest }: IconProps) => {
   return (
     <div
-      className="flex items-center justify-center border border-slate-400 cursor-pointer min-w-[2rem] px-2 transition hover:scale-105 rounded-md shadow-md "
+      className='flex items-center justify-center border border-slate-400 cursor-pointer min-w-[2rem] px-2 transition hover:scale-105 rounded-md shadow-md '
       {...rest}
     >
       <div
@@ -25,7 +34,7 @@ const Icon = ({ text, fullName, ...rest }: IconProps) => {
         {fullName ? text : text[0]}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Icon;
+export default Icon

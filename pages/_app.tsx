@@ -1,13 +1,9 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import Layout from '@components/layout';
-import useSWR, { SWRConfig } from 'swr';
-import { UserResponse } from './study/[id]';
+import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import Layout from '@components/layout'
+import { SWRConfig } from 'swr'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const { data, mutate: nicknameMutate } =
-    useSWR<UserResponse>('/api/profile/me');
-
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <SWRConfig
       value={{
@@ -18,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Layout>
     </SWRConfig>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
