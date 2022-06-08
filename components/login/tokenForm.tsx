@@ -1,5 +1,5 @@
 import Button from '@components/common/button'
-import Input from '@components/input'
+import Input from '@components/common/input'
 import useMutation from '@libs/client/useMutation'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
