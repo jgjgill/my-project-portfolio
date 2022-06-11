@@ -33,7 +33,7 @@ const UserComment = () => {
 
   return (
     <ul>
-      {user?.profile.comments.map((comment) => (
+      {user?.profile?.comments.map((comment) => (
         <li key={comment.id}>
           <Link href={`study/${comment.post.id}`}>
             <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>

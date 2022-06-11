@@ -24,7 +24,7 @@ interface UserResponse {
 }
 
 const Profile: NextPage = () => {
-  const { data: user, mutate: nicknameMutate } = useSWR<UserResponse>('/api/profile/me')
+  const { data: user, mutate } = useSWR<UserResponse>('/api/profile/me')
 
   const [logout, { loading: logoutLoading }] = useMutation('/api/profile/logout')
 
@@ -34,6 +34,7 @@ const Profile: NextPage = () => {
 
   const logoutValid = () => {
     logout({})
+
     router.replace('/')
   }
 
@@ -56,7 +57,7 @@ const Profile: NextPage = () => {
           <UserNickname />
         </Loading>
 
-        <NicknameForm nicknameMutate={nicknameMutate} />
+        <NicknameForm nicknameMutate={mutate} />
 
         <UserHistroy title='좋아요 페이지 내역' component={<UserLike />} />
         <UserHistroy title='댓글 페이지 내역' component={<UserComment />} />

@@ -32,7 +32,7 @@ const UserLike = () => {
 
   return (
     <ul>
-      {user?.profile.likes.map((like) => (
+      {user?.profile?.likes.map((like) => (
         <li key={like.post.id}>
           <Link href={`study/${like.post.id}`}>
             <a className='underline text-slate-50 hover:translate-y-1 transition'>{like.post.title}</a>
