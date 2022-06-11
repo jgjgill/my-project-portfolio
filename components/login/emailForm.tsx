@@ -1,11 +1,12 @@
-import Button from '@components/common/button'
-import Input from '@components/common/input'
-import useMutation from '@libs/client/useMutation'
-import { useRouter } from 'next/router'
-import { UserResponse } from 'pages/study/[id]'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { User } from '@prisma/client'
 import useSWR from 'swr'
+
+import useMutation from '@libs/client/useMutation'
+import Button from '@components/common/button'
+import Input from '@components/common/input'
 
 interface LoginForm {
   email: string
@@ -19,6 +20,12 @@ interface MutationResult {
 interface EmailFormProps {
   isView: boolean | undefined
   setIsView: Dispatch<SetStateAction<boolean>>
+}
+
+interface UserResponse {
+  ok: boolean
+  profile: User
+  error?: string
 }
 
 const EmailForm = ({ isView, setIsView }: EmailFormProps) => {
@@ -58,6 +65,7 @@ const EmailForm = ({ isView, setIsView }: EmailFormProps) => {
         register={loginRegister('email', { required: true })}
         required
       />
+
       <Button text='Get Login Link' loading={emailLoading} />
     </form>
   )

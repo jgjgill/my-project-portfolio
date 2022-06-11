@@ -9,6 +9,7 @@ interface LikeAndCommentWithUser extends User {
       title: string
     }
   }[]
+
   comments: {
     id: number
     content: string
@@ -31,13 +32,15 @@ const UserComment = () => {
   })
 
   return (
-    <div>
+    <ul>
       {user?.profile.comments.map((comment) => (
-        <Link key={comment.id} href={`study/${comment.post.id}`}>
-          <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>
-        </Link>
+        <li key={comment.id}>
+          <Link href={`study/${comment.post.id}`}>
+            <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

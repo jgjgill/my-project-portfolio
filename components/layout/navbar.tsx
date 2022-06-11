@@ -23,6 +23,7 @@ const Navbar = () => {
           <span className='text-slate-50 text-xl font-semibold'>JG</span>
         </a>
       </Link>
+
       <ul className='flex items-center space-x-4 justify-between text-xl font-semibold text-slate-50'>
         {filteredNav.map((item) => (
           <li key={item.name}>

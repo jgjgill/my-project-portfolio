@@ -1,5 +1,6 @@
-import Loading from '@components/common/loading'
 import { ReactElement } from 'react'
+
+import Loading from '@components/common/loading'
 
 interface UserHistroyProps {
   title: string

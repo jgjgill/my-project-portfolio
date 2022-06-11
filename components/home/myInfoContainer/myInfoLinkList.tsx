@@ -3,7 +3,7 @@ import MyInfoLinkItem from './myInfoLinkItem'
 const MyInfoLinkList = () => {
   return (
     <div className='space-y-2'>
-      <p className='text-4xl text-center font-semibold text-slate-400'>My Channel</p>
+      <h1 className='text-4xl text-center font-semibold text-slate-400'>My Channel</h1>
 
       <ul className='grid grid-cols-3 h-20 sm:h-32 w-[343px] border-2 border-slate-400 px-2 py-2 rounded-md shadow-md'>
         <MyInfoLinkItem href='https://velog.io/@jgjgill'>

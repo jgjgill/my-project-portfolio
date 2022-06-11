@@ -1,17 +1,17 @@
-import Button from '@components/common/button'
-import Input from '@components/common/input'
-import Loading from '@components/common/loading'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { User } from '@prisma/client'
+import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import useSWR from 'swr'
+
 import NicknameForm from '@components/profile/nicknameForm'
 import UserHistroy from '@components/profile/userHistory'
 import useMutation from '@libs/client/useMutation'
-import { User } from '@prisma/client'
-import { NextPage } from 'next'
-import dynamic from 'next/dynamic'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import useSWR from 'swr'
+import Loading from '@components/common/loading'
+import Button from '@components/common/button'
 
 const UserNickname = dynamic(() => import('@components/profile/userNickname'), { suspense: true })
 const UserLike = dynamic(() => import('@components/profile/userLike'), { suspense: true })
@@ -26,11 +26,11 @@ interface UserResponse {
 const Profile: NextPage = () => {
   const { data: user, mutate: nicknameMutate } = useSWR<UserResponse>('/api/profile/me')
 
-  const router = useRouter()
-
   const [logout, { loading: logoutLoading }] = useMutation('/api/profile/logout')
 
   const { handleSubmit: logoutSubmit } = useForm()
+
+  const router = useRouter()
 
   const logoutValid = () => {
     logout({})
@@ -50,7 +50,8 @@ const Profile: NextPage = () => {
       </Head>
 
       <div className='border border-slate-400 px-2 py-2 space-y-2 rounded-md shadow-md'>
-        <div className='text-xl font-bold text-slate-400'>Profile</div>
+        <h3 className='text-xl font-bold text-slate-400'>Profile</h3>
+
         <Loading>
           <UserNickname />
         </Loading>
