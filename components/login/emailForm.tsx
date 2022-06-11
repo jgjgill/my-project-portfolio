@@ -41,10 +41,12 @@ const EmailForm = ({ isView, setIsView }: EmailFormProps) => {
     confirmEmail(emailForm)
   }
 
-  useEffect(() => {
-    if (!(user && user.ok)) return
+  // console.log(user)
 
-    router.replace('/')
+  useEffect(() => {
+    if (user?.ok === true) {
+      router.replace('/')
+    }
   }, [user, router])
 
   useEffect(() => {
