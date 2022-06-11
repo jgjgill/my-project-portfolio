@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import useSWR from 'swr'
+
+import { UserResponse } from 'types/study'
 
 import useMutation from '@libs/client/useMutation'
 import Button from '@components/common/button'
@@ -20,6 +23,8 @@ interface TokenFormProps {
 }
 
 const TokenForm = ({ isView }: TokenFormProps) => {
+  const { data: user, mutate } = useSWR<UserResponse>('/api/profile/me')
+
   const [confirmToken, { loading: tokenLoading, data: tokenData }] = useMutation<MutationResult>('/api/users/confirm')
 
   const { register: tokenRegister, handleSubmit: tokenSubmit, reset: tokenReset } = useForm<ITokenForm>()
@@ -38,7 +43,7 @@ const TokenForm = ({ isView }: TokenFormProps) => {
     if (!tokenData?.ok) return
 
     router.replace('/')
-  }, [tokenData, router])
+  }, [tokenData, router, mutate])
 
   useEffect(() => {
     if (!tokenData?.error) return

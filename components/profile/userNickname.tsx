@@ -12,7 +12,7 @@ const UserNickname = () => {
     // suspense: true,
   })
 
-  return <span className='text-slate-50'>{user?.profile.name}</span>
+  return <span className='text-slate-50'>{user?.profile?.name}</span>
 }
 
 export default UserNickname

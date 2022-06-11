@@ -1,9 +1,9 @@
-interface CommentProps {
+interface CommentItemProps {
   name: string
   content: string
 }
 
-const Comment = ({ name, content }: CommentProps) => {
+const CommentItem = ({ name, content }: CommentItemProps) => {
   return (
     <div className='flex items-center space-x-4 py-1'>
       <span className='text-base font-medium text-gray-900'>{name}</span>
@@ -13,4 +13,4 @@ const Comment = ({ name, content }: CommentProps) => {
   )
 }
 
-export default Comment
+export default CommentItem
