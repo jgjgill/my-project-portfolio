@@ -23,7 +23,7 @@ interface TokenFormProps {
 }
 
 const TokenForm = ({ isView }: TokenFormProps) => {
-  const { data: user, mutate } = useSWR<UserResponse>('/api/profile/me')
+  const { data: user, mutate } = useSWR<UserResponse>('/api/users/me')
 
   const [confirmToken, { loading: tokenLoading, data: tokenData }] = useMutation<MutationResult>('/api/users/confirm')
 
@@ -42,8 +42,14 @@ const TokenForm = ({ isView }: TokenFormProps) => {
   useEffect(() => {
     if (!tokenData?.ok) return
 
+    mutate()
+  }, [tokenData, mutate])
+
+  useEffect(() => {
+    if (!user?.ok) return
+
     router.replace('/')
-  }, [tokenData, router, mutate])
+  }, [user, router])
 
   useEffect(() => {
     if (!tokenData?.error) return

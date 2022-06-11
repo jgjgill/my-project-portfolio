@@ -1,4 +1,3 @@
-import Loading from '@components/common/loading'
 import Link from 'next/link'
 import useSWR from 'swr'
 
@@ -16,8 +15,7 @@ const Navbar = () => {
     // suspense: true,
   })
 
-  console.log(123123)
-  console.log(user)
+  const filteredNav = NAV.filter((item) => (user?.ok ? item.name !== 'Login' : item.name !== 'Profile'))
 
   return (
     <nav className='flex sticky top-0 z-10 justify-between bg-slate-800 px-4 py-2 rounded-md shadow-md'>
@@ -26,16 +24,16 @@ const Navbar = () => {
           <span className='text-slate-50 text-xl font-semibold'>JG</span>
         </a>
       </Link>
-      {user?.ok || <div>123123</div>}
 
       <ul className='flex items-center space-x-4 justify-between text-xl font-semibold text-slate-50'>
-        {NAV.map((item) => (
-          <li key={item.name}>
-            <Link href={item.href}>
-              <a>{item.name}</a>
-            </Link>
-          </li>
-        ))}
+        {user &&
+          filteredNav.map((item) => (
+            <li key={item.name}>
+              <Link href={item.href}>
+                <a>{item.name}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
   )

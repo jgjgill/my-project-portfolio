@@ -23,10 +23,15 @@ interface UserResponse {
   error?: string
 }
 
-const Profile: NextPage = () => {
-  const { data: user, mutate } = useSWR<UserResponse>('/api/profile/me')
+interface MutationResult {
+  ok: boolean
+  error?: string
+}
 
-  const [logout, { loading: logoutLoading }] = useMutation('/api/profile/logout')
+const Profile: NextPage = () => {
+  const { data: user, mutate } = useSWR<UserResponse>('/api/users/me')
+
+  const [logout, { data: logoutData, loading: logoutLoading }] = useMutation<MutationResult>('/api/profile/logout')
 
   const { handleSubmit: logoutSubmit } = useForm()
 
@@ -34,12 +39,16 @@ const Profile: NextPage = () => {
 
   const logoutValid = () => {
     logout({})
-
-    router.replace('/')
   }
 
   useEffect(() => {
-    if (user && !user?.ok) {
+    if (!logoutData?.ok) return
+
+    mutate()
+  }, [logoutData, mutate])
+
+  useEffect(() => {
+    if (user?.ok === false) {
       router.replace('/')
     }
   }, [user, router])
