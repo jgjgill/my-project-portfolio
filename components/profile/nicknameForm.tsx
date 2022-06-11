@@ -1,9 +1,10 @@
+import { useForm } from 'react-hook-form'
+import { User } from '@prisma/client'
+import { KeyedMutator } from 'swr'
+
+import useMutation from '@libs/client/useMutation'
 import Button from '@components/common/button'
 import Input from '@components/common/input'
-import useMutation from '@libs/client/useMutation'
-import { UserResponse } from 'pages/study/[id]'
-import { useForm } from 'react-hook-form'
-import { KeyedMutator } from 'swr'
 
 interface NicknameFormProps {
   nicknameMutate: KeyedMutator<UserResponse>
@@ -13,6 +14,12 @@ interface INicknameForm {
   nickname: string
 }
 
+interface UserResponse {
+  ok: boolean
+  profile: User
+  error?: string
+}
+
 const NicknameForm = ({ nicknameMutate }: NicknameFormProps) => {
   const [nicknameChange, { loading: nicknameLoading }] = useMutation('/api/profile')
 
@@ -20,6 +27,7 @@ const NicknameForm = ({ nicknameMutate }: NicknameFormProps) => {
 
   const nicknameValid = (nicknameForm: INicknameForm) => {
     nicknameChange(nicknameForm)
+
     nicknameMutate(
       (prev) =>
         prev && {
@@ -31,6 +39,7 @@ const NicknameForm = ({ nicknameMutate }: NicknameFormProps) => {
         },
       false
     )
+
     nicknameReset()
   }
 

@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import test from '@public/test1.png'
+import Image from 'next/image'
 
 const ImageContainer = () => {
   return (

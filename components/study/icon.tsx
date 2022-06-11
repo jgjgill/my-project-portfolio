@@ -1,5 +1,6 @@
-import { cls } from '@libs/client/utils'
 import { Post } from '@prisma/client'
+
+import { cls } from '@libs/client/utils'
 
 interface PostWithCount extends Post {
   _count: {

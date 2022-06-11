@@ -31,13 +31,15 @@ const UserLike = () => {
   })
 
   return (
-    <div>
+    <ul>
       {user?.profile.likes.map((like) => (
-        <Link key={like.post.id} href={`study/${like.post.id}`}>
-          <a className='underline text-slate-50 hover:translate-y-1 transition'>{like.post.title}</a>
-        </Link>
+        <li key={like.post.id}>
+          <Link href={`study/${like.post.id}`}>
+            <a className='underline text-slate-50 hover:translate-y-1 transition'>{like.post.title}</a>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

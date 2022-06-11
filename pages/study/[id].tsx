@@ -1,18 +1,19 @@
-import Input from '@components/common/input'
-import Comment from '@components/study/comment'
-import { useForm } from 'react-hook-form'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { asyncFetchNotionPage, createNotion, getBlockData } from '@libs/client/notion'
-import { GetPageResponse, ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
-import client from '@libs/server/client'
-import useSWR from 'swr'
-import useMutation from '@libs/client/useMutation'
-import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
 import { Comment as CommentType, User } from '@prisma/client'
-import Button from '@components/common/button'
-import { contentType } from '@libs/client/notionContentType'
+import { useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
+import useSWR from 'swr'
+
+import { GetPageResponse, ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
+import { asyncFetchNotionPage, createNotion, getBlockData } from '@libs/client/notion'
+import { contentType } from '@libs/client/notionContentType'
+import useMutation from '@libs/client/useMutation'
+import Comment from '@components/study/comment'
+import Button from '@components/common/button'
+import Input from '@components/common/input'
+import client from '@libs/server/client'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany()
@@ -222,12 +223,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
         {data?.comments.length !== 0 && (
           <div className='space-y-2 px-2 py-2 bg-slate-400 rounded-md shadow-md divide-y-2 divide-slate-400'>
             {data?.comments?.map((commentItem) => (
-              <Comment
-                id={commentItem.id}
-                key={commentItem.id}
-                name={commentItem.userName}
-                content={commentItem.content}
-              />
+              <Comment key={commentItem.id} name={commentItem.userName} content={commentItem.content} />
             ))}
           </div>
         )}

@@ -30,7 +30,7 @@ const TEXT_GROUP = [
 const MyInfoTextList = () => {
   return (
     <div className='space-y-2'>
-      <p className='text-4xl text-center font-semibold text-slate-400'>My Info</p>
+      <h1 className='text-4xl text-center font-semibold text-slate-400'>My Info</h1>
 
       <div className='border-slate-400 border-2 px-4 py-2 rounded-md shadow-md'>
         <ul className='grid grid-cols-2 gap-4 text-center sm:text-left break-words'>

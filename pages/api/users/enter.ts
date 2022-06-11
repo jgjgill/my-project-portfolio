@@ -25,15 +25,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseType>) 
     },
   })
 
-  if (token) {
-    await mail.send({
-      from: process.env.MY_EMAIL!,
-      to: email,
-      subject: 'Login Token Mail',
-      text: payload,
-      html: `<strong>Your token is ${payload}</strong>`,
-    })
-  }
+  // if (token) {
+  //   await mail.send({
+  //     from: process.env.MY_EMAIL!,
+  //     to: email,
+  //     subject: 'Login Token Mail',
+  //     text: payload,
+  //     html: `<strong>Your token is ${payload}</strong>`,
+  //   })
+  // }
+
+  console.log(token)
 
   return res.status(200).json({ ok: true })
 }

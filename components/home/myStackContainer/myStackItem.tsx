@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import MyStackModal from './myStackModal'
 
 export interface MyStackImgProps {
@@ -11,7 +12,7 @@ export interface MyStackImgProps {
 
 const MyStackItem = ({ src, stack, setToggle, toggle, contents }: MyStackImgProps) => {
   return (
-    <div className='relative'>
+    <li className='relative'>
       <Image
         src={src}
         width={70}
@@ -21,8 +22,9 @@ const MyStackItem = ({ src, stack, setToggle, toggle, contents }: MyStackImgProp
         onMouseEnter={setToggle}
         onMouseLeave={setToggle}
       />
+
       {toggle && <MyStackModal stack={stack} contents={contents} />}
-    </div>
+    </li>
   )
 }
 
