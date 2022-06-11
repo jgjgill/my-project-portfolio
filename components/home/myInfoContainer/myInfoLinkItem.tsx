@@ -7,13 +7,13 @@ interface MyInfoLinkItemProps {
 
 const MyInfoLinkItem = ({ href, children }: MyInfoLinkItemProps) => {
   return (
-    <div className='flex items-center justify-center w-16 h-10'>
+    <li className='flex items-center justify-center w-full h-full'>
       <Link href={href} passHref>
         <a target='_blank' rel='noopener noreferrer'>
           {children}
         </a>
       </Link>
-    </div>
+    </li>
   )
 }
 

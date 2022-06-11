@@ -51,12 +51,12 @@ export const contentType = (item: PostContent, index: number) => {
       )
     case 'code':
       return (
-        <span
+        <p
           key={index}
           className='whitespace-pre-wrap text-slate-400 overflow-x-auto inline-block p-4 border-2 rounded-md shadow-md'
         >
           {item.text}
-        </span>
+        </p>
       )
     case 'bulleted_list_item':
       return <li className='font-medium text-base text-slate-400'>{item.text}</li>
