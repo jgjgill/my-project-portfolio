@@ -106,6 +106,10 @@ const MYBLOG_DEVELOPMENT_LOG: IProjectDevelopmentLogParagraph[] = [
         title: 'SWR',
         text: 'SWR를 활용해서 데이터를 가져왔습니다. SWR를 사용하면서 캐시와 Mutation에 대해 이해할 수 있었습니다. Key를 통한 캐싱으로 요청을 최소화하는 개념을 알았습니다. Mutation에서도 사용자에게 데이터의 변경을 즉각적으로 보여지도록 하는 장점을 파악하면서 좋아요와 댓글 기능에 활용해봤습니다.',
       },
+      {
+        title: 'Prisma',
+        text: 'Prisma를 사용하면서 편리하게 DB를 생성할 수 있었습니다. 여러 모델을 빠르게 만들 수 있었고 Type 시스템으로 높은 생산성을 얻을 수 있었습니다.',
+      },
     ],
   },
   {
