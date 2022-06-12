@@ -14,7 +14,6 @@ const Layout = ({ children }: LayoutProps) => {
       <Loading>
         <Navbar />
       </Loading>
-
       {children}
     </div>
   )

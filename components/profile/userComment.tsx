@@ -9,7 +9,6 @@ interface LikeAndCommentWithUser extends User {
       title: string
     }
   }[]
-
   comments: {
     id: number
     content: string

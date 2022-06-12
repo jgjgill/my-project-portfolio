@@ -1,7 +1,9 @@
+import { ReactElement } from 'react'
+
 interface MyInfoTextItemProps {
   title: string
   text: string
-  svg: any
+  svg: ReactElement<any, any>
 }
 
 const MyInfoTextItem = ({ title, text, svg }: MyInfoTextItemProps) => {

@@ -1,7 +1,7 @@
-import DateIcon from 'assets/svgs/myInfo/dateIcon'
-import EmailIcon from 'assets/svgs/myInfo/emailIcon'
-import NameIcon from 'assets/svgs/myInfo/nameIcon'
 import SchoolIcon from 'assets/svgs/myInfo/schoolIcon'
+import EmailIcon from 'assets/svgs/myInfo/emailIcon'
+import DateIcon from 'assets/svgs/myInfo/dateIcon'
+import NameIcon from 'assets/svgs/myInfo/nameIcon'
 import MyInfoTextItem from './myInfoTextItem'
 
 const TEXT_GROUP = [

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import useSWR from 'swr'
-
 import Icon from './icon'
 
 interface MemoProps {
@@ -32,7 +31,6 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
 
         <div className='absolute bottom-0 right-1 w-full pl-2 flex justify-between text-sm font-medium text-gray-700'>
           <div className='text-xs font-normal text-slate-50'>{time}</div>
-
           <div className='flex space-x-2'>
             <div className='flex items-center space-x-1'>
               <svg

@@ -41,8 +41,6 @@ const EmailForm = ({ isView, setIsView }: EmailFormProps) => {
     confirmEmail(emailForm)
   }
 
-  // console.log(user)
-
   useEffect(() => {
     if (user?.ok === true) {
       router.replace('/')
@@ -67,7 +65,6 @@ const EmailForm = ({ isView, setIsView }: EmailFormProps) => {
         register={loginRegister('email', { required: true })}
         required
       />
-
       <Button text='Get Login Link' loading={emailLoading} />
     </form>
   )

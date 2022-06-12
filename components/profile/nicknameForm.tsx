@@ -27,7 +27,6 @@ const NicknameForm = ({ nicknameMutate }: NicknameFormProps) => {
 
   const nicknameValid = (nicknameForm: INicknameForm) => {
     nicknameChange(nicknameForm)
-
     nicknameMutate(
       (prev) =>
         prev && {
@@ -39,7 +38,6 @@ const NicknameForm = ({ nicknameMutate }: NicknameFormProps) => {
         },
       false
     )
-
     nicknameReset()
   }
 

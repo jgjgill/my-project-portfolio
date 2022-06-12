@@ -1,5 +1,5 @@
-import GithubIcon from 'assets/svgs/common/githubIcon'
 import InstagramIcon from 'assets/svgs/myInfo/instagramIcon'
+import GithubIcon from 'assets/svgs/common/githubIcon'
 import ResumeIcon from 'assets/svgs/myInfo/resumeIcon'
 import MyInfoLinkItem from './myInfoLinkItem'
 
