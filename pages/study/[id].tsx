@@ -1,18 +1,16 @@
-import Input from '@components/common/input'
-import Comment from '@components/study/comment'
-import { useForm } from 'react-hook-form'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { asyncFetchNotionPage, createNotion, getBlockData } from '@libs/client/notion'
-import { GetPageResponse, ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
-import client from '@libs/server/client'
-import useSWR from 'swr'
-import useMutation from '@libs/client/useMutation'
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
-import { Comment as CommentType, User } from '@prisma/client'
-import Button from '@components/common/button'
-import { contentType } from '@libs/client/notionContentType'
 import Head from 'next/head'
+import useSWR from 'swr'
+
+import { PostContent, PostResponse, UserResponse } from 'types/study'
+
+import { GetPageResponse, ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints'
+import { asyncFetchNotionPage, createNotion, getBlockData } from '@libs/client/notion'
+import { contentType } from '@libs/client/notionContentType'
+import CommentList from '@components/study/commentList'
+import PostHeader from '@components/study/postHeader'
+import client from '@libs/server/client'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsInfo = await client.post.findMany()
@@ -34,9 +32,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }: any) => {
   const notion = createNotion()
+
   const postContent = await client.post.findUnique({
     where: { id: Number(id) },
   })
+
   const postComments = await client.comment.findMany({
     where: { postId: Number(id) },
   })
@@ -50,6 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } }: any) =>
   const blocks: ListBlockChildrenResponse = await asyncFetchNotionPage(notion, postContent?.pageId!)
 
   const studyPageTitle = studyPage.properties.title.title.map((title: any) => title.plain_text).join('')
+
   const studyPageContent = getBlockData(blocks)
 
   return {
@@ -63,91 +64,12 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } }: any) =>
   }
 }
 
-interface CommentForm {
-  comment: string
-}
-
-export interface PostResponse {
-  ok: boolean
-  isLiked: boolean
-  comments: CommentType[]
-}
-
-interface CommentResponse {
-  ok: boolean
-  comment: CommentType
-}
-
-export interface UserResponse {
-  ok: boolean
-  profile: User
-  error?: string
-}
-
-export interface PostContent {
-  type: string
-  text: string
-  annotations?: {
-    bold: boolean
-    code: string
-    color: boolean
-    italic: boolean
-    strikethrough: boolean
-    underline: boolean
-  }
-}
-
-export interface PostBoardProps {
-  title: string
-  content: PostContent[]
-}
-
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const router = useRouter()
   const { data: user } = useSWR<UserResponse>('/api/users/me')
 
-  const { data: likeData, mutate: likeMutate } = useSWR<PostResponse>(
-    router.query.id ? `/api/posts/${router.query.id}` : null
-  )
+  const router = useRouter()
 
-  const [toggleLike, { loading }] = useMutation(`/api/posts/${router.query.id}/like`)
-
-  const onClickBack = () => {
-    router.back()
-  }
-
-  const onToggleLike = () => {
-    if (loading) return
-
-    if (user?.ok) {
-      toggleLike({})
-      likeMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false)
-    }
-  }
-
-  const { register, reset, handleSubmit: commentSubmit } = useForm<CommentForm>()
   const { data, mutate } = useSWR<PostResponse>(router.query.id ? `/api/posts/${router.query.id}` : null)
-  const [comment, { loading: commentLoading, data: commentData }] = useMutation<CommentResponse>(
-    `/api/posts/${router.query.id}/comment`
-  )
-
-  const commentVaild = (commentValidData: CommentForm) => {
-    if (commentLoading) return
-
-    if (user?.ok) {
-      comment(commentValidData)
-      reset()
-    }
-  }
-
-  const scrollRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (scrollRef.current && commentData?.ok) {
-      mutate()
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-    }
-  }, [commentData, mutate])
 
   return (
     <>
@@ -155,84 +77,15 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <title>Study</title>
       </Head>
 
-      <div className='px-2 py-2 space-y-2 border border-slate-400 rounded-md shadow-md'>
-        <div className='relative flex'>
-          <svg
-            className='absolute top-0 -left-1 w-8 h-8 cursor-pointer fill-slate-400 stroke-slate-700'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            xmlns='http://www.w3.org/2000/svg'
-            onClick={onClickBack}
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z'
-            />
-          </svg>
-          <p className='px-8 py-2 w-full text-center text-xl font-semibold text-slate-400 '>{post.title}</p>
-          <button type='button' className='text-slate-400' onClick={onToggleLike}>
-            {user?.ok && likeData?.isLiked ? (
-              <svg className='w-8 h-8' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
-                <path
-                  fillRule='evenodd'
-                  d='M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z'
-                  clipRule='evenodd'
-                />
-              </svg>
-            ) : (
-              <svg
-                className='h-8 w-8'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                aria-hidden='true'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-                />
-              </svg>
-            )}
-          </button>
-        </div>
+      <div className='px-2 py-2 space-y-2 border border-slate-400  rounded-md shadow-md'>
+        <PostHeader title={post.title} user={user} isLiked={data?.isLiked} likeMutate={mutate} />
+
         <div className='px-4 py-4 min-h-[20rem] overflow-x-hidden whitespace-pre-wrap border border-slate-400 rounded-md shadow-md'>
           {post.content.map((item: PostContent, i: number) => contentType(item, i))}
         </div>
       </div>
-      <div className='px-2 py-2 border border-slate-400 space-y-2 rounded-md shadow-md'>
-        <form className='flex flex-col space-y-2' onSubmit={commentSubmit(commentVaild)}>
-          <Input
-            label='Comment'
-            name='comment'
-            type='text'
-            placeholder='댓글을 입력해주세요'
-            register={register('comment', {
-              required: true,
-            })}
-            required
-          />
-          <Button text='Submit' loading={commentLoading} />
-        </form>
-        {data?.comments.length !== 0 && (
-          <div className='space-y-2 px-2 py-2 bg-slate-400 rounded-md shadow-md divide-y-2 divide-slate-400'>
-            {data?.comments?.map((commentItem) => (
-              <Comment
-                id={commentItem.id}
-                key={commentItem.id}
-                name={commentItem.userName}
-                content={commentItem.content}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-      <div ref={scrollRef} className='pt-20' />
+
+      <CommentList user={user} comments={data?.comments} commentMutate={mutate} />
     </>
   )
 }

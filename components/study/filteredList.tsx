@@ -15,11 +15,11 @@ interface FilteredListProps {
 const FilteredList = ({ filteredList }: FilteredListProps) => {
   return (
     <div className='border border-slate-400 py-2 px-2 min-h-[12rem] rounded-md shadow-md'>
-      <div className='space-y-3'>
+      <ul className='space-y-3'>
         {filteredList.map((filteredItem) => (
           <ListItem key={filteredItem.id} id={filteredItem.id} text={filteredItem.theme} title={filteredItem.title} />
         ))}
-      </div>
+      </ul>
     </div>
   )
 }

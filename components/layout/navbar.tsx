@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { UserResponse } from 'pages/study/[id]'
 import useSWR from 'swr'
+
+import { UserResponse } from 'types/study'
 
 const NAV = [
   { name: 'Home', href: '/' },
@@ -23,14 +24,16 @@ const Navbar = () => {
           <span className='text-slate-50 text-xl font-semibold'>JG</span>
         </a>
       </Link>
+
       <ul className='flex items-center space-x-4 justify-between text-xl font-semibold text-slate-50'>
-        {filteredNav.map((item) => (
-          <li key={item.name}>
-            <Link href={item.href}>
-              <a>{item.name}</a>
-            </Link>
-          </li>
-        ))}
+        {user &&
+          filteredNav.map((item) => (
+            <li key={item.name}>
+              <Link href={item.href}>
+                <a>{item.name}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
   )

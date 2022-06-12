@@ -14,9 +14,7 @@ const Memo = ({ id, text, title, content, createdAt }: MemoProps) => {
   const timestamp = new Date(createdAt)
   const time = `${timestamp.getFullYear()}-${timestamp.getMonth() + 1}-${timestamp.getDate()}`
 
-  const { data } = useSWR(`/api/posts/${id}/length`, (url) => fetch(url).then((res) => res.json()), {
-    // refreshInterval: 1000,
-  })
+  const { data } = useSWR(`/api/posts/${id}/length`, (url) => fetch(url).then((res) => res.json()))
 
   return (
     <Link href={`/study/${id}`}>

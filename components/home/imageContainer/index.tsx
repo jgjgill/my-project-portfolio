@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import test from '@public/test1.png'
+import Image from 'next/image'
 
 const ImageContainer = () => {
   return (
     <div className='relative'>
-      <Image src={test} height={500} />
+      <Image src={test} placeholder='blur' height={500} />
 
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-2/3 px-2 py-2 space-y-4 rounded-md shadow-md'>
         <p className='whitespace-pre text-xs sm:text-xl md:text-2xl  font-bold md:leading-loose text-slate-50 text-center'>
@@ -14,7 +14,7 @@ const ImageContainer = () => {
 
       <dl className='absolute flex bottom-5 right-2 text-xs sm:text-right font-normal text-slate-50'>
         <dt>Last Update:</dt>
-        <dd>2022.06.08</dd>
+        <dd>2022.06.12</dd>
       </dl>
     </div>
   )

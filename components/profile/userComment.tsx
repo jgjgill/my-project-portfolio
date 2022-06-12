@@ -31,13 +31,15 @@ const UserComment = () => {
   })
 
   return (
-    <div>
-      {user?.profile.comments.map((comment) => (
-        <Link key={comment.id} href={`study/${comment.post.id}`}>
-          <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>
-        </Link>
+    <ul>
+      {user?.profile?.comments.map((comment) => (
+        <li key={comment.id}>
+          <Link href={`study/${comment.post.id}`}>
+            <a className='underline text-slate-50 hover:translate-y-1 transition'>{comment.content}</a>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

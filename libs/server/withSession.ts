@@ -1,10 +1,10 @@
-import { withIronSessionApiRoute } from 'iron-session/next';
+import { withIronSessionApiRoute } from 'iron-session/next'
 
 declare module 'iron-session' {
   interface IronSessionData {
     user?: {
-      id: number;
-    };
+      id: number
+    }
   }
 }
 
@@ -14,8 +14,8 @@ const cookieOptions = {
   cookieOptions: {
     maxAge: undefined,
   },
-};
+}
 
 export const withApiSession = (fn: any) => {
-  return withIronSessionApiRoute(fn, cookieOptions);
-};
+  return withIronSessionApiRoute(fn, cookieOptions)
+}

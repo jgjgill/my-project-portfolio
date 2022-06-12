@@ -18,12 +18,12 @@
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.27.0",
     "react-slick": "^0.28.1",
+    "react-use": "^17.4.0",
     "slick-carousel": "^1.8.1",
     "swr": "^1.2.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
-    "@svgr/webpack": "^6.2.1",
     "@types/node": "17.0.16",
     "@types/react": "17.0.39",
     "@types/react-slick": "^0.23.8",

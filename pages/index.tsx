@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
-import MyInfoContainer from '@components/home/myInfoContainer'
 import Head from 'next/head'
+
+import MyProjectContainer from '@components/home/myProjectContainer'
+import MyStackContainer from '@components/home/myStackContainer'
+import MyInfoContainer from '@components/home/myInfoContainer'
 import ImageContainer from '@components/home/imageContainer'
 import UpButton from '@components/common/upButton'
-import MyStackContainer from '@components/home/myStackContainer'
-import MyProjectContainer from '@components/home/myProjectContainer'
 
 const Home: NextPage = () => {
   return (

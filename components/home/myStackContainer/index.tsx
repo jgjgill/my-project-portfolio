@@ -1,11 +1,12 @@
-import react from '@public/react.svg'
-import nextjs from '@public/nextjs.svg'
+import { useState } from 'react'
+
+import MyStackItem, { MyStackImgProps } from './myStackItem'
 import tailwindcss from '@public/tailwindcss.svg'
 import typescript from '@public/typescript.svg'
-import mui from '@public/mui.svg'
+import nextjs from '@public/nextjs.svg'
 import prisma from '@public/prisma.svg'
-import { useState } from 'react'
-import MyStackItem, { MyStackImgProps } from './myStackItem'
+import react from '@public/react.svg'
+import mui from '@public/mui.svg'
 
 const MyStackContainer = () => {
   const [reactToggle, setReactToggle] = useState(false)
@@ -62,13 +63,13 @@ const MyStackContainer = () => {
 
   return (
     <div className='border border-slate-400 px-2 py-2 space-y-4 rounded-md shadow-md'>
-      <p className='text-4xl text-center font-semibold text-slate-400'>My Stack</p>
+      <h1 className='text-4xl text-center font-semibold text-slate-400'>My Stack</h1>
 
-      <div className='grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md'>
+      <ul className='grid grid-cols-3 place-items-center gap-10 text-center border-2 border-gray-400 p-4 rounded-md shadow-md'>
         {STACK_GROUP.map((item) => (
           <MyStackItem {...item} key={item.stack} />
         ))}
-      </div>
+      </ul>
     </div>
   )
 }
