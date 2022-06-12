@@ -24,7 +24,7 @@ const withHandler = ({ methods, handler, isPrivate = false }: ConfigType) => {
     }
 
     try {
-      handler(req, res)
+      await handler(req, res)
     } catch (err) {
       return res.status(500).json({ err })
     }
