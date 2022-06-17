@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic'
 
 import Loading from '@components/common/loading'
+import Navbar from './navbar'
 
-const Navbar = dynamic(() => import('./navbar'), { suspense: true })
+// const Navbar = dynamic(() => import('./navbar'), { suspense: true })
 
 interface LayoutProps {
   children: React.ReactNode

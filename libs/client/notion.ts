@@ -43,7 +43,7 @@ export const getThemePageNameGroup = (mainPage: ListBlockChildrenResponse) => {
 export const getThemePage = async (notion: NotionClient, themeNameGroup: ThemeName[]) => {
   const themePageGroup: ThemePage[] = []
 
-  Promise.all(
+  await Promise.all(
     themeNameGroup.map(async (themePageName) => {
       const themePage = await asyncFetchNotionPage(notion, themePageName.id)
       themePageGroup.push({
@@ -52,6 +52,7 @@ export const getThemePage = async (notion: NotionClient, themeNameGroup: ThemeNa
       })
     })
   )
+
   return themePageGroup
 }
 
