@@ -14,7 +14,7 @@ const ImageContainer = () => {
 
       <dl className='absolute flex bottom-5 right-2 text-xs sm:text-right font-normal text-slate-50'>
         <dt>Last Update:</dt>
-        <dd>2022.06.19</dd>
+        <dd>2022.07.20</dd>
       </dl>
     </div>
   )
