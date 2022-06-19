@@ -25,7 +25,7 @@ const ProjectCarousel = ({ imgsInfo }: ProjectCarouselProps) => {
         {imgsInfo.map((imgInfo) => (
           <div key={imgInfo.title} className='flex flex-col text-center'>
             <h3 className='text-2xl font-semibold mb-4 text-slate-400'>{imgInfo.title}</h3>
-            <Image src={imgInfo.src} height={500} />
+            <Image src={imgInfo.src} height={500} priority />
           </div>
         ))}
       </Slider>
