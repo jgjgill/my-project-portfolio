@@ -9,7 +9,7 @@ interface UserResponse {
 
 const UserNickname = () => {
   const { data: user } = useSWR<UserResponse>('/api/profile/me', {
-    // suspense: true,
+    suspense: true,
   })
 
   return (

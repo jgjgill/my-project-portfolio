@@ -27,7 +27,7 @@ interface UserResponse {
 
 const UserLike = () => {
   const { data: user } = useSWR<UserResponse>('/api/profile/me', {
-    //  suspense: true
+    suspense: true,
   })
 
   return (

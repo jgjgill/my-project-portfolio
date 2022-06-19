@@ -13,9 +13,9 @@ import useMutation from '@libs/client/useMutation'
 import Loading from '@components/common/loading'
 import Button from '@components/common/button'
 
-const UserNickname = dynamic(() => import('@components/profile/userNickname'), { suspense: true })
-const UserLike = dynamic(() => import('@components/profile/userLike'), { suspense: true })
-const UserComment = dynamic(() => import('@components/profile/userComment'), { suspense: true })
+const UserNickname = dynamic(() => import('@components/profile/userNickname'), { ssr: false })
+const UserLike = dynamic(() => import('@components/profile/userLike'), { ssr: false })
+const UserComment = dynamic(() => import('@components/profile/userComment'), { ssr: false })
 
 interface UserResponse {
   ok: boolean
