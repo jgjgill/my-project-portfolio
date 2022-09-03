@@ -32,7 +32,7 @@ export interface IProjectDevelopmentLogParagraph {
 
 const MYBLOG_INFO: IProjectInfo = {
   title: 'My Blog',
-  date: '2022-02-08 ~ ing...',
+  date: '2022-02-08',
   git: 'https://github.com/jgjgill/my_project_portfolio',
 }
 
