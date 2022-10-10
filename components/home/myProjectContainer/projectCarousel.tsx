@@ -11,7 +11,7 @@ interface ProjectCarouselProps {
 
 const ProjectCarousel = ({ imgsInfo }: ProjectCarouselProps) => {
   return (
-    <div className='flex flex-col items-center px-8 w-full border border-slate-400 rounded-md shadow-md'>
+    <div className='flex flex-col items-center w-full'>
       <Slider
         dots
         speed={500}
@@ -24,8 +24,8 @@ const ProjectCarousel = ({ imgsInfo }: ProjectCarouselProps) => {
       >
         {imgsInfo.map((imgInfo) => (
           <div key={imgInfo.title} className='flex flex-col text-center'>
-            <h3 className='text-2xl font-semibold mb-4 text-slate-400'>{imgInfo.title}</h3>
-            <Image src={imgInfo.src} height={500} priority />
+            <h2 className='text-2xl font-semibold mb-4 text-slate-400'>{imgInfo.title}</h2>
+            <Image src={imgInfo.src} height={500} layout='responsive' alt={imgInfo.alt} />
           </div>
         ))}
       </Slider>

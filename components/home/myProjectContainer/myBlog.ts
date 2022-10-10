@@ -11,6 +11,7 @@ export interface IProjectInfo {
 export interface IProjectCarousel {
   title: string
   src: StaticImageData
+  alt: string
 }
 
 export interface IProjectDescription {
@@ -37,8 +38,8 @@ const MYBLOG_INFO: IProjectInfo = {
 }
 
 const MYBLOG_IMAGES: IProjectCarousel[] = [
-  { title: 'Study', src: study1 },
-  { title: 'Test', src: study1 },
+  { title: 'Study', src: study1, alt: 'study' },
+  { title: 'Test', src: study1, alt: 'test' },
 ]
 
 const MYBLOG_DESCRIPTIONS: IProjectDescription[] = [
