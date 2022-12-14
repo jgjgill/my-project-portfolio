@@ -19,10 +19,7 @@ const MyInfoLinkList = () => {
           <GithubIcon className='w-6 h-6 fill-slate-50 hover:scale-105 transition' />
         </MyInfoLinkItem>
 
-        <MyInfoLinkItem
-          href='https://eight-kitty-e55.notion.site/jgjgill-e51b44e7e4d346269b2bea55ccc6ba9f'
-          ariaLabel='notion page'
-        >
+        <MyInfoLinkItem href='https://jgjgill.notion.site/e51b44e7e4d346269b2bea55ccc6ba9f' ariaLabel='notion page'>
           <ResumeIcon className='w-6 h-6 fill-slate-50 hover:scale-105 transition' />
         </MyInfoLinkItem>
       </ul>
