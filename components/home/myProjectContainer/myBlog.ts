@@ -1,11 +1,13 @@
 import { StaticImageData } from 'next/image'
 
 import study1 from '@public/study1.png'
+import home1 from '@public/home1.png'
 
 export interface IProjectInfo {
   title: string
   date: string
   git: string
+  ariaLabel: string
 }
 
 export interface IProjectCarousel {
@@ -35,11 +37,12 @@ const MYBLOG_INFO: IProjectInfo = {
   title: 'My Blog',
   date: '2022-02-08',
   git: 'https://github.com/jgjgill/my_project_portfolio',
+  ariaLabel: 'github page',
 }
 
 const MYBLOG_IMAGES: IProjectCarousel[] = [
+  { title: 'Home', src: home1, alt: 'home' },
   { title: 'Study', src: study1, alt: 'study' },
-  { title: 'Test', src: study1, alt: 'test' },
 ]
 
 const MYBLOG_DESCRIPTIONS: IProjectDescription[] = [

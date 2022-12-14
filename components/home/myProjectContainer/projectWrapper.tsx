@@ -19,7 +19,7 @@ const ProjectWrapper = ({ projectInfo, children }: ProjectWrapperProps) => {
           </div>
 
           <Link href={projectInfo.git} passHref>
-            <a target='_blank' rel='noopener noreferrer'>
+            <a target='_blank' rel='noopener noreferrer' aria-label={projectInfo.ariaLabel}>
               <GithubIcon className='w-6 h-6 fill-slate-400 hover:scale-105 transition' />
             </a>
           </Link>
