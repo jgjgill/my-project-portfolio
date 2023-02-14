@@ -18,6 +18,8 @@ NextJS와 Notion-API를 적용하면서 나만의 개인 블로그 구현했습�
 |------|---|
 |![노션 글](https://user-images.githubusercontent.com/79239852/218506021-7e0eabc1-ed5b-4d68-9d97-52ea9eec9811.gif)|![노션 게시판](https://user-images.githubusercontent.com/79239852/218506033-ab3fb58e-35ae-4fe6-9b95-13c886f183e0.gif)|
 
+# 📜개발 일지
+<a href="https://bit.ly/3j0KFkW" target="_blank">Notion Blog</a>
 
 
 # 🚀배포
